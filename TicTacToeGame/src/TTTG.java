@@ -19,7 +19,7 @@ public class TTTG implements ActionListener{
 	JPanel buttonp = new JPanel();
 	JLabel txtl = new JLabel();
 	JButton[] barray = new JButton[9];
-	boolean p1_turn;
+	boolean px_turn;
 	
 	TTTG(){
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -61,20 +61,24 @@ public class TTTG implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		for( int i = 0; i < 9; i++ ) {
 			if( e.getSource() == barray[i] ) {
-				if( p1_turn ) {
+				if( px_turn ) {
 					if( barray[i].getText() == "" ) {
 						barray[i].setForeground( new Color( 255, 0, 0 ) );
 						barray[i].setText( "X" );
-						p1_turn = false;
-						txtl.setText( "O turn" );
+						if( !check() ) {
+							px_turn = false;
+							txtl.setText( "O turn" );
+						}
 					}
 				}
 				else {
 					if( barray[i].getText() == "" ) {
 						barray[i].setForeground( new Color( 0, 0, 255 ) );
 						barray[i].setText( "O" );
-						p1_turn = true;
-						txtl.setText( "X turn" );
+						if( !check() ) {
+							px_turn = true;
+							txtl.setText( "X turn" );
+						}
 					}
 				}
 			}
@@ -91,50 +95,65 @@ public class TTTG implements ActionListener{
 		}
 		
 		if( random.nextInt( 2 ) == 0 ) {
-			p1_turn = true;
+			px_turn = true;
 			txtl.setText( "X turn" );
 		}
 		else {
-			p1_turn = false;
+			px_turn = false;
 			txtl.setText( "O turn" );			
 		}
 
 	}
 	
-	public void check() {
+	public boolean check() {
 		for( int i = 0; i < 3; i++ ) {
-			if( barray[0 + ( i * 3 )].getText() == barray[1 + ( i * 3 )].getText() && barray[1 + ( i * 3 )].getText() == barray[2 + ( i * 3 )].getText() ) { //rows
+			if( barray[0 + ( i * 3 )].getText() != "" && barray[0 + ( i * 3 )].getText() == barray[1 + ( i * 3 )].getText() && barray[1 + ( i * 3 )].getText() == barray[2 + ( i * 3 )].getText() ) { //rows
 				if( barray[0 + ( i * 3 )].getText() == "X" ) xwin( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
 				else owin( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
-				return;
+				return true;
 			}
 			
-			if( barray[0 + i].getText() == barray[3 + i].getText() && barray[3 + i].getText() == barray[6 + i].getText() ) { //columns
+			if( barray[0 + i].getText() != "" && barray[0 + i].getText() == barray[3 + i].getText() && barray[3 + i].getText() == barray[6 + i].getText() ) { //columns
 				if( barray[0 + i].getText() == "X" ) xwin( 0 + i, 3 + i, 6 + i );
 				else owin( 0 + i, 3 + i, 6 + i );
-				return;
+				return true;
 			}
 		}
-		if( barray[0].getText() == barray[4].getText() && barray[4].getText() == barray[8].getText() ) { //diagonals
+		if( barray[0].getText() != "" && barray[0].getText() == barray[4].getText() && barray[4].getText() == barray[8].getText() ) { //diagonals
 			if( barray[0].getText() == "X" ) xwin( 0, 4, 8 );
 			else owin( 0, 4, 8 );
-			return;
+			return true;
 		}
-		if( barray[2].getText() == barray[4].getText() && barray[4].getText() == barray[6].getText() ) { //diagonals
+		if( barray[2].getText() != "" && barray[2].getText() == barray[4].getText() && barray[4].getText() == barray[6].getText() ) { //diagonals
 			if( barray[2].getText() == "X" ) xwin( 2, 4, 6 );
 			else owin( 2, 4, 6 );
-			return;
+			return true;
 		}
-		
+		return false;
 	}
 	
 	
 	
 	public void xwin( int a, int b, int c) {
+		barray[a].setBackground(new Color( 0, 255, 0 ) );
+		barray[b].setBackground(new Color( 0, 255, 0 ) );
+		barray[c].setBackground(new Color( 0, 255, 0 ) );
 		
+		for( int i = 0; i < 9; i++ ) {
+			barray[i].setEnabled( false );
+		}
+		txtl.setText( "X wins! ");
 	}
 	
 	public void owin( int a, int b, int c) {
+		barray[a].setBackground(new Color( 0, 255, 0 ) );
+		barray[b].setBackground(new Color( 0, 255, 0 ) );
+		barray[c].setBackground(new Color( 0, 255, 0 ) );
+		
+		for( int i = 0; i < 9; i++ ) {
+			barray[i].setEnabled( false );
+		}
+		txtl.setText( "O wins! ");
 		
 	}
 }
