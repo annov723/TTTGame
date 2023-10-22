@@ -1,5 +1,5 @@
 Bartus:1500
-Ania:500
+Loki:450
 troll666:200
+Ania:500
 Maja:0
-Julka:-1000

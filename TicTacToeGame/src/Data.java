@@ -1,7 +1,11 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Data {
 	
@@ -38,6 +42,23 @@ public class Data {
 	
 	protected void dataSave() { //method to save all name and score data into a dat.txt file
 		File file = new File( path ); //we are sure that the file exists, was created at the beginning of the program or had existed before running the program
+		BufferedWriter buff;
+		
+		dat.put( "Loki", 450 );
+		try {
+			buff = new BufferedWriter( new FileWriter( file ) );
+			for( Map.Entry<String, Integer> entry : dat.entrySet() ) {
+				buff.write( entry.getKey() + ":" + entry.getValue());
+				buff.newLine();
+			}
+			buff.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
+	
+	
+	
 }
