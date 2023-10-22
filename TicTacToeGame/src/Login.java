@@ -1,6 +1,6 @@
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -10,31 +10,42 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 public class Login implements ActionListener{
 
 	HashMap<String, Integer> dat = new HashMap<String, Integer>();
 	
 	JFrame frame = new JFrame( "TTTGame" );
-	JButton playB = new JButton( "play" );
+	ImageIcon icon = new ImageIcon( "icon.png" );
+	ImageIcon playII = new ImageIcon( "continueb.png" );
+	JButton playB; //add action when cursor touches the button
 	JTextField txtF = new JTextField();
 	JLabel messL = new JLabel( "name:" );
-	ImageIcon background = new ImageIcon( "backlogin.png" );
-	JLabel  backL = new JLabel( background );
+	JLabel  backL = new JLabel( new ImageIcon( "backlogin.png" ) );
 	
 	
 	Login( HashMap<String, Integer> datImported ){
 		dat = datImported;
 		
-		messL.setBounds( 50, 50, 100, 35 );
-		messL.setFont( new Font( "Candara", Font.BOLD, 25 ) );
+		messL.setBounds( 20, 35, 80, 35 );
+		messL.setFont( new Font( "Calibri", Font.BOLD, 25 ) );
 		messL.setForeground( Color.white );
 		
-		txtF.setBounds( 150, 50, 200, 25 );
+		txtF.setBounds( 100, 30, 200, 40 );
+		txtF.setFont( new Font( "Calibri", Font.BOLD, 25 ) );
+		txtF.setHorizontalAlignment( JTextField.CENTER );
+		txtF.setBorder( new LineBorder( Color.white, 5 ) );
 		
-		playB.setBounds( 125, 100, 100, 25 );
+		Image before = playII.getImage();
+		Image after = before.getScaledInstance( 146, 50, java.awt.Image.SCALE_SMOOTH );
+		playII = new ImageIcon( after );
+		playB = new JButton( playII );
+		playB.setBounds( 234, 95, 146, 50 );
+		playB.setContentAreaFilled( false );
 		playB.addActionListener( this );
 		playB.setFocusable( false );
+		
 		
 		backL.add( messL );
 		backL.add( txtF );
@@ -47,10 +58,11 @@ public class Login implements ActionListener{
 		
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); //no additional action is needed
 		frame.setSize( 420, 200 );
+		frame.setResizable( false );
 		frame.setLocationRelativeTo( null ); //the window appears on the center of the screen
+		frame.setIconImage( icon.getImage() );
 		frame.setLayout( null );
 		frame.setVisible( true );
-		
 		
 	}
 	
@@ -62,7 +74,7 @@ public class Login implements ActionListener{
 			String uidS = idf.getText(); //pobieramy login do string'a
 			String passS = String.valueOf(passf.getPassword() ); //jako, ¿e to z PasswordField to pobieramy przez valueOf
 		
-			//sprawedzamy czy login i has³o siê zgadzaj¹ z data w HashMap
+			//check if name doesn't exist, pass the name and the dat HashMap to the Menu object
 			if( info.containsKey( uidS ) ){
 				if( info.get( uidS ).equals( passS ) ) {
 					messl.setForeground( Color.green );

@@ -7,7 +7,7 @@ public class Main {
 		
 		Login tttg = new Login( dat.loginInfo() );
 		
-		dat.dataSave(); //this method will be called in the Menu class!
+		dat.dataSave(); //this method will be called by the Menu object!
 
 	}
 
