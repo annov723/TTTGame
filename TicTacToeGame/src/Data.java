@@ -44,7 +44,6 @@ public class Data {
 		File file = new File( path ); //we are sure that the file exists, was created at the beginning of the program or had existed before running the program
 		BufferedWriter buff;
 		
-		dat.put( "Loki", 450 );
 		try {
 			buff = new BufferedWriter( new FileWriter( file ) );
 			for( Map.Entry<String, Integer> entry : dat.entrySet() ) {
@@ -53,7 +52,8 @@ public class Data {
 			}
 			buff.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// do popup box with info that an error occured
+			//JOptionPane.showMessageDialog( frame, "An Error Occurred While TTTGame Was Saving the File" );
 			e.printStackTrace();
 		}
 		

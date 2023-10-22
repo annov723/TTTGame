@@ -1,9 +1,11 @@
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,30 +15,39 @@ public class Login implements ActionListener{
 
 	HashMap<String, Integer> dat = new HashMap<String, Integer>();
 	
-	JFrame frame = new JFrame();
+	JFrame frame = new JFrame( "TTTGame" );
 	JButton playB = new JButton( "play" );
 	JTextField txtF = new JTextField();
-	JLabel messL = new JLabel( "Type your name:" );
+	JLabel messL = new JLabel( "name:" );
+	ImageIcon background = new ImageIcon( "backlogin.png" );
+	JLabel  backL = new JLabel( background );
 	
 	
 	Login( HashMap<String, Integer> datImported ){
 		dat = datImported;
 		
-		messL.setBounds( 125, 250, 250, 35 );
-		messL.setFont( new Font( "Segoe UI", Font.BOLD, 25 ) );
+		messL.setBounds( 50, 50, 100, 35 );
+		messL.setFont( new Font( "Candara", Font.BOLD, 25 ) );
+		messL.setForeground( Color.white );
 		
-		txtF.setBounds( 125, 100, 200, 25 );
+		txtF.setBounds( 150, 50, 200, 25 );
 		
-		playB.setBounds( 125, 200, 100, 25 );
+		playB.setBounds( 125, 100, 100, 25 );
 		playB.addActionListener( this );
 		playB.setFocusable( false );
 		
-		frame.add( messL );
-		frame.add( txtF );
-		frame.add( playB );
+		backL.add( messL );
+		backL.add( txtF );
+		backL.add( playB );
 		
-		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );  //exit unavailable for now
-		frame.setSize( 420, 420 );
+		backL.setLayout( null );
+		backL.setBounds( 0, 0, 420, 200 );
+		
+		frame.add( backL );
+		
+		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); //no additional action is needed
+		frame.setSize( 420, 200 );
+		frame.setLocationRelativeTo( null ); //the window appears on the center of the screen
 		frame.setLayout( null );
 		frame.setVisible( true );
 		
