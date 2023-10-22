@@ -2,3 +2,4 @@ Bartus:1500
 Ania:500
 troll666:200
 Maja:0
+Julka:-1000

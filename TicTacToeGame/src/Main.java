@@ -5,7 +5,6 @@ public class Main {
 		
 		Data dat = new Data(); //import data from dat.txt file
 		
-		System.out.println( dat.loginInfo() );
 		Login tttg = new Login( dat.loginInfo() );
 		
 		dat.dataSave();

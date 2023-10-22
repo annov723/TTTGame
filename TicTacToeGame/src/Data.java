@@ -16,19 +16,14 @@ public class Data {
 			
 			BufferedReader buff = new BufferedReader( new FileReader( file ) );
 			String line = null;
-			line = buff.readLine();
-			System.out.println( line );
 			
 			while( ( line = buff.readLine() ) != null ) { //if there is another line that is not empty
 				String[] arr = line.split( ":" ); //put a part of text separated with colon into one array cell
 				String name = arr[0].trim();
 				Integer points = Integer.parseInt( arr[1].trim() ); //change String data to Integer
-				if( !name.equals( "" ) && ( points < 0 ) ) dat.put( name, points ); //adding elements to the HashMap
-				
+				if( !name.equals( "" ) && ( points >= 0 ) ) dat.put( name, points ); //adding elements to the HashMap
 			}
-			
 			buff.close();
-			
 		}
 		catch( Exception exp ){ //if the dat.txt does not exist and couldn't been created properly
 			System.err.println( exp );
@@ -37,7 +32,7 @@ public class Data {
 		
 	}
 	
-	protected HashMap loginInfo() { //method to send created HashMap to a proper object
+	protected HashMap<String, Integer> loginInfo() { //method to send created HashMap to a proper object
 		return dat;
 	}
 	
