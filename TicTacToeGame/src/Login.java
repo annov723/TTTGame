@@ -87,6 +87,7 @@ public class Login implements ActionListener{
 			}
 			
 			wrongL.setVisible( true );
+			txtF.setText("");
 							
 		}
 	}
