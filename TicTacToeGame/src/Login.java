@@ -14,7 +14,7 @@ import javax.swing.border.LineBorder;
 
 public class Login implements ActionListener{
 
-	HashMap<String, Integer> dat = new HashMap<String, Integer>();
+	Data dat = new Data();
 	
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
@@ -22,11 +22,11 @@ public class Login implements ActionListener{
 	JButton playB; //add action when cursor touches the button
 	JTextField txtF = new JTextField();
 	JLabel messL = new JLabel( "name:" );
+	JLabel wrongL = new JLabel( "invalid sign \":\"");
 	JLabel  backL = new JLabel( new ImageIcon( "backlogin.png" ) );
 	
 	
-	Login( HashMap<String, Integer> datImported ){
-		dat = datImported;
+	Login(){
 		
 		messL.setBounds( 20, 35, 80, 35 );
 		messL.setFont( new Font( "Calibri", Font.BOLD, 25 ) );
@@ -46,10 +46,18 @@ public class Login implements ActionListener{
 		playB.addActionListener( this );
 		playB.setFocusable( false );
 		
+		wrongL.setBounds( 100, 74, 200, 20 );
+		wrongL.setFont( new Font( "Calibri", Font.BOLD, 17 ) );
+		wrongL.setHorizontalAlignment( JLabel.CENTER );
+		wrongL.setForeground( Color.RED );
+		wrongL.setVisible( false );
+		
+		
 		
 		backL.add( messL );
 		backL.add( txtF );
 		backL.add( playB );
+		backL.add( wrongL );
 		
 		backL.setLayout( null );
 		backL.setBounds( 0, 0, 420, 200 );
@@ -68,33 +76,25 @@ public class Login implements ActionListener{
 	
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed( ActionEvent e ) {
 		
-		/*if( e.getSource()==loginb ) { //remember to check if the name doesn't contain a ":" sign that is unacceptable (used to save a file properly)
-			String uidS = idf.getText(); //pobieramy login do string'a
-			String passS = String.valueOf(passf.getPassword() ); //jako, ¿e to z PasswordField to pobieramy przez valueOf
-		
-			//check if name doesn't exist, pass the name and the dat HashMap to the Menu object
-			if( info.containsKey( uidS ) ){
-				if( info.get( uidS ).equals( passS ) ) {
-					messl.setForeground( Color.green );
-					messl.setText( "login successful" );
-					
-					frame.dispose(); //znika LoginPage
-					
-					WelcomePage welcome = new WelcomePage( uidS ); //otwieramy nowe okno jak oba elementy HashMap pasuj¹
-				}
-				else {
-					messl.setForeground( Color.red );
-					messl.setText( "wrong password" );
-				}
+		if( e.getSource() == playB ) { //remember to check if the name doesn't contain a ":" sign that is unacceptable (used to save a file properly)
+			String name = txtF.getText(); //put name from txtF to a string
+			int a = name.indexOf( ':' );
+			if( a == -1 ) {
+				frame.dispose(); //Login window disappears	
+				Menu start = new Menu( dat.loginInfo(), name ); //Menu opens
 			}
-			else {
-				messl.setForeground( Color.red );
-				messl.setText( "wrong username" );
-			}
-		}*/
-		
+			
+			wrongL.setVisible( true );
+							
+		}
+	}
+	
+	public void save() {
+		dat.dataSave(); //this method will be called by the Menu object!
 	}
 
+	
+	
 }
