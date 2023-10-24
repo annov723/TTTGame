@@ -32,6 +32,7 @@ public class Menu implements ActionListener{
 	
 	Menu( HashMap<String, Integer> hashImported, String name ){
 		
+		//first check if name exists or is a new one
 		
 		
 	}
