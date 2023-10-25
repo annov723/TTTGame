@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,13 +17,15 @@ public class Menu implements ActionListener{ //subclass so we can use save metho
 	ImageIcon icon = new ImageIcon( "icon.png" );
 	JLabel  backL = new JLabel( new ImageIcon( "backmenu.png" ) );
 	JLabel titleL = new JLabel( "TTTGame" );
+	ImageIcon logoII = new ImageIcon( "icon.png" );
+	JLabel logoL;
 	
 	ImageIcon classicII = new ImageIcon( "classicb.png" );
 	JButton classicB; //add action when cursor touches the button
 	ImageIcon classicII2 = new ImageIcon( "classicb2.png" );
 	JButton classicB2; //add action when cursor touches the button
 	ImageIcon ninoII = new ImageIcon( "ninob.png" );
-	JButton nionoB; //add action when cursor touches the button
+	JButton ninoB; //add action when cursor touches the button
 	ImageIcon ninoII2 = new ImageIcon( "ninob2.png" );
 	JButton ninoB2; //add action when cursor touches the button
 	ImageIcon rankII = new ImageIcon( "rankb.png" );
@@ -39,6 +43,15 @@ public class Menu implements ActionListener{ //subclass so we can use save metho
 			dat.put( name, 0 );
 		}
 		
+		Image logoBefore = logoII.getImage();
+		Image logoAfter = logoBefore.getScaledInstance( 110, 110, java.awt.Image.SCALE_SMOOTH );
+		logoII = new ImageIcon( logoAfter );
+		logoL = new JLabel( logoII );
+		logoL.setBounds( 20, 20, 110, 110);
+		
+		titleL.setBounds( 150, 40, 500, 110 );
+		titleL.setFont( new Font( "Calibri", Font.BOLD, 90 ) );
+		titleL.setForeground( Color.white );
 		/*Image before = playII.getImage();
 		Image after = before.getScaledInstance( 146, 50, java.awt.Image.SCALE_SMOOTH );
 		playII = new ImageIcon( after );
@@ -60,15 +73,22 @@ public class Menu implements ActionListener{ //subclass so we can use save metho
 		
 		playB2.addActionListener( this );
 		playB.addMouseListener( this );
-		playB2.addMouseListener( this );
+		playB2.addMouseListener( this );*/
 		
 		
 		
-		backL.add( messL );
-		backL.add( txtF );
-		backL.add( playB2 );
-		backL.add( playB );
-		backL.add( wrongL );*/
+		
+		
+		backL.add( logoL );
+		backL.add( titleL );
+		/*(backL.add( classicB );
+		backL.add( classicB2 );
+		backL.add( ninoB );
+		backL.add( ninoB2 );
+		backL.add( rankB );
+		backL.add( rankB2 );
+		backL.add( exitB );
+		backL.add( exitB2 );*/
 		
 		backL.setLayout( null );
 		backL.setBounds( 0, 0, 750, 500 );
