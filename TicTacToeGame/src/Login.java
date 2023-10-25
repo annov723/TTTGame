@@ -26,7 +26,7 @@ public class Login implements ActionListener, MouseListener{
 	JButton playB2; //add action when cursor touches the button
 	JTextField txtF = new JTextField();
 	JLabel messL = new JLabel( "name:" );
-	JLabel wrongL = new JLabel( "invalid sign \":\"");
+	JLabel wrongL = new JLabel();
 	JLabel  backL = new JLabel( new ImageIcon( "backlogin.png" ) );
 	
 	
@@ -100,14 +100,19 @@ public class Login implements ActionListener, MouseListener{
 		if( e.getSource() == playB2 ) { //remember to check if the name doesn't contain a ":" sign that is unacceptable (used to save a file properly)
 			String name = txtF.getText(); //put name from txtF to a string
 			int a = name.indexOf( ':' );
-			if( a == -1 ) {
+			if( name.length() == 0 ) {
+				wrongL.setText( "enter your name here" );
+				wrongL.setVisible( true );
+			}
+			else if( a == -1 ) {
 				frame.dispose(); //Login window disappears	
 				Menu start = new Menu( dat.loginInfo(), name ); //Menu opens
 			}
-			
-			wrongL.setVisible( true );
-			txtF.setText("");
-							
+			else {
+				wrongL.setText( "forbidden character \":\"" );
+				wrongL.setVisible( true );
+				txtF.setText( "" );
+			}			
 		}
 	}
 
