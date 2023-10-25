@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class Menu implements ActionListener{
+public class Menu implements ActionListener{ //subclass so we can use save method here
 
 
 	HashMap<String, Integer> dat = new HashMap<String, Integer>();
@@ -19,7 +19,7 @@ public class Menu implements ActionListener{
 	
 	ImageIcon oneII = new ImageIcon( "oneb.png" );
 	JButton oneB; //add action when cursor touches the button
-	ImageIcon twoII = new ImageIcon( "twob.png" );
+	ImageIcon twoII = new ImageIcon( "tpb.png" );
 	JButton twoB; //add action when cursor touches the button
 	ImageIcon nineoneII = new ImageIcon( "nineoneb.png" );
 	JButton nineoneB; //add action when cursor touches the button

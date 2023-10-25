@@ -3,6 +3,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -12,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-public class Login implements ActionListener{
+public class Login implements ActionListener, MouseListener{
 
 	Data dat = new Data();
 	
@@ -20,6 +22,8 @@ public class Login implements ActionListener{
 	ImageIcon icon = new ImageIcon( "icon.png" );
 	ImageIcon playII = new ImageIcon( "continueb.png" );
 	JButton playB; //add action when cursor touches the button
+	ImageIcon playII2 = new ImageIcon( "continueb2.png" );
+	JButton playB2; //add action when cursor touches the button
 	JTextField txtF = new JTextField();
 	JLabel messL = new JLabel( "name:" );
 	JLabel wrongL = new JLabel( "invalid sign \":\"");
@@ -43,8 +47,22 @@ public class Login implements ActionListener{
 		playB = new JButton( playII );
 		playB.setBounds( 234, 95, 146, 50 );
 		playB.setContentAreaFilled( false );
-		playB.addActionListener( this );
 		playB.setFocusable( false );
+		playB.setBorder( null ); //no border when button mouse go through the button :)
+		
+		Image before2 = playII2.getImage();
+		Image after2 = before2.getScaledInstance( 146, 50, java.awt.Image.SCALE_SMOOTH );
+		playII2 = new ImageIcon( after2 );
+		playB2 = new JButton( playII2 );
+		playB2.setBounds( 234, 95, 146, 50 );
+		playB2.setContentAreaFilled( false );
+		playB2.setFocusable( false );
+		playB2.setVisible( false );
+		playB2.setBorder( null );
+		
+		playB2.addActionListener( this );
+		playB.addMouseListener( this );
+		playB2.addMouseListener( this );
 		
 		wrongL.setBounds( 100, 74, 200, 20 );
 		wrongL.setFont( new Font( "Calibri", Font.BOLD, 17 ) );
@@ -52,10 +70,11 @@ public class Login implements ActionListener{
 		wrongL.setForeground( Color.RED );
 		wrongL.setVisible( false );
 		
-		
+
 		
 		backL.add( messL );
 		backL.add( txtF );
+		backL.add( playB2 );
 		backL.add( playB );
 		backL.add( wrongL );
 		
@@ -78,7 +97,7 @@ public class Login implements ActionListener{
 	@Override
 	public void actionPerformed( ActionEvent e ) {
 		
-		if( e.getSource() == playB ) { //remember to check if the name doesn't contain a ":" sign that is unacceptable (used to save a file properly)
+		if( e.getSource() == playB2 ) { //remember to check if the name doesn't contain a ":" sign that is unacceptable (used to save a file properly)
 			String name = txtF.getText(); //put name from txtF to a string
 			int a = name.indexOf( ':' );
 			if( a == -1 ) {
@@ -91,6 +110,44 @@ public class Login implements ActionListener{
 							
 		}
 	}
+
+	@Override
+	public void mouseEntered( MouseEvent e ) {
+		if( e.getSource() == playB ) {
+			playB2.setVisible( true );
+			playB.setVisible( false );
+		}
+		
+	}
+
+	@Override
+	public void mouseExited( MouseEvent e ) {
+		if( e.getSource() == playB2 ) {
+			playB2.setVisible( false );
+			playB.setVisible( true );
+		}
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 	
 	public void save() {
 		dat.dataSave(); //this method will be called by the Menu object!
