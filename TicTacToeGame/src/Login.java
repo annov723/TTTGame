@@ -16,7 +16,7 @@ import javax.swing.border.LineBorder;
 
 public class Login implements ActionListener, MouseListener{
 
-	Data dat = new Data();
+	Data dat = new Data(); //create new Cata object and import dat.txt file
 	
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
@@ -32,15 +32,18 @@ public class Login implements ActionListener, MouseListener{
 	
 	Login(){
 		
+		/*name text*/
 		messL.setBounds( 20, 35, 80, 35 );
 		messL.setFont( new Font( "Calibri", Font.BOLD, 25 ) );
 		messL.setForeground( Color.white );
 		
+		/*text field*/
 		txtF.setBounds( 100, 30, 200, 40 );
 		txtF.setFont( new Font( "Calibri", Font.BOLD, 25 ) );
 		txtF.setHorizontalAlignment( JTextField.CENTER );
 		txtF.setBorder( new LineBorder( Color.white, 5 ) );
 		
+		/*continue button*/
 		Image before = playII.getImage();
 		Image after = before.getScaledInstance( 146, 50, java.awt.Image.SCALE_SMOOTH );
 		playII = new ImageIcon( after );
@@ -64,6 +67,7 @@ public class Login implements ActionListener, MouseListener{
 		playB.addMouseListener( this );
 		playB2.addMouseListener( this );
 		
+		/*mistakes message*/
 		wrongL.setBounds( 100, 74, 200, 20 );
 		wrongL.setFont( new Font( "Calibri", Font.BOLD, 17 ) );
 		wrongL.setHorizontalAlignment( JLabel.CENTER );
@@ -78,11 +82,13 @@ public class Login implements ActionListener, MouseListener{
 		backL.add( playB );
 		backL.add( wrongL );
 		
+		/*background picture label*/
 		backL.setLayout( null );
 		backL.setBounds( 0, 0, 420, 200 );
 		
 		frame.add( backL );
 		
+		/*whole window*/
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); //no additional action is needed
 		frame.setSize( 420, 200 );
 		frame.setResizable( false );
@@ -97,7 +103,13 @@ public class Login implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed( ActionEvent e ) {
 		
-		if( e.getSource() == playB2 ) { //remember to check if the name doesn't contain a ":" sign that is unacceptable (used to save a file properly)
+		/**
+		 * check if the name doesn't contain a ":" sign that is unacceptable (used to save a file properly)
+		 * force user to input any name, even one character
+		 * if everything is ok, close Login and open Menu
+		 * pass all names and scores information (dat) to Menu
+		 */
+		if( e.getSource() == playB2 ) {
 			String name = txtF.getText(); //put name from txtF to a string
 			int a = name.indexOf( ':' );
 			if( name.length() == 0 ) {

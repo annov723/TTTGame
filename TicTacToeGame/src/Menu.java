@@ -3,6 +3,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -11,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class Menu implements ActionListener{ //subclass so we can use save method here
+public class Menu implements ActionListener, MouseListener{ //subclass so we can use save method here
 	
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
@@ -43,37 +45,63 @@ public class Menu implements ActionListener{ //subclass so we can use save metho
 			dat.put( name, 0 );
 		}
 		
+		/*logo image*/
 		Image logoBefore = logoII.getImage();
 		Image logoAfter = logoBefore.getScaledInstance( 110, 110, java.awt.Image.SCALE_SMOOTH );
 		logoII = new ImageIcon( logoAfter );
 		logoL = new JLabel( logoII );
 		logoL.setBounds( 20, 20, 110, 110);
 		
+		/*logo image*/
 		titleL.setBounds( 150, 40, 500, 110 );
 		titleL.setFont( new Font( "Calibri", Font.BOLD, 90 ) );
 		titleL.setForeground( Color.white );
-		/*Image before = playII.getImage();
-		Image after = before.getScaledInstance( 146, 50, java.awt.Image.SCALE_SMOOTH );
-		playII = new ImageIcon( after );
-		playB = new JButton( playII );
-		playB.setBounds( 234, 95, 146, 50 );
-		playB.setContentAreaFilled( false );
-		playB.setFocusable( false );
-		playB.setBorder( null ); //no border when button mouse go through the button :)
 		
-		Image before2 = playII2.getImage();
-		Image after2 = before2.getScaledInstance( 146, 50, java.awt.Image.SCALE_SMOOTH );
-		playII2 = new ImageIcon( after2 );
-		playB2 = new JButton( playII2 );
-		playB2.setBounds( 234, 95, 146, 50 );
-		playB2.setContentAreaFilled( false );
-		playB2.setFocusable( false );
-		playB2.setVisible( false );
-		playB2.setBorder( null );
+		Image classicBefore = classicII.getImage();
+		Image classicAfter = classicBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		classicII = new ImageIcon( classicAfter );
+		classicB = new JButton( classicII );
+		classicB.setBounds( 75, 160, 176, 60 );
+		classicB.setContentAreaFilled( false );
+		classicB.setFocusable( false );
+		classicB.setBorder( null );
 		
-		playB2.addActionListener( this );
-		playB.addMouseListener( this );
-		playB2.addMouseListener( this );*/
+		Image classicBefore2 = classicII2.getImage();
+		Image classicAfter2 = classicBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		classicII2 = new ImageIcon( classicAfter2 );
+		classicB2 = new JButton( classicII2 );
+		classicB2.setBounds( 75, 160, 176, 60 );
+		classicB2.setContentAreaFilled( false );
+		classicB2.setFocusable( false );
+		classicB2.setBorder( null );
+		classicB2.setVisible( false );
+		
+		classicB2.addActionListener( this );
+		classicB.addMouseListener( this );
+		classicB2.addMouseListener( this );
+		
+		Image classicBefore = classicII.getImage();
+		Image classicAfter = classicBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		classicII = new ImageIcon( classicAfter );
+		classicB = new JButton( classicII );
+		classicB.setBounds( 75, 160, 176, 60 );
+		classicB.setContentAreaFilled( false );
+		classicB.setFocusable( false );
+		classicB.setBorder( null );
+		
+		Image classicBefore2 = classicII2.getImage();
+		Image classicAfter2 = classicBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		classicII2 = new ImageIcon( classicAfter2 );
+		classicB2 = new JButton( classicII2 );
+		classicB2.setBounds( 75, 160, 176, 60 );
+		classicB2.setContentAreaFilled( false );
+		classicB2.setFocusable( false );
+		classicB2.setBorder( null );
+		classicB2.setVisible( false );
+		
+		classicB2.addActionListener( this );
+		classicB.addMouseListener( this );
+		classicB2.addMouseListener( this );
 		
 		
 		
@@ -81,9 +109,9 @@ public class Menu implements ActionListener{ //subclass so we can use save metho
 		
 		backL.add( logoL );
 		backL.add( titleL );
-		/*(backL.add( classicB );
+		backL.add( classicB );
 		backL.add( classicB2 );
-		backL.add( ninoB );
+		/*backL.add( ninoB );
 		backL.add( ninoB2 );
 		backL.add( rankB );
 		backL.add( rankB2 );
@@ -109,6 +137,47 @@ public class Menu implements ActionListener{ //subclass so we can use save metho
 	@Override
 	public void actionPerformed( ActionEvent e ) {
 		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		if( e.getSource() == classicB ) {
+			classicB2.setVisible( true );
+			classicB.setVisible( false );
+		}
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		if( e.getSource() == classicB2 ) {
+			classicB2.setVisible( false );
+			classicB.setVisible( true );
+		}
 		
 	}
 

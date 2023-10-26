@@ -12,6 +12,9 @@ public class Data {
 	final static String path = "dat.txt";
 	HashMap<String, Integer> dat = new HashMap<String, Integer>();
 	
+	/**
+	 * constructor imports data from dat.txt file and save it in the HashMap
+	 */
 	Data(){
 		try {
 			File file = new File( path );
@@ -36,10 +39,12 @@ public class Data {
 		
 	}
 	
+	/*return HashMap*/
 	protected HashMap<String, Integer> loginInfo() { //method to send created HashMap to a proper object
 		return dat;
 	}
 	
+	/*save all names and scores to dat.txt*/
 	protected void dataSave() { //method to save all name and score data into a dat.txt file
 		File file = new File( path ); //we are sure that the file exists, was created at the beginning of the program or had existed before running the program
 		BufferedWriter buff;
