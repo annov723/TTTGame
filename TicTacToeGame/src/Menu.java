@@ -129,6 +129,29 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		rankB.addMouseListener( this );
 		rankB2.addMouseListener( this );
 		
+		/*exit button*/
+		Image exitBefore = exitII.getImage();
+		Image exitAfter = exitBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		exitII = new ImageIcon( exitAfter );
+		exitB = new JButton( exitII );
+		exitB.setBounds( 525, 380, 176, 60 );
+		exitB.setContentAreaFilled( false );
+		exitB.setFocusable( false );
+		exitB.setBorder( null );
+		
+		Image exitBefore2 = exitII2.getImage();
+		Image exitAfter2 = exitBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		exitII2 = new ImageIcon( exitAfter2 );
+		exitB2 = new JButton( exitII2 );
+		exitB2.setBounds( 525, 380, 176, 60 );
+		exitB2.setContentAreaFilled( false );
+		exitB2.setFocusable( false );
+		exitB2.setBorder( null );
+		exitB2.setVisible( false );
+		
+		exitB2.addActionListener( this );
+		exitB.addMouseListener( this );
+		exitB2.addMouseListener( this );
 		
 		
 		
@@ -140,8 +163,8 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		backL.add( ninoB2 );
 		backL.add( rankB );
 		backL.add( rankB2 );
-		/*backL.add( exitB );
-		backL.add( exitB2 );*/
+		backL.add( exitB );
+		backL.add( exitB2 );
 		
 		backL.setLayout( null );
 		backL.setBounds( 0, 0, 750, 500 );
@@ -201,6 +224,10 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 			rankB2.setVisible( true );
 			rankB.setVisible( false );
 		}
+		if( e.getSource() == exitB ) {
+			exitB2.setVisible( true );
+			exitB.setVisible( false );
+		}
 		
 	}
 
@@ -218,6 +245,10 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		if( e.getSource() == rankB2 ) {
 			rankB2.setVisible( false );
 			rankB.setVisible( true );
+		}
+		if( e.getSource() == exitB2 ) {
+			exitB2.setVisible( false );
+			exitB.setVisible( true );
 		}
 		
 	}
