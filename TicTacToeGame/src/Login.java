@@ -21,9 +21,9 @@ public class Login implements ActionListener, MouseListener{
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
 	ImageIcon playII = new ImageIcon( "continueb.png" );
-	JButton playB; //add action when cursor touches the button
+	JButton playB;
 	ImageIcon playII2 = new ImageIcon( "continueb2.png" );
-	JButton playB2; //add action when cursor touches the button
+	JButton playB2; //add action when button clicked
 	JTextField txtF = new JTextField();
 	JLabel messL = new JLabel( "name:" );
 	JLabel wrongL = new JLabel();

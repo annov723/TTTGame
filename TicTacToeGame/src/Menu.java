@@ -23,21 +23,21 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 	JLabel logoL;
 	
 	ImageIcon classicII = new ImageIcon( "classicb.png" );
-	JButton classicB; //add action when cursor touches the button
+	JButton classicB;
 	ImageIcon classicII2 = new ImageIcon( "classicb2.png" );
-	JButton classicB2; //add action when cursor touches the button
+	JButton classicB2;
 	ImageIcon ninoII = new ImageIcon( "ninob.png" );
-	JButton ninoB; //add action when cursor touches the button
+	JButton ninoB;
 	ImageIcon ninoII2 = new ImageIcon( "ninob2.png" );
-	JButton ninoB2; //add action when cursor touches the button
+	JButton ninoB2;
 	ImageIcon rankII = new ImageIcon( "rankb.png" );
-	JButton rankB; //add action when cursor touches the button
+	JButton rankB;
 	ImageIcon rankII2 = new ImageIcon( "rankb2.png" );
-	JButton rankB2; //add action when cursor touches the button
+	JButton rankB2;
 	ImageIcon exitII = new ImageIcon( "exitb.png" );
-	JButton exitB; //add action when cursor touches the button
+	JButton exitB;
 	ImageIcon exitII2 = new ImageIcon( "exitb2.png" );
-	JButton exitB2; //add action when cursor touches the button
+	JButton exitB2;
 	
 	Menu( HashMap<String, Integer> dat, String name ){
 		
@@ -52,11 +52,12 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		logoL = new JLabel( logoII );
 		logoL.setBounds( 20, 20, 110, 110);
 		
-		/*logo image*/
+		/*title label*/
 		titleL.setBounds( 150, 40, 500, 110 );
 		titleL.setFont( new Font( "Calibri", Font.BOLD, 90 ) );
 		titleL.setForeground( Color.white );
 		
+		/*classic mode button*/
 		Image classicBefore = classicII.getImage();
 		Image classicAfter = classicBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		classicII = new ImageIcon( classicAfter );
@@ -80,29 +81,53 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		classicB.addMouseListener( this );
 		classicB2.addMouseListener( this );
 		
-		Image classicBefore = classicII.getImage();
-		Image classicAfter = classicBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
-		classicII = new ImageIcon( classicAfter );
-		classicB = new JButton( classicII );
-		classicB.setBounds( 75, 160, 176, 60 );
-		classicB.setContentAreaFilled( false );
-		classicB.setFocusable( false );
-		classicB.setBorder( null );
+		/*9 in 1 mode button*/
+		Image ninoBefore = ninoII.getImage();
+		Image ninoAfter = ninoBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		ninoII = new ImageIcon( ninoAfter );
+		ninoB = new JButton( ninoII );
+		ninoB.setBounds( 75, 240, 176, 60 );
+		ninoB.setContentAreaFilled( false );
+		ninoB.setFocusable( false );
+		ninoB.setBorder( null );
 		
-		Image classicBefore2 = classicII2.getImage();
-		Image classicAfter2 = classicBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
-		classicII2 = new ImageIcon( classicAfter2 );
-		classicB2 = new JButton( classicII2 );
-		classicB2.setBounds( 75, 160, 176, 60 );
-		classicB2.setContentAreaFilled( false );
-		classicB2.setFocusable( false );
-		classicB2.setBorder( null );
-		classicB2.setVisible( false );
+		Image ninoBefore2 = ninoII2.getImage();
+		Image ninoAfter2 = ninoBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		ninoII2 = new ImageIcon( ninoAfter2 );
+		ninoB2 = new JButton( ninoII2 );
+		ninoB2.setBounds( 75, 240, 176, 60 );
+		ninoB2.setContentAreaFilled( false );
+		ninoB2.setFocusable( false );
+		ninoB2.setBorder( null );
+		ninoB2.setVisible( false );
 		
-		classicB2.addActionListener( this );
-		classicB.addMouseListener( this );
-		classicB2.addMouseListener( this );
+		ninoB2.addActionListener( this );
+		ninoB.addMouseListener( this );
+		ninoB2.addMouseListener( this );
 		
+		/*player ranking button*/
+		Image rankBefore = rankII.getImage();
+		Image rankAfter = rankBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		rankII = new ImageIcon( rankAfter );
+		rankB = new JButton( rankII );
+		rankB.setBounds( 75, 320, 176, 60 );
+		rankB.setContentAreaFilled( false );
+		rankB.setFocusable( false );
+		rankB.setBorder( null );
+		
+		Image rankBefore2 = rankII2.getImage();
+		Image rankAfter2 = rankBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		rankII2 = new ImageIcon( rankAfter2 );
+		rankB2 = new JButton( rankII2 );
+		rankB2.setBounds( 75, 320, 176, 60 );
+		rankB2.setContentAreaFilled( false );
+		rankB2.setFocusable( false );
+		rankB2.setBorder( null );
+		rankB2.setVisible( false );
+		
+		rankB2.addActionListener( this );
+		rankB.addMouseListener( this );
+		rankB2.addMouseListener( this );
 		
 		
 		
@@ -111,11 +136,11 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		backL.add( titleL );
 		backL.add( classicB );
 		backL.add( classicB2 );
-		/*backL.add( ninoB );
+		backL.add( ninoB );
 		backL.add( ninoB2 );
 		backL.add( rankB );
 		backL.add( rankB2 );
-		backL.add( exitB );
+		/*backL.add( exitB );
 		backL.add( exitB2 );*/
 		
 		backL.setLayout( null );
@@ -168,6 +193,14 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 			classicB2.setVisible( true );
 			classicB.setVisible( false );
 		}
+		if( e.getSource() == ninoB ) {
+			ninoB2.setVisible( true );
+			ninoB.setVisible( false );
+		}
+		if( e.getSource() == rankB ) {
+			rankB2.setVisible( true );
+			rankB.setVisible( false );
+		}
 		
 	}
 
@@ -177,6 +210,14 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		if( e.getSource() == classicB2 ) {
 			classicB2.setVisible( false );
 			classicB.setVisible( true );
+		}
+		if( e.getSource() == ninoB2 ) {
+			ninoB2.setVisible( false );
+			ninoB.setVisible( true );
+		}
+		if( e.getSource() == rankB2 ) {
+			rankB2.setVisible( false );
+			rankB.setVisible( true );
 		}
 		
 	}
