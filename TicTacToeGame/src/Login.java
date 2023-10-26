@@ -15,8 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 public class Login implements ActionListener, MouseListener{
-
-	Data dat = new Data(); //create new Cata object and import dat.txt file
 	
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
@@ -118,7 +116,7 @@ public class Login implements ActionListener, MouseListener{
 			}
 			else if( a == -1 ) {
 				frame.dispose(); //Login window disappears	
-				Menu start = new Menu( dat.loginInfo(), name ); //Menu opens
+				Menu start = new Menu( name ); //Menu opens
 			}
 			else {
 				wrongL.setText( "forbidden character \":\"" );
@@ -162,12 +160,6 @@ public class Login implements ActionListener, MouseListener{
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	
-	
-	public void save() {
-		dat.dataSave(); //this method will be called by the Menu object!
 	}
 
 	

@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -14,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class Menu implements ActionListener, MouseListener{ //subclass so we can use save method here
+	
+	Data list = new Data(); //create new Cata object and import dat.txt file
 	
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
@@ -39,10 +43,10 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 	ImageIcon exitII2 = new ImageIcon( "exitb2.png" );
 	JButton exitB2;
 	
-	Menu( HashMap<String, Integer> dat, String name ){
+	Menu( String name ){
 		
-		if( !dat.containsKey( name ) ) {
-			dat.put( name, 0 );
+		if( !list.dat.containsKey( name ) ) {
+			list.dat.put( name, 0 );
 		}
 		
 		/*logo image*/
@@ -179,15 +183,36 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		frame.setLayout( null );
 		frame.setVisible( true );
 		
+		/*when the window is closing we wanna save all ranking data to dat.txt*/
+		frame.addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowClosing( WindowEvent e ) {
+            	list.dataSave();
+                System.exit(0);
+            }
+        } );
+		
 	}
-	
 	
 	@Override
 	public void actionPerformed( ActionEvent e ) {
-		// TODO Auto-generated method stub
+		if( e.getSource() == classicB2 ) {
+			
+		}
+		
+		if( e.getSource() == ninoB2 ) {
+			
+		}
+		if( e.getSource() == rankB2 ) {
+			
+		}
+		if( e.getSource() == exitB2 ) {
+			list.dataSave();
+            frame.dispose();
+            System.exit(0);
+        }
 		
 	}
-
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -195,20 +220,17 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		
 	}
 
-
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
-
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -230,7 +252,6 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		}
 		
 	}
-
 
 	@Override
 	public void mouseExited(MouseEvent e) {

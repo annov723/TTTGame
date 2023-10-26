@@ -1,5 +1,8 @@
 Bartus:1500
+dfg:0
 Loki:450
+helloo:0
 troll666:200
 Ania:500
+falafel:0
 Maja:0
