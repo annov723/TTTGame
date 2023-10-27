@@ -106,7 +106,7 @@ public class Login implements ActionListener, MouseListener{
 		 * force user to input any name, even one character
 		 * if everything is ok, close Login and open Menu
 		 * pass all names and scores information (dat) to Menu
-		 * need to add the max lenght flag to this!!! - done
+		 * max length of name is 20 characters
 		 */
 		if( e.getSource() == playB2 ) {
 			String name = txtF.getText(); //put name from txtF to a string
