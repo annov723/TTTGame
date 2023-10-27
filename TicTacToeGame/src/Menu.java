@@ -13,9 +13,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class Menu implements ActionListener, MouseListener{ //subclass so we can use save method here
+public class Menu implements ActionListener, MouseListener{
 	
 	Data list = new Data(); //create new Cata object and import dat.txt file
 	byte mode = 0;
@@ -23,10 +24,16 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 	
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
+	
 	JLabel  menuBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
+	JLabel  modeBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
+	JLabel  levelBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
 	JLabel  rankBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
-	JLabel  ninoBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
 	JLabel  classicBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
+	JLabel  ninoBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
+
+	
+	
 	JLabel titleL = new JLabel( "TTTGame" );
 	ImageIcon logoII = new ImageIcon( "icon.png" );
 	JLabel logoL;
@@ -83,6 +90,11 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		}
 		
 		frame.add( menu() );
+		frame.add( mode() );
+		frame.add( level() );
+		frame.add( ranking() );
+		frame.add( classic() );
+		frame.add( nino() );
 		
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); //no additional action is needed
 		frame.setSize( 750, 500 );
@@ -109,20 +121,18 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		/*classic button to start classic version of Tic Tac Toe game*/
 		if( e.getSource() == classicB2 ) {
 			menuBackL.setVisible( false );
-			classicBackL.setVisible( true );
-			frame.add( mode() );
+			modeBackL.setVisible( true );
 		}
 		/*9 in 1 button to start this version of game*/
 		if( e.getSource() == ninoB2 ) {
 			menuBackL.setVisible( false );
-			ninoBackL.setVisible( true );
-			frame.add( mode() );
+			modeBackL.setVisible( true );
 		}
 		/*ranking button to open ranking view*/
 		if( e.getSource() == rankB2 ) {
 			menuBackL.setVisible( false );
 			rankBackL.setVisible( true );
-			frame.add( ranking() );
+			
 		}
 		/*exit button clicked closes window, saves data and closes whole program*/
 		if( e.getSource() == exitB2 ) {
@@ -136,11 +146,50 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 			if( rankBackL.isVisible() ) {
 				rankBackL.setVisible( false );
 				menuBackL.setVisible( true );
-				frame.add( menu() );
 			}
-			else if( )
+			else if( ninoBackL.isVisible() || classicBackL.isVisible() ) {
+				 int result = JOptionPane.showConfirmDialog( frame, "Are you sure you want to go back to menu? ", "Your progress will be lost.", JOptionPane.YES_NO_OPTION );
+	             if ( result == JOptionPane.YES_OPTION ) {
+	            	 ninoBackL.setVisible( false );
+	            	 classicBackL.setVisible( false );
+	            	 menuBackL.setVisible( true );
+	             }
+			}
 			
         }
+		
+		if( e.getSource() == singleB2 ) {
+			mode = 1;
+			modeBackL.setVisible( false );
+			levelBackL.setVisible( true );
+		}
+		if( e.getSource() == twoB2 ) {
+			mode = 2;
+			modeBackL.setVisible( false );
+			levelBackL.setVisible( true );
+		}
+		
+		if( e.getSource() == easyB2 ) {
+			level = 1;
+			levelBackL.setVisible( false );
+			if( mode == 1 ) classicBackL.setVisible( true );
+			else if( mode == 2 ) ninoBackL.setVisible( true );
+			else menuBackL.setVisible( true ); //an error occured...
+		}
+		if( e.getSource() == mediumB2 ) {
+			level = 2;
+			levelBackL.setVisible( false );
+			if( mode == 1 ) classicBackL.setVisible( true );
+			else if( mode == 2 ) ninoBackL.setVisible( true );
+			else menuBackL.setVisible( true );
+		}
+		if( e.getSource() == hardB2 ) {
+			level = 3;
+			levelBackL.setVisible( false );
+			if( mode == 1 ) classicBackL.setVisible( true );
+			else if( mode == 2 ) ninoBackL.setVisible( true );
+			else menuBackL.setVisible( true );
+		}
 		
 	}
 
@@ -392,6 +441,7 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		
 		menuBackL.setLayout( null );
 		menuBackL.setBounds( 0, 0, 750, 500 );
+		menuBackL.setVisible( true );
 		
 		return( menuBackL );
 	}
@@ -403,7 +453,7 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		Image singleAfter = singleBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		singleII = new ImageIcon( singleAfter );
 		singleB = new JButton( singleII );
-		singleB.setBounds( 100, 160, 176, 60 );
+		singleB.setBounds( 280, 165, 176, 60 );
 		singleB.setContentAreaFilled( false );
 		singleB.setFocusable( false );
 		singleB.setBorder( null );
@@ -412,7 +462,7 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		Image singleAfter2 = singleBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		singleII2 = new ImageIcon( singleAfter2 );
 		singleB2 = new JButton( singleII2 );
-		singleB2.setBounds( 100, 160, 176, 60 );
+		singleB2.setBounds( 280, 165, 176, 60 );
 		singleB2.setContentAreaFilled( false );
 		singleB2.setFocusable( false );
 		singleB2.setBorder( null );
@@ -427,7 +477,7 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		Image twoAfter = twoBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		twoII = new ImageIcon( twoAfter );
 		twoB = new JButton( twoII );
-		twoB.setBounds( 100, 160, 176, 60 );
+		twoB.setBounds( 280, 245, 176, 60 );
 		twoB.setContentAreaFilled( false );
 		twoB.setFocusable( false );
 		twoB.setBorder( null );
@@ -436,7 +486,7 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		Image twoAfter2 = twoBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		twoII2 = new ImageIcon( twoAfter2 );
 		twoB2 = new JButton( twoII2 );
-		twoB2.setBounds( 100, 160, 176, 60 );
+		twoB2.setBounds( 280, 245, 176, 60 );
 		twoB2.setContentAreaFilled( false );
 		twoB2.setFocusable( false );
 		twoB2.setBorder( null );
@@ -448,30 +498,27 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		
 		
 		
-		menuBackL.add( classicB );
-		menuBackL.add( classicB2 );
-		menuBackL.add( ninoB );
-		menuBackL.add( ninoB2 );
-		menuBackL.add( rankB );
-		menuBackL.add( rankB2 );
+		modeBackL.add( singleB );
+		modeBackL.add( singleB2 );
+		modeBackL.add( twoB );
+		modeBackL.add( twoB2 );
 		
-		menuBackL.setLayout( null );
-		menuBackL.setBounds( 0, 0, 750, 500 );
+		modeBackL.setLayout( null );
+		modeBackL.setBounds( 0, 0, 750, 500 );
+		modeBackL.setVisible( false );
 		
-		return( menuBackL );
-		
-		
+		return( modeBackL );
 		
 	}
 	
 	JLabel level() {
 		
-		/*easy mode button*/
+		/*easy level button*/
 		Image easyBefore = easyII.getImage();
 		Image easyAfter = easyBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		easyII = new ImageIcon( easyAfter );
 		easyB = new JButton( easyII );
-		easyB.setBounds( 100, 160, 176, 60 );
+		easyB.setBounds( 280, 120, 176, 60 );
 		easyB.setContentAreaFilled( false );
 		easyB.setFocusable( false );
 		easyB.setBorder( null );
@@ -480,7 +527,7 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		Image easyAfter2 = easyBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		easyII2 = new ImageIcon( easyAfter2 );
 		easyB2 = new JButton( easyII2 );
-		easyB2.setBounds( 100, 160, 176, 60 );
+		easyB2.setBounds( 280, 120, 176, 60 );
 		easyB2.setContentAreaFilled( false );
 		easyB2.setFocusable( false );
 		easyB2.setBorder( null );
@@ -490,12 +537,12 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		easyB.addMouseListener( this );
 		easyB2.addMouseListener( this );
 		
-		/*medium mode button*/
+		/*medium level button*/
 		Image mediumBefore = mediumII.getImage();
 		Image mediumAfter = mediumBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		mediumII = new ImageIcon( mediumAfter );
 		mediumB = new JButton( mediumII );
-		mediumB.setBounds( 100, 160, 176, 60 );
+		mediumB.setBounds( 280, 200, 176, 60 );
 		mediumB.setContentAreaFilled( false );
 		mediumB.setFocusable( false );
 		mediumB.setBorder( null );
@@ -504,7 +551,7 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		Image mediumAfter2 = mediumBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		mediumII2 = new ImageIcon( mediumAfter2 );
 		mediumB2 = new JButton( mediumII2 );
-		mediumB2.setBounds( 100, 160, 176, 60 );
+		mediumB2.setBounds( 280, 200, 176, 60 );
 		mediumB2.setContentAreaFilled( false );
 		mediumB2.setFocusable( false );
 		mediumB2.setBorder( null );
@@ -514,12 +561,12 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		mediumB.addMouseListener( this );
 		mediumB2.addMouseListener( this );
 		
-		/*hard mode button*/
+		/*hard level button*/
 		Image hardBefore = hardII.getImage();
 		Image hardAfter = hardBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		hardII = new ImageIcon( hardAfter );
 		hardB = new JButton( hardII );
-		hardB.setBounds( 100, 160, 176, 60 );
+		hardB.setBounds( 280, 280, 176, 60 );
 		hardB.setContentAreaFilled( false );
 		hardB.setFocusable( false );
 		hardB.setBorder( null );
@@ -528,7 +575,7 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		Image hardAfter2 = hardBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		hardII2 = new ImageIcon( hardAfter2 );
 		hardB2 = new JButton( hardII2 );
-		hardB2.setBounds( 100, 160, 176, 60 );
+		hardB2.setBounds( 280, 280, 176, 60 );
 		hardB2.setContentAreaFilled( false );
 		hardB2.setFocusable( false );
 		hardB2.setBorder( null );
@@ -540,23 +587,27 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		
 		
 		
-		menuBackL.add( classicB );
-		menuBackL.add( classicB2 );
-		menuBackL.add( ninoB );
-		menuBackL.add( ninoB2 );
-		menuBackL.add( rankB );
-		menuBackL.add( rankB2 );
+		levelBackL.add( easyB );
+		levelBackL.add( easyB2 );
+		levelBackL.add( mediumB );
+		levelBackL.add( mediumB2 );
+		levelBackL.add( hardB );
+		levelBackL.add( hardB2 );
 		
-		menuBackL.setLayout( null );
-		menuBackL.setBounds( 0, 0, 750, 500 );
+		levelBackL.setLayout( null );
+		levelBackL.setBounds( 0, 0, 750, 500 );
+		levelBackL.setVisible( false );
 		
-		return( menuBackL );
+		return( levelBackL );
 		
 	}
 	
 	JLabel ranking() {
 		
-		/*back mode button*/
+		/*ranking board*/
+		
+		
+		/*back button*/
 		Image backBefore = backII.getImage();
 		Image backAfter = backBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		backII = new ImageIcon( backAfter );
@@ -582,13 +633,92 @@ public class Menu implements ActionListener, MouseListener{ //subclass so we can
 		
 		
 		
-		menuBackL.add( backB );
-		menuBackL.add( backB2 );
+		rankBackL.add( backB );
+		rankBackL.add( backB2 );
 		
-		menuBackL.setLayout( null );
-		menuBackL.setBounds( 0, 0, 750, 500 );
+		rankBackL.setLayout( null );
+		rankBackL.setBounds( 0, 0, 750, 500 );
+		rankBackL.setVisible( false );
 		
-		return( menuBackL );
+		return( rankBackL );
+		
+	}
+	
+	JLabel classic() {
+		
+		/*back button*/
+		Image backBefore = backII.getImage();
+		Image backAfter = backBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		backII = new ImageIcon( backAfter );
+		backB = new JButton( backII );
+		backB.setBounds( 525, 380, 176, 60 );
+		backB.setContentAreaFilled( false );
+		backB.setFocusable( false );
+		backB.setBorder( null );
+		
+		Image backBefore2 = backII2.getImage();
+		Image backAfter2 = backBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		backII2 = new ImageIcon( backAfter2 );
+		backB2 = new JButton( backII2 );
+		backB2.setBounds( 525, 380, 176, 60 );
+		backB2.setContentAreaFilled( false );
+		backB2.setFocusable( false );
+		backB2.setBorder( null );
+		backB2.setVisible( false );
+		
+		backB2.addActionListener( this );
+		backB.addMouseListener( this );
+		backB2.addMouseListener( this );
+		
+		
+		
+		classicBackL.add( backB );
+		classicBackL.add( backB2 );
+		
+		classicBackL.setLayout( null );
+		classicBackL.setBounds( 0, 0, 750, 500 );
+		classicBackL.setVisible( false );
+		
+		return( classicBackL );
+		
+	}
+	
+	JLabel nino() {
+		
+		/*back button*/
+		Image backBefore = backII.getImage();
+		Image backAfter = backBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		backII = new ImageIcon( backAfter );
+		backB = new JButton( backII );
+		backB.setBounds( 525, 380, 176, 60 );
+		backB.setContentAreaFilled( false );
+		backB.setFocusable( false );
+		backB.setBorder( null );
+		
+		Image backBefore2 = backII2.getImage();
+		Image backAfter2 = backBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		backII2 = new ImageIcon( backAfter2 );
+		backB2 = new JButton( backII2 );
+		backB2.setBounds( 525, 380, 176, 60 );
+		backB2.setContentAreaFilled( false );
+		backB2.setFocusable( false );
+		backB2.setBorder( null );
+		backB2.setVisible( false );
+		
+		backB2.addActionListener( this );
+		backB.addMouseListener( this );
+		backB2.addMouseListener( this );
+		
+		
+		
+		ninoBackL.add( backB );
+		ninoBackL.add( backB2 );
+		
+		ninoBackL.setLayout( null );
+		ninoBackL.setBounds( 0, 0, 750, 500 );
+		ninoBackL.setVisible( false );
+		
+		return( ninoBackL );
 		
 	}
 	

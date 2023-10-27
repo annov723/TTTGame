@@ -1,12 +1,13 @@
-dfs:0
+A:0
 jhyn:0
-Bartus:1500
 dfg:0
-sdf:0
 Loki:450
 helloo:0
+Maja:0
+dfs:0
+Bartus:1500
+sdf:0
 troll666:200
 wef:0
 Ania:500
 falafel:0
-Maja:0
