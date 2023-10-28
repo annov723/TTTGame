@@ -25,8 +25,9 @@ import javax.swing.JTextField;
 public class Menu implements ActionListener, MouseListener{
 	
 	Data list = new Data(); //create new Cata object and import dat.txt file
-	byte mode = 0;
-	byte level = 0;
+	byte game = 0; //1 - classic, 2 - 9 in 1
+	byte mode = 0; //1 - single, 2 - two
+	byte level = 0; //1 - easy, 2 - medium, 3 - hard
 	
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
@@ -127,11 +128,13 @@ public class Menu implements ActionListener, MouseListener{
 	public void actionPerformed( ActionEvent e ) {
 		/*classic button to start classic version of Tic Tac Toe game*/
 		if( e.getSource() == classicB2 ) {
+			game = 1;
 			menuBackL.setVisible( false );
 			modeBackL.setVisible( true );
 		}
 		/*9 in 1 button to start this version of game*/
 		if( e.getSource() == ninoB2 ) {
+			game = 2;
 			menuBackL.setVisible( false );
 			modeBackL.setVisible( true );
 		}
@@ -159,40 +162,79 @@ public class Menu implements ActionListener, MouseListener{
             	ninoBackL.setVisible( false );
             	classicBackL.setVisible( false );
             	menuBackL.setVisible( true );
+            	game = mode = level = 0;
             }
 		}
-		
+		 /*single player mode chosen so user has to choose the game level now*/
 		if( e.getSource() == singleB2 ) {
 			mode = 1;
 			modeBackL.setVisible( false );
 			levelBackL.setVisible( true );
 		}
+		/*two player mode chosen so it's time to start the game*/
 		if( e.getSource() == twoB2 ) {
 			mode = 2;
 			modeBackL.setVisible( false );
-			levelBackL.setVisible( true );
+			
+			if( game == 1 ) {
+				classicBackL.setVisible( true );
+			}
+			else if( game == 2 ) {
+				ninoBackL.setVisible( true );
+			}
+			else {
+				game = mode = level = 0;
+				menuBackL.setVisible( true );
+			}
 		}
 		
+		/*easy level chosen so it's time to start the game, we are sure that the mode is single*/
 		if( e.getSource() == easyB2 ) {
 			level = 1;
 			levelBackL.setVisible( false );
-			if( mode == 1 ) classicBackL.setVisible( true );
-			else if( mode == 2 ) ninoBackL.setVisible( true );
-			else menuBackL.setVisible( true ); //an error occured...
+
+			if( game == 1 ) {
+				classicBackL.setVisible( true );
+			}
+			else if( game == 2 ) {
+				ninoBackL.setVisible( true );
+			}
+			else {
+				game = mode = level = 0;
+				menuBackL.setVisible( true );
+			}
 		}
+		/*medium level chosen so it's time to start the game, we are sure that the mode is single*/
 		if( e.getSource() == mediumB2 ) {
 			level = 2;
 			levelBackL.setVisible( false );
-			if( mode == 1 ) classicBackL.setVisible( true );
-			else if( mode == 2 ) ninoBackL.setVisible( true );
-			else menuBackL.setVisible( true );
+
+			if( game == 1 ) {
+				classicBackL.setVisible( true );
+			}
+			else if( game == 2 ) {
+				ninoBackL.setVisible( true );
+			}
+			else {
+				game = mode = level = 0;
+				menuBackL.setVisible( true );
+			}
 		}
+		/*hard level chosen so it's time to start the game, we are sure that the mode is single*/
 		if( e.getSource() == hardB2 ) {
 			level = 3;
 			levelBackL.setVisible( false );
-			if( mode == 1 ) classicBackL.setVisible( true );
-			else if( mode == 2 ) ninoBackL.setVisible( true );
-			else menuBackL.setVisible( true );
+
+			if( game == 1 ) {
+				classicBackL.setVisible( true );
+			}
+			else if( game == 2 ) {
+				ninoBackL.setVisible( true );
+			}
+			else {
+				game = mode = level = 0;
+				menuBackL.setVisible( true );
+			}
 		}
 		
 	}
