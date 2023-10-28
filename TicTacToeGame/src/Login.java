@@ -122,7 +122,7 @@ public class Login implements ActionListener, MouseListener{
 			}
 			else if( a == -1 ) {
 				frame.dispose(); //Login window disappears	
-				Menu start = new Menu( name ); //Menu opens
+				Menu menu = new Menu( name ); //Menu opens
 			}
 			else {
 				wrongL.setText( "forbidden character \":\"" );
@@ -132,6 +132,8 @@ public class Login implements ActionListener, MouseListener{
 		}
 	}
 
+	
+	
 	@Override
 	public void mouseEntered( MouseEvent e ) {
 		if( e.getSource() == playB ) {

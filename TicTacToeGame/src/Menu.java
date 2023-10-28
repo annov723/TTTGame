@@ -26,8 +26,7 @@ public class Menu implements ActionListener, MouseListener{
 	
 	Data list = new Data(); //create new Cata object and import dat.txt file
 	byte game = 0; //1 - classic, 2 - 9 in 1
-	byte mode = 0; //1 - single, 2 - two
-	byte level = 0; //1 - easy, 2 - medium, 3 - hard
+	String name;
 	
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
@@ -89,7 +88,9 @@ public class Menu implements ActionListener, MouseListener{
 	
 	
 	
-	Menu( String name ){
+	Menu( String player ){
+		
+		name = player;
 		
 		if( !list.dat.containsKey( name ) ) {
 			list.dat.put( name, 0 );
@@ -162,79 +163,96 @@ public class Menu implements ActionListener, MouseListener{
             	ninoBackL.setVisible( false );
             	classicBackL.setVisible( false );
             	menuBackL.setVisible( true );
-            	game = mode = level = 0;
+            	game = 0;
             }
 		}
 		 /*single player mode chosen so user has to choose the game level now*/
 		if( e.getSource() == singleB2 ) {
-			mode = 1;
 			modeBackL.setVisible( false );
 			levelBackL.setVisible( true );
 		}
 		/*two player mode chosen so it's time to start the game*/
 		if( e.getSource() == twoB2 ) {
-			mode = 2;
 			modeBackL.setVisible( false );
 			
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
+				Classic round = new Classic();
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
+				Nino round = new Nino();
 			}
-			else {
-				game = mode = level = 0;
-				menuBackL.setVisible( true );
-			}
+			
+			game = 0;
+			menuBackL.setVisible( true );
 		}
 		
 		/*easy level chosen so it's time to start the game, we are sure that the mode is single*/
 		if( e.getSource() == easyB2 ) {
-			level = 1;
 			levelBackL.setVisible( false );
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
+				Classic round = new Classic( 1 );
+				int points = list.dat.get( name );
+				points = points + round.score();
+				list.dat.put( name, points );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
+				Nino round = new Nino( 1 );
+				int points = list.dat.get( name );
+				points = points + round.score();
+				list.dat.put( name, points );
 			}
-			else {
-				game = mode = level = 0;
-				menuBackL.setVisible( true );
-			}
+
+			game = 0;
+			menuBackL.setVisible( true );
 		}
 		/*medium level chosen so it's time to start the game, we are sure that the mode is single*/
 		if( e.getSource() == mediumB2 ) {
-			level = 2;
 			levelBackL.setVisible( false );
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
+				Classic round = new Classic( 2 );
+				int points = list.dat.get( name );
+				points = points + round.score();
+				list.dat.put( name, points );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
+				Nino round = new Nino( 2 );
+				int points = list.dat.get( name );
+				points = points + round.score();
+				list.dat.put( name, points );
 			}
-			else {
-				game = mode = level = 0;
-				menuBackL.setVisible( true );
-			}
+			
+			game = 0;
+			menuBackL.setVisible( true );
 		}
 		/*hard level chosen so it's time to start the game, we are sure that the mode is single*/
 		if( e.getSource() == hardB2 ) {
-			level = 3;
 			levelBackL.setVisible( false );
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
+				Classic round = new Classic( 3 );
+				int points = list.dat.get( name );
+				points = points + round.score();
+				list.dat.put( name, points );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
+				Nino round = new Nino( 3 );
+				int points = list.dat.get( name );
+				points = points + round.score();
+				list.dat.put( name, points );
 			}
-			else {
-				game = mode = level = 0;
-				menuBackL.setVisible( true );
-			}
+			
+			game = 0;
+			menuBackL.setVisible( true );
 		}
 		
 	}
