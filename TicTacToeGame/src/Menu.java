@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +8,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -622,10 +628,20 @@ public class Menu implements ActionListener, MouseListener{
 	
 	JLabel ranking() {
 		
-		/*ranking board*/
-		JLabel rankL = new JLabel();
+		int num = list.dat.size();
+		
+		/*ranking board*/				
+		JLabel rankL = new JLabel( new ImageIcon( "backrank.png" ) );
 		rankL.setLayout( null );
-		rankL.setBounds( 20, 20, 480, 450);
+		rankL.setBounds( 20, 20, 480, 420 );
+		
+		JLabel pointsL = new JLabel();
+		pointsL.setLayout( null );
+		pointsL.setBounds( 420, 20, 80, 420 );
+		
+		JLabel numL = new JLabel();
+		numL.setLayout( null );
+		numL.setBounds( 45, 20, 40, 420 );
 		
 		/*back button - used in ranking, classic and 9 in 1 JLabel*/
 		Image backBefore = backII.getImage();
@@ -651,10 +667,44 @@ public class Menu implements ActionListener, MouseListener{
 		backRankB.addMouseListener( this );
 		backRankB2.addMouseListener( this );
 		
+		/*print ranking*/
+		List<Map.Entry<String, Integer>> sorted = new ArrayList<>( list.dat.entrySet() );
+		Collections.sort( sorted, ( entry1, entry2 ) -> entry2.getValue().compareTo( entry1.getValue() ) );
 		
+		JLabel[] names = new JLabel[num];
+		JLabel[] scores = new JLabel[num];
+		JLabel[] nums = new JLabel[num];
+		
+		int counter = 0;
+		for ( Map.Entry<String, Integer> entry : sorted ) {
+			nums[counter] = new JLabel( Integer.toString( counter + 1 ) + "." );
+	    	names[counter] = new JLabel( entry.getKey() );
+	    	scores[counter] = new JLabel( Integer.toString( entry.getValue() ) );
+	    	counter++;
+		}
+		
+		for( int i = 0; i < num; i++ ) {
+			if( 40 + ( i * 35 ) >= 420 ) break;
+			nums[i].setBounds( 25, 20 + ( i * 35 ), 40, 35 );
+			nums[i].setFont( new Font( "Calibri", Font.BOLD, 25 ) );
+			nums[i].setForeground( new Color( 27, 213, 213 ) );
+			rankL.add( nums[i] );
+			names[i].setBounds( 65, 20 + ( i * 35 ), 355, 35 );
+			names[i].setFont( new Font( "Calibri", Font.BOLD, 25 ) );
+			names[i].setForeground( new Color( 27, 213, 213 ) );
+			rankL.add( names[i] );
+			scores[i].setBounds( 0, 20 + ( i * 35 ), 80, 35 );
+			scores[i].setFont( new Font( "Calibri", Font.BOLD, 25 ) );
+			scores[i].setForeground( new Color( 27, 213, 213 ) );
+			pointsL.add( scores[i] );
+		}
 		
 		rankBackL.add( backRankB );
 		rankBackL.add( backRankB2 );
+		rankBackL.add(  pointsL );
+		rankBackL.add(  rankL );
+		
+		
 		
 		rankBackL.setLayout( null );
 		rankBackL.setBounds( 0, 0, 750, 500 );
