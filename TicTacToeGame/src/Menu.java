@@ -85,12 +85,15 @@ public class Menu implements ActionListener, MouseListener{
 	JButton backNinoB;
 	JButton backNinoB2;
 	
-	JButton[] squareB = new JButton[9];
-	JLabel buttonL = new JLabel( new ImageIcon( "tttboard.png" ) );
-	JLabel classicL = new JLabel();
-	JLabel moveL = new JLabel();
+	JButton[] xoclassicB = new JButton[9];
+	JButton[] xoninoB = new JButton[9];
+	JLabel xobuttonCL = new JLabel( new ImageIcon( "tttboard.png" ) );
+	JLabel xobuttonNL = new JLabel( new ImageIcon( "tttboard.png" ) );
+	JLabel moveCL = new JLabel( "move\n" );
+	JLabel moveNL = new JLabel( "move\n" );
 	
-	boolean Xturn;
+	boolean Xturn; //check whose move is now
+	int score = 0; //count the player score
 	
 	
 	
@@ -111,7 +114,8 @@ public class Menu implements ActionListener, MouseListener{
 		frame.add( classic() );
 		frame.add( nino() );
 		
-		for( int i = 0; i < 9; i++ ) squareB[i] = new JButton();
+		for( int i = 0; i < 9; i++ ) xoclassicB[i] = new JButton();
+		for( int i = 0; i < 9; i++ ) xoninoB[i] = new JButton();
 		
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); //no additional action is needed
 		frame.setSize( 750, 500 );
@@ -172,6 +176,7 @@ public class Menu implements ActionListener, MouseListener{
             	classicBackL.setVisible( false );
             	menuBackL.setVisible( true );
             	game = 0;
+            	score = 0;
             }
 		}
 		 /*single player mode chosen so user has to choose the game level now*/
@@ -185,14 +190,15 @@ public class Menu implements ActionListener, MouseListener{
 			
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				//
+				classic_game( 0 );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
-				//
+				nino_game( 0 );
 			}
 			
 			game = 0;
+			score = 0;
 			menuBackL.setVisible( true );
 		}
 		
@@ -202,20 +208,21 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				//
-				int points = list.dat.get( name );
+				classic_game( 1 );
 				
-				list.dat.put( name, points );
+				score = score + list.dat.get( name );
+				list.dat.put( name, score );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
-				//
-				int points = list.dat.get( name );
+				nino_game( 1 );
 				
-				list.dat.put( name, points );
+				score = score + list.dat.get( name );
+				list.dat.put( name, score );
 			}
 
 			game = 0;
+			score = 0;
 			menuBackL.setVisible( true );
 		}
 		/*medium level chosen so it's time to start the game, we are sure that the mode is single*/
@@ -224,20 +231,21 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				//
-				int points = list.dat.get( name );
+				classic_game( 2 );
 				
-				list.dat.put( name, points );
+				score = score + list.dat.get( name );
+				list.dat.put( name, score );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
-				//
-				int points = list.dat.get( name );
+				nino_game( 2 );
 				
-				list.dat.put( name, points );
+				score = score + list.dat.get( name );
+				list.dat.put( name, score );
 			}
 			
 			game = 0;
+			score = 0;
 			menuBackL.setVisible( true );
 		}
 		/*hard level chosen so it's time to start the game, we are sure that the mode is single*/
@@ -246,20 +254,21 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				//
-				int points = list.dat.get( name );
+				classic_game( 3 );
 				
-				list.dat.put( name, points );
+				score = score + list.dat.get( name );
+				list.dat.put( name, score );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
-				//
-				int points = list.dat.get( name );
+				nino_game( 3 );
 				
-				list.dat.put( name, points );
+				score = score + list.dat.get( name );
+				list.dat.put( name, score );
 			}
 			
 			game = 0;
+			score = 0;
 			menuBackL.setVisible( true );
 		}
 		
@@ -808,12 +817,11 @@ public class Menu implements ActionListener, MouseListener{
 		backClassicB.addMouseListener( this );
 		backClassicB2.addMouseListener( this );
 		
-		buttonL.setLayout( null );
-		buttonL.setBounds( 40, 20, 420, 420 );
-		buttonL.setBackground( new Color( 0, 0, 0, 0 ) ); //transparent background
+		xobuttonCL.setLayout( null );
+		xobuttonCL.setBounds( 20, 20, 420, 420 );
 		
 		for( int i = 0; i < 9; i++ ) {
-			squareB[i].setFont( new Font( "Ink Free", Font.BOLD, 120 ) );
+			squareB[i].setFont( new Font( "Ink Free", Font.BOLD, 120 ) ); //Comic Sans, Forte, MV Boli, Segoe UI Black
 			squareB[i].setContentAreaFilled( false );
 			squareB[i].setFocusable( false );
 			squareB[i].setBorder( null );
