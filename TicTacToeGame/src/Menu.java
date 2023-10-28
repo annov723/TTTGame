@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,23 +9,23 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 public class Menu implements ActionListener, MouseListener{
 	
 	Data list = new Data(); //create new Cata object and import dat.txt file
 	byte game = 0; //1 - classic, 2 - 9 in 1
 	String name;
+	
+	Random random  = new Random();
 	
 	JFrame frame = new JFrame( "TTTGame" );
 	ImageIcon icon = new ImageIcon( "icon.png" );
@@ -86,6 +85,13 @@ public class Menu implements ActionListener, MouseListener{
 	JButton backNinoB;
 	JButton backNinoB2;
 	
+	JButton[] squareB = new JButton[9];
+	JLabel buttonL = new JLabel( new ImageIcon( "tttboard.png" ) );
+	JLabel classicL = new JLabel();
+	JLabel moveL = new JLabel();
+	
+	boolean Xturn;
+	
 	
 	
 	Menu( String player ){
@@ -104,6 +110,8 @@ public class Menu implements ActionListener, MouseListener{
 		frame.add( ranking() );
 		frame.add( classic() );
 		frame.add( nino() );
+		
+		for( int i = 0; i < 9; i++ ) squareB[i] = new JButton();
 		
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); //no additional action is needed
 		frame.setSize( 750, 500 );
@@ -177,11 +185,11 @@ public class Menu implements ActionListener, MouseListener{
 			
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				Classic round = new Classic();
+				//
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
-				Nino round = new Nino();
+				//
 			}
 			
 			game = 0;
@@ -194,7 +202,7 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				Classic round = new Classic( 1 );
+				//
 				int points = list.dat.get( name );
 				points = points + round.score();
 				list.dat.put( name, points );
@@ -216,7 +224,7 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				Classic round = new Classic( 2 );
+				Classic round = new Classic( frame, 2 );
 				int points = list.dat.get( name );
 				points = points + round.score();
 				list.dat.put( name, points );
@@ -238,7 +246,7 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				Classic round = new Classic( 3 );
+				Classic round = new Classic( frame, 3 );
 				int points = list.dat.get( name );
 				points = points + round.score();
 				list.dat.put( name, points );
@@ -800,6 +808,28 @@ public class Menu implements ActionListener, MouseListener{
 		backClassicB.addMouseListener( this );
 		backClassicB2.addMouseListener( this );
 		
+		buttonL.setLayout( null );
+		buttonL.setBounds( 40, 20, 420, 420 );
+		buttonL.setBackground( new Color( 0, 0, 0, 0 ) ); //transparent background
+		
+		for( int i = 0; i < 9; i++ ) {
+			squareB[i].setFont( new Font( "Ink Free", Font.BOLD, 120 ) );
+			squareB[i].setContentAreaFilled( false );
+			squareB[i].setFocusable( false );
+			squareB[i].setBorder( null );
+			squareB[i].setBounds( 40 + ( 140 * ( i % 3 ) ), 20 + ( 140 * Integer.valueOf( i / 3 ) ), 140, 140 );
+			squareB[i].addActionListener( this );
+			
+			buttonL.add( squareB[i] );
+		}
+		
+		moveL.setBounds( 470, 80, 240, 55 );
+		moveL.setFont( new Font( "Calibri", Font.BOLD, 45 ) );
+		moveL.setForeground( Color.white );
+		
+		classicL.add( moveL );
+		classicL.add( buttonL );
+		
 		
 		
 		classicBackL.add( backClassicB );
@@ -851,5 +881,69 @@ public class Menu implements ActionListener, MouseListener{
 		return( ninoBackL );
 		
 	}
+	
+	
+	
+	void begin() {
+		if( random.nextInt( 2 ) == 0 ) {
+			Xturn = true;
+			moveL.setText( "X turn" );
+		}
+		else {
+			Xturn = false;
+			moveL.setText( "O turn" );			
+		}
+	}
+	
+	public boolean check() {
+		for( int i = 0; i < 3; i++ ) {
+			if( squareB[0 + ( i * 3 )].getText() != "" && squareB[0 + ( i * 3 )].getText() == squareB[1 + ( i * 3 )].getText() && squareB[1 + ( i * 3 )].getText() == squareB[2 + ( i * 3 )].getText() ) { //rows
+				if( squareB[0 + ( i * 3 )].getText() == "X" ) xwin( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
+				else owin( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
+				return true;
+			}
+			
+			if( squareB[0 + i].getText() != "" && squareB[0 + i].getText() == squareB[3 + i].getText() && squareB[3 + i].getText() == squareB[6 + i].getText() ) { //columns
+				if( squareB[0 + i].getText() == "X" ) xwin( 0 + i, 3 + i, 6 + i );
+				else owin( 0 + i, 3 + i, 6 + i );
+				return true;
+			}
+		}
+		if( squareB[0].getText() != "" && squareB[0].getText() == squareB[4].getText() && squareB[4].getText() == squareB[8].getText() ) { //diagonals
+			if( squareB[0].getText() == "X" ) xwin( 0, 4, 8 );
+			else owin( 0, 4, 8 );
+			return true;
+		}
+		if( squareB[2].getText() != "" && squareB[2].getText() == squareB[4].getText() && squareB[4].getText() == squareB[6].getText() ) { //diagonals
+			if( squareB[2].getText() == "X" ) xwin( 2, 4, 6 );
+			else owin( 2, 4, 6 );
+			return true;
+		}
+		return false;
+	}
+	
+	public void xwin( int a, int b, int c) {
+		squareB[a].setBackground(new Color( 0, 255, 0 ) );
+		squareB[b].setBackground(new Color( 0, 255, 0 ) );
+		squareB[c].setBackground(new Color( 0, 255, 0 ) );
+		
+		for( int i = 0; i < 9; i++ ) {
+			squareB[i].setEnabled( false );
+		}
+		//pop up window for winner and go back to menu
+	}
+	
+	public void owin( int a, int b, int c) {
+		squareB[a].setBackground(new Color( 0, 255, 0 ) );
+		squareB[b].setBackground(new Color( 0, 255, 0 ) );
+		squareB[c].setBackground(new Color( 0, 255, 0 ) );
+		
+		for( int i = 0; i < 9; i++ ) {
+			squareB[i].setEnabled( false );
+		}
+		//pop up window for winner and go back to menu
+		
+	}
+	
 	
 }
