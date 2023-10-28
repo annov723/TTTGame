@@ -204,14 +204,14 @@ public class Menu implements ActionListener, MouseListener{
 				classicBackL.setVisible( true );
 				//
 				int points = list.dat.get( name );
-				points = points + round.score();
+				
 				list.dat.put( name, points );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
-				Nino round = new Nino( 1 );
+				//
 				int points = list.dat.get( name );
-				points = points + round.score();
+				
 				list.dat.put( name, points );
 			}
 
@@ -224,16 +224,16 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				Classic round = new Classic( frame, 2 );
+				//
 				int points = list.dat.get( name );
-				points = points + round.score();
+				
 				list.dat.put( name, points );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
-				Nino round = new Nino( 2 );
+				//
 				int points = list.dat.get( name );
-				points = points + round.score();
+				
 				list.dat.put( name, points );
 			}
 			
@@ -246,16 +246,16 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				classicBackL.setVisible( true );
-				Classic round = new Classic( frame, 3 );
+				//
 				int points = list.dat.get( name );
-				points = points + round.score();
+				
 				list.dat.put( name, points );
 			}
 			else if( game == 2 ) {
 				ninoBackL.setVisible( true );
-				Nino round = new Nino( 3 );
+				//
 				int points = list.dat.get( name );
-				points = points + round.score();
+				
 				list.dat.put( name, points );
 			}
 			
