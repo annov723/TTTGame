@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 public class Menu implements ActionListener, MouseListener{
 	
@@ -89,11 +90,16 @@ public class Menu implements ActionListener, MouseListener{
 	JButton[] xoninoB = new JButton[9];
 	JLabel xobuttonCL = new JLabel( new ImageIcon( "tttboard.png" ) );
 	JLabel xobuttonNL = new JLabel( new ImageIcon( "tttboard.png" ) );
-	JLabel moveCL = new JLabel( "move\n" );
-	JLabel moveNL = new JLabel( "move\n" );
+	JLabel moveCL = new JLabel();
+	JLabel moveNL = new JLabel();
+	JLabel whotitCL = new JLabel( "turn" );
+	JLabel whotitNL = new JLabel( "turn" );
+	
+	JLabel scoreNL = new JLabel();
 	
 	boolean Xturn; //check whose move is now
 	int score = 0; //count the player score
+	String points = "score: ";
 	
 	
 	
@@ -114,8 +120,7 @@ public class Menu implements ActionListener, MouseListener{
 		frame.add( classic() );
 		frame.add( nino() );
 		
-		for( int i = 0; i < 9; i++ ) xoclassicB[i] = new JButton();
-		for( int i = 0; i < 9; i++ ) xoninoB[i] = new JButton();
+		
 		
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); //no additional action is needed
 		frame.setSize( 750, 500 );
@@ -188,92 +193,68 @@ public class Menu implements ActionListener, MouseListener{
 		if( e.getSource() == twoB2 ) {
 			modeBackL.setVisible( false );
 			
-			if( game == 1 ) {
-				classicBackL.setVisible( true );
-				classic_game( 0 );
+			if( game == 1 )	classic_game( 0 );
+			else if( game == 2 ) nino_game( 0 );
+			else {
+				ninoBackL.setVisible( false );
+            	classicBackL.setVisible( false );
+            	menuBackL.setVisible( true );
+            	game = 0;
+            	score = 0;
 			}
-			else if( game == 2 ) {
-				ninoBackL.setVisible( true );
-				nino_game( 0 );
-			}
-			
-			game = 0;
-			score = 0;
-			menuBackL.setVisible( true );
 		}
 		
 		/*easy level chosen so it's time to start the game, we are sure that the mode is single*/
 		if( e.getSource() == easyB2 ) {
 			levelBackL.setVisible( false );
 
-			if( game == 1 ) {
-				classicBackL.setVisible( true );
-				classic_game( 1 );
-				
-				score = score + list.dat.get( name );
-				list.dat.put( name, score );
+			if( game == 1 ) classic_game( 1 );
+			else if( game == 2 ) nino_game( 1 );
+			else {
+				ninoBackL.setVisible( false );
+            	classicBackL.setVisible( false );
+            	menuBackL.setVisible( true );
+            	game = 0;
+            	score = 0;
 			}
-			else if( game == 2 ) {
-				ninoBackL.setVisible( true );
-				nino_game( 1 );
-				
-				score = score + list.dat.get( name );
-				list.dat.put( name, score );
-			}
-
-			game = 0;
-			score = 0;
-			menuBackL.setVisible( true );
 		}
 		/*medium level chosen so it's time to start the game, we are sure that the mode is single*/
 		if( e.getSource() == mediumB2 ) {
 			levelBackL.setVisible( false );
 
-			if( game == 1 ) {
-				classicBackL.setVisible( true );
-				classic_game( 2 );
-				
-				score = score + list.dat.get( name );
-				list.dat.put( name, score );
+			if( game == 1 ) classic_game( 2 );
+			else if( game == 2 ) nino_game( 2 );
+			else{
+				ninoBackL.setVisible( false );
+            	classicBackL.setVisible( false );
+            	menuBackL.setVisible( true );
+            	game = 0;
+            	score = 0;
 			}
-			else if( game == 2 ) {
-				ninoBackL.setVisible( true );
-				nino_game( 2 );
-				
-				score = score + list.dat.get( name );
-				list.dat.put( name, score );
-			}
-			
-			game = 0;
-			score = 0;
-			menuBackL.setVisible( true );
 		}
 		/*hard level chosen so it's time to start the game, we are sure that the mode is single*/
 		if( e.getSource() == hardB2 ) {
 			levelBackL.setVisible( false );
 
-			if( game == 1 ) {
-				classicBackL.setVisible( true );
-				classic_game( 3 );
-				
-				score = score + list.dat.get( name );
-				list.dat.put( name, score );
+			if( game == 1 )	classic_game( 3 );
+			else if( game == 2 ) nino_game( 3 );
+			else {
+				ninoBackL.setVisible( false );
+            	classicBackL.setVisible( false );
+            	menuBackL.setVisible( true );
+            	game = 0;
+            	score = 0;
 			}
-			else if( game == 2 ) {
-				ninoBackL.setVisible( true );
-				nino_game( 3 );
-				
-				score = score + list.dat.get( name );
-				list.dat.put( name, score );
-			}
-			
-			game = 0;
-			score = 0;
-			menuBackL.setVisible( true );
 		}
+		
+		
+		
+		//xoclassicB[i].setOpaque(true); 
+		//xoclassicB[i].setBackground(new Color(0, 0, 0, 128));
 		
 	}
 
+	
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -281,17 +262,20 @@ public class Menu implements ActionListener, MouseListener{
 		
 	}
 
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -351,6 +335,7 @@ public class Menu implements ActionListener, MouseListener{
 		}
 		
 	}
+	
 
 	@Override
 	public void mouseExited(MouseEvent e) {
@@ -410,6 +395,7 @@ public class Menu implements ActionListener, MouseListener{
 		}
 		
 	}
+	
 
 	
 
@@ -547,6 +533,7 @@ public class Menu implements ActionListener, MouseListener{
 		return( menuBackL );
 	}
 	
+	
 	JLabel mode() {
 		
 		/*single mode button*/
@@ -611,6 +598,7 @@ public class Menu implements ActionListener, MouseListener{
 		return( modeBackL );
 		
 	}
+	
 	
 	JLabel level() {
 		
@@ -703,6 +691,7 @@ public class Menu implements ActionListener, MouseListener{
 		
 	}
 	
+	
 	JLabel ranking() {
 		
 		int num = list.dat.size();
@@ -791,6 +780,7 @@ public class Menu implements ActionListener, MouseListener{
 		
 	}
 	
+	
 	JLabel classic() {
 		
 		/*back button - used in ranking, classic and 9 in 1 JLabel*/
@@ -817,31 +807,37 @@ public class Menu implements ActionListener, MouseListener{
 		backClassicB.addMouseListener( this );
 		backClassicB2.addMouseListener( this );
 		
+		/*game buttons field*/
 		xobuttonCL.setLayout( null );
 		xobuttonCL.setBounds( 20, 20, 420, 420 );
 		
 		for( int i = 0; i < 9; i++ ) {
-			squareB[i].setFont( new Font( "Ink Free", Font.BOLD, 120 ) ); //Comic Sans, Forte, MV Boli, Segoe UI Black
-			squareB[i].setContentAreaFilled( false );
-			squareB[i].setFocusable( false );
-			squareB[i].setBorder( null );
-			squareB[i].setBounds( 40 + ( 140 * ( i % 3 ) ), 20 + ( 140 * Integer.valueOf( i / 3 ) ), 140, 140 );
-			squareB[i].addActionListener( this );
+			xoclassicB[i] = new JButton();
+			xoclassicB[i].setFont( new Font( "Ink Free", Font.BOLD, 90 ) ); //Comic Sans, Forte, MV Boli, Segoe UI Black
+			xoclassicB[i].setContentAreaFilled( false );
+			xoclassicB[i].setFocusable( false );
+			xoclassicB[i].setBorder( null );
+			xoclassicB[i].setBounds( 140 * ( i % 3 ) , 140 * Integer.valueOf( i / 3 ), 140, 140 );
+			xoclassicB[i].addActionListener( this );
 			
-			buttonL.add( squareB[i] );
+			xobuttonCL.add( xoclassicB[i] );
 		}
 		
-		moveL.setBounds( 470, 80, 240, 55 );
-		moveL.setFont( new Font( "Calibri", Font.BOLD, 45 ) );
-		moveL.setForeground( Color.white );
+		moveCL.setBounds( 470, 80, 240, 55 );
+		moveCL.setHorizontalAlignment( SwingConstants.CENTER );
+		moveCL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
+		moveCL.setForeground( Color.white );
 		
-		classicL.add( moveL );
-		classicL.add( buttonL );
-		
-		
+		whotitCL.setBounds( 470, 110, 240, 55 );
+		whotitCL.setHorizontalAlignment( SwingConstants.CENTER );
+		whotitCL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
+		whotitCL.setForeground( Color.white );
 		
 		classicBackL.add( backClassicB );
 		classicBackL.add( backClassicB2 );
+		classicBackL.add( xobuttonCL );
+		classicBackL.add( moveCL );
+		classicBackL.add( whotitCL );
 		
 		classicBackL.setLayout( null );
 		classicBackL.setBounds( 0, 0, 750, 500 );
@@ -877,10 +873,49 @@ public class Menu implements ActionListener, MouseListener{
 		backNinoB.addMouseListener( this );
 		backNinoB2.addMouseListener( this );
 		
+		/*game buttons field*/
+		xobuttonNL.setLayout( null );
+		xobuttonNL.setBounds( 20, 20, 420, 420 );
+		
+		for( int i = 0; i < 9; i++ ) {
+			xoninoB[i] = new JButton();
+			xoninoB[i].setFont( new Font( "Ink Free", Font.BOLD, 90 ) ); //Comic Sans, Forte, MV Boli, Segoe UI Black
+			xoninoB[i].setContentAreaFilled( false );
+			xoninoB[i].setFocusable( false );
+			xoninoB[i].setBorder( null );
+			xoninoB[i].setBounds( 140 * ( i % 3 ) , 140 * Integer.valueOf( i / 3 ), 140, 140 );
+			xoninoB[i].addActionListener( this );
+			
+			xobuttonNL.add( xoninoB[i] );
+		}
+		
+		/*whose turn label*/
+		moveNL.setBounds( 470, 80, 240, 55 );
+		moveNL.setHorizontalAlignment( SwingConstants.CENTER );
+		moveNL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
+		moveNL.setForeground( Color.white );
+		
+		/*whose turn title label*/
+		whotitNL.setBounds( 470, 110, 240, 55 );
+		whotitNL.setHorizontalAlignment( SwingConstants.CENTER );
+		whotitNL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
+		whotitNL.setForeground( Color.white );
+		
+		scoreNL.setBounds( 470, 200, 240, 35 );
+		scoreNL.setHorizontalAlignment( SwingConstants.CENTER );
+		scoreNL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
+		scoreNL.setForeground( Color.white );
+		scoreNL.setText( points + score );
+		scoreNL.setVisible( false );
+		
 		
 		
 		ninoBackL.add( backNinoB );
 		ninoBackL.add( backNinoB2 );
+		ninoBackL.add( xobuttonNL );
+		ninoBackL.add( moveNL );
+		ninoBackL.add( whotitNL );
+		ninoBackL.add( scoreNL );
 		
 		ninoBackL.setLayout( null );
 		ninoBackL.setBounds( 0, 0, 750, 500 );
@@ -892,66 +927,121 @@ public class Menu implements ActionListener, MouseListener{
 	
 	
 	
-	void begin() {
-		if( random.nextInt( 2 ) == 0 ) {
-			Xturn = true;
-			moveL.setText( "X turn" );
+	/**
+	 * @brief runs the classic game variant
+	 * 
+	 * @param mode - 0 for two players mode and 1, 2, 3 for single with different difficulty levels
+	 */
+	void classic_game( int mode ){
+		
+		classicBackL.setVisible( true );
+		begin( mode );
+		
+		
+		score = score + list.dat.get( name );
+		list.dat.put( name, score );
+		game = 0;
+		score = 0;
+		//menuBackL.setVisible( true );
+		
+	}
+	
+	/**
+	 * @brief runs the 9 in 1 game variant
+	 * 
+	 * @param mode - 0 for two players mode and 1, 2, 3 for single with different difficulty levels
+	 */
+	void nino_game( int mode ) {
+		
+		ninoBackL.setVisible( true );
+		begin( mode );
+		if( mode >= 1 ) scoreNL.setVisible( true );
+		
+		score = score + list.dat.get( name );
+		list.dat.put( name, score );
+		game = 0;
+		score = 0;
+		//menuBackL.setVisible( true );
+		
+	}
+	
+	/**
+	 * @brief decides who starts, and with which elem
+	 * 0 - X begins, 1 - O begins
+	 * 0 - the logged user begins, 1 - computer (1) or their friend (0) begins
+	 * 
+	 * @param mode - if the game is single or for two players 
+	 */
+	void begin( int mode ) {
+		if( random.nextInt( 2 ) == 0 ) Xturn = true;
+		else Xturn = false;
+			
+		if( random.nextInt( 2 ) == 0 ) { //who starts
+			if( game == 1 ) moveCL.setText( name );
+			else moveNL.setText( name );
 		}
 		else {
-			Xturn = false;
-			moveL.setText( "O turn" );			
+			if( mode == 0 ) {
+				if( game == 1 ) moveCL.setText( "friend" );
+				else moveNL.setText( "friend" );
+			}
+			else {
+				if( game == 1 ) moveCL.setText( "computer" );
+				else moveNL.setText( "computer" );
+			}
 		}
 	}
 	
-	public boolean check() {
+	boolean check() {
 		for( int i = 0; i < 3; i++ ) {
-			if( squareB[0 + ( i * 3 )].getText() != "" && squareB[0 + ( i * 3 )].getText() == squareB[1 + ( i * 3 )].getText() && squareB[1 + ( i * 3 )].getText() == squareB[2 + ( i * 3 )].getText() ) { //rows
-				if( squareB[0 + ( i * 3 )].getText() == "X" ) xwin( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
+			if( xoclassicB[0 + ( i * 3 )].getText() != "" && xoclassicB[0 + ( i * 3 )].getText() == xoclassicB[1 + ( i * 3 )].getText() && xoclassicB[1 + ( i * 3 )].getText() == xoclassicB[2 + ( i * 3 )].getText() ) { //rows
+				if( xoclassicB[0 + ( i * 3 )].getText() == "X" ) xwin( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
 				else owin( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
 				return true;
 			}
 			
-			if( squareB[0 + i].getText() != "" && squareB[0 + i].getText() == squareB[3 + i].getText() && squareB[3 + i].getText() == squareB[6 + i].getText() ) { //columns
-				if( squareB[0 + i].getText() == "X" ) xwin( 0 + i, 3 + i, 6 + i );
+			if( xoclassicB[0 + i].getText() != "" && xoclassicB[0 + i].getText() == xoclassicB[3 + i].getText() && xoclassicB[3 + i].getText() == xoclassicB[6 + i].getText() ) { //columns
+				if( xoclassicB[0 + i].getText() == "X" ) xwin( 0 + i, 3 + i, 6 + i );
 				else owin( 0 + i, 3 + i, 6 + i );
 				return true;
 			}
 		}
-		if( squareB[0].getText() != "" && squareB[0].getText() == squareB[4].getText() && squareB[4].getText() == squareB[8].getText() ) { //diagonals
-			if( squareB[0].getText() == "X" ) xwin( 0, 4, 8 );
+		if( xoclassicB[0].getText() != "" && xoclassicB[0].getText() == xoclassicB[4].getText() && xoclassicB[4].getText() == xoclassicB[8].getText() ) { //diagonals
+			if( xoclassicB[0].getText() == "X" ) xwin( 0, 4, 8 );
 			else owin( 0, 4, 8 );
 			return true;
 		}
-		if( squareB[2].getText() != "" && squareB[2].getText() == squareB[4].getText() && squareB[4].getText() == squareB[6].getText() ) { //diagonals
-			if( squareB[2].getText() == "X" ) xwin( 2, 4, 6 );
+		if( xoclassicB[2].getText() != "" && xoclassicB[2].getText() == xoclassicB[4].getText() && xoclassicB[4].getText() == xoclassicB[6].getText() ) { //diagonals
+			if( xoclassicB[2].getText() == "X" ) xwin( 2, 4, 6 );
 			else owin( 2, 4, 6 );
 			return true;
 		}
 		return false;
 	}
 	
-	public void xwin( int a, int b, int c) {
-		squareB[a].setBackground(new Color( 0, 255, 0 ) );
-		squareB[b].setBackground(new Color( 0, 255, 0 ) );
-		squareB[c].setBackground(new Color( 0, 255, 0 ) );
+	void xwin( int a, int b, int c) {
+		xoclassicB[a].setBackground(new Color( 0, 255, 0 ) );
+		xoclassicB[b].setBackground(new Color( 0, 255, 0 ) );
+		xoclassicB[c].setBackground(new Color( 0, 255, 0 ) );
 		
 		for( int i = 0; i < 9; i++ ) {
-			squareB[i].setEnabled( false );
+			xoclassicB[i].setEnabled( false );
 		}
 		//pop up window for winner and go back to menu
 	}
 	
-	public void owin( int a, int b, int c) {
-		squareB[a].setBackground(new Color( 0, 255, 0 ) );
-		squareB[b].setBackground(new Color( 0, 255, 0 ) );
-		squareB[c].setBackground(new Color( 0, 255, 0 ) );
+	void owin( int a, int b, int c) {
+		xoclassicB[a].setBackground(new Color( 0, 255, 0 ) );
+		xoclassicB[b].setBackground(new Color( 0, 255, 0 ) );
+		xoclassicB[c].setBackground(new Color( 0, 255, 0 ) );
 		
 		for( int i = 0; i < 9; i++ ) {
-			squareB[i].setEnabled( false );
+			xoclassicB[i].setEnabled( false );
 		}
 		//pop up window for winner and go back to menu
 		
 	}
 	
+
 	
 }

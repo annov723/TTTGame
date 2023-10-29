@@ -2,10 +2,12 @@ A:0
 jhyn:0
 dfg:0
 Loki:450
+Galimans:0
 helloo:1000
 Bartus:1500
 sdf:0
 Bob:0
+Wanda:0
 troll666:200
 Ania:0
 falafel:400
