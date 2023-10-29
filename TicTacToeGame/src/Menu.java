@@ -142,6 +142,7 @@ public class Menu implements ActionListener, MouseListener{
 	}
 	
 	
+	
 	@Override
 	public void actionPerformed( ActionEvent e ) {
 		/*classic button to start classic version of Tic Tac Toe game*/
@@ -255,20 +256,17 @@ public class Menu implements ActionListener, MouseListener{
 	}
 
 	
-	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -276,7 +274,6 @@ public class Menu implements ActionListener, MouseListener{
 		
 	}
 	
-
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		if( e.getSource() == classicB ) {
@@ -336,7 +333,6 @@ public class Menu implements ActionListener, MouseListener{
 		
 	}
 	
-
 	@Override
 	public void mouseExited(MouseEvent e) {
 		if( e.getSource() == classicB2 ) {
@@ -398,7 +394,6 @@ public class Menu implements ActionListener, MouseListener{
 	
 
 	
-
 	JLabel menu() {
 		
 		JLabel titleL = new JLabel( "TTTGame" );
@@ -533,7 +528,6 @@ public class Menu implements ActionListener, MouseListener{
 		return( menuBackL );
 	}
 	
-	
 	JLabel mode() {
 		
 		/*single mode button*/
@@ -598,7 +592,6 @@ public class Menu implements ActionListener, MouseListener{
 		return( modeBackL );
 		
 	}
-	
 	
 	JLabel level() {
 		
@@ -691,7 +684,6 @@ public class Menu implements ActionListener, MouseListener{
 		
 	}
 	
-	
 	JLabel ranking() {
 		
 		int num = list.dat.size();
@@ -779,7 +771,6 @@ public class Menu implements ActionListener, MouseListener{
 		return( rankBackL );
 		
 	}
-	
 	
 	JLabel classic() {
 		
