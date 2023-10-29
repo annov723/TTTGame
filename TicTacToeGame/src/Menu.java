@@ -100,6 +100,8 @@ public class Menu implements ActionListener, MouseListener{
 	boolean Xturn; //check whose move is now
 	int score = 0; //count the player score
 	String points = "score: ";
+	String Xplayer;
+	String Oplayer;
 	
 	
 	
@@ -249,7 +251,28 @@ public class Menu implements ActionListener, MouseListener{
 		}
 		
 		
-		
+		for( int i = 0; i < 9; i++ ) {
+			if( e.getSource() == xoclassicB[i] ) {
+				if( Xturn ) {
+					if( xoclassicB[i].getText() == "" ) {
+						xoclassicB[i].setText( "X" );
+						if( !check() ) {
+							Xturn = false;
+							moveCL.setText( Xplayer );
+						}
+					}
+				}
+				else {
+					if( xoclassicB[i].getText() == "" ) {
+						xoclassicB[i].setText( "O" );
+						if( !check() ) {
+							Xturn = true;
+							moveCL.setText( Oplayer );
+						}
+					}
+				}
+			}
+		}
 		//xoclassicB[i].setOpaque(true); 
 		//xoclassicB[i].setBackground(new Color(0, 0, 0, 128));
 		
@@ -968,15 +991,41 @@ public class Menu implements ActionListener, MouseListener{
 		else Xturn = false;
 			
 		if( random.nextInt( 2 ) == 0 ) { //who starts
+			if( Xturn == true ) {
+				Xplayer = name;
+				if( mode == 0 ) Oplayer = "friend";
+				else Oplayer = "computer";
+			}
+			else {
+				Oplayer = name;
+				if( mode == 0 ) Xplayer = "friend";
+				else Xplayer = "computer";
+			}
 			if( game == 1 ) moveCL.setText( name );
 			else moveNL.setText( name );
 		}
 		else {
 			if( mode == 0 ) {
+				if( Xturn == true ) {
+					Xplayer = "friend";
+					Oplayer = name;
+				}
+				else {
+					Xplayer = name;
+					Oplayer = "friend";
+				}
 				if( game == 1 ) moveCL.setText( "friend" );
 				else moveNL.setText( "friend" );
 			}
 			else {
+				if( Xturn == true ) {
+					Xplayer = "computer";
+					Oplayer = name;
+				}
+				else {
+					Xplayer = name;
+					Oplayer = "computer";
+				}
 				if( game == 1 ) moveCL.setText( "computer" );
 				else moveNL.setText( "computer" );
 			}
