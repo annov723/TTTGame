@@ -961,7 +961,7 @@ public class Menu implements ActionListener, MouseListener{
 		list.dat.put( name, score );
 		game = 0;
 		score = 0;
-		//menuBackL.setVisible( true );
+		//menuBackL.setVisible( true ); 
 		
 	}
 	
