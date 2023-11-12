@@ -1277,7 +1277,7 @@ public class Menu implements ActionListener, MouseListener{
 				else classic_hard();
 			}
 			else {
-				//nino game options
+				//nino game options 
 			}
 			
 			Xturn = false;
