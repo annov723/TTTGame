@@ -1,8 +1,8 @@
-A:0
-jhyn:0
+Aww:0
+kk:10
+A:250
 Bartus:1500
-dfg:0
 Loki:450
-Galimans:0
-helloo:1000
-Ania:110
+Ania:210
+kkk:0
+jjj:0

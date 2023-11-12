@@ -122,7 +122,6 @@ public class Menu implements ActionListener, MouseListener{
 	char user;
 	boolean winner = false;
 	int mode; //if we have single, two player easy, medium or hard mode (0 for two players mode and 1, 2, 3 for single with different difficulty levels)
-	int opt; //if we have classic (0) or 9 in 1 (1) option
 	
 	
 	
@@ -219,12 +218,10 @@ public class Menu implements ActionListener, MouseListener{
 			
 			if( game == 1 ) {
 				mode = 0;
-				opt = 0;
 				classic_game();
 			}
 			else if( game == 2 ) {
 				mode = 0;
-				opt = 1;
 				nino_game();
 			}
 			else {
@@ -242,12 +239,10 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				mode = 1;
-				opt = 0;
 				classic_game();
 			}
 			else if( game == 2 ) {
 				mode = 1;
-				opt = 1;
 				nino_game();
 			}
 			else {
@@ -264,12 +259,10 @@ public class Menu implements ActionListener, MouseListener{
 
 			if( game == 1 ) {
 				mode = 2;
-				opt = 0;
 				classic_game();
 			}
 			else if( game == 2 ) {
 				mode = 2;
-				opt = 1;
 				nino_game();
 			}
 			else{
@@ -285,12 +278,10 @@ public class Menu implements ActionListener, MouseListener{
 			levelBackL.setVisible( false );
 
 			if( game == 1 ) {
-				opt = 0;
 				mode = 3;
 				classic_game();
 			}
 			else if( game == 2 ) {
-				opt = 1;
 				mode = 3;
 				nino_game();
 			}
@@ -309,23 +300,32 @@ public class Menu implements ActionListener, MouseListener{
 				if( Xturn ) {
 					if( xoclassicB[i].getText() == "" ) {
 						xoclassicB[i].setText( "X" );
-						if( !check() ) {
+						if( !checkc() ) {
 							Xturn = false;
-							moveCL.setText( Xplayer );
+							moveCL.setText( Oplayer );
 						}
 					}
 				}
 				else {
 					if( xoclassicB[i].getText() == "" ) {
 						xoclassicB[i].setText( "O" );
-						if( !check() ) {
+						if( !checkc() ) {
 							Xturn = true;
-							moveCL.setText( Oplayer );
+							moveCL.setText( Xplayer );
 						}
 					}
 				}
 			}
 		}
+		
+		//go back to menu after the classic game
+		if( e.getSource() == winnerCB2 ) {
+			winner = false;
+			classicBackL.setVisible( false );
+			menuBackL.setVisible( true );
+			
+		}
+
 		
 	}
 
@@ -405,6 +405,15 @@ public class Menu implements ActionListener, MouseListener{
 			backNinoB.setVisible( false );
 		}
 		
+		if( e.getSource() == winnerCB ) {
+			winnerCB2.setVisible( true );
+			winnerCB.setVisible( false );
+		}
+		if( e.getSource() == winnerLB ) {
+			winnerLB2.setVisible( true );
+			winnerLB.setVisible( false );
+		}
+		
 	}
 	
 	@Override
@@ -462,6 +471,15 @@ public class Menu implements ActionListener, MouseListener{
 		if( e.getSource() == backNinoB2 ) {
 			backNinoB2.setVisible( false );
 			backNinoB.setVisible( true );
+		}
+		
+		if( e.getSource() == winnerCB2 ) {
+			winnerCB2.setVisible( false );
+			winnerCB.setVisible( true );
+		}
+		if( e.getSource() == winnerLB2 ) {
+			winnerLB2.setVisible( false );
+			winnerLB.setVisible( true );
 		}
 		
 	}
@@ -877,7 +895,7 @@ public class Menu implements ActionListener, MouseListener{
 		Image mainAfter = mainBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		mainII = new ImageIcon( mainAfter );
 		winnerCB = new JButton( mainII );
-		winnerCB.setBounds( 122, 200, 176, 60 );
+		winnerCB.setBounds( 122, 240, 176, 60 );
 		winnerCB.setContentAreaFilled( false );
 		winnerCB.setFocusable( false );
 		winnerCB.setBorder( null );
@@ -886,7 +904,7 @@ public class Menu implements ActionListener, MouseListener{
 		Image mainAfter2 = mainBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		mainII2 = new ImageIcon( mainAfter2 );
 		winnerCB2 = new JButton( mainII2 );
-		winnerCB2.setBounds( 122, 200, 176, 60 );
+		winnerCB2.setBounds( 122, 240, 176, 60 );
 		winnerCB2.setContentAreaFilled( false );
 		winnerCB2.setFocusable( false );
 		winnerCB2.setBorder( null );
@@ -900,10 +918,19 @@ public class Menu implements ActionListener, MouseListener{
 		xobuttonCL.setLayout( null );
 		xobuttonCL.setBounds( 20, 20, 420, 420 );
 		
+		//winner message
 		winnerCL.setBounds( 0, 0, 420, 420 );
 		winnerCL.setHorizontalAlignment( SwingConstants.CENTER );
 		winnerCL.setFont( new Font( "Calibri", Font.BOLD, 50 ) );
 		winnerCL.setForeground( Color.white );
+		winnerCL.setBackground(new Color(255, 255, 255, 55));
+		winnerCL.setOpaque(true);
+		
+		xobuttonCL.add( winnerCL );
+		winnerCL.setVisible( false );
+		xobuttonCL.add( winnerCB );
+		winnerCB.setVisible( false );
+		xobuttonCL.add( winnerCB2 );
 		
 		for( int i = 0; i < 9; i++ ) {
 			xoclassicB[i] = new JButton();
@@ -917,22 +944,19 @@ public class Menu implements ActionListener, MouseListener{
 			xobuttonCL.add( xoclassicB[i] );
 		}
 		
-		xobuttonCL.add( winnerCL );
-		winnerCL.setVisible( false );
-		xobuttonCL.add( winnerCB );
-		winnerCB.setVisible( false );
-		xobuttonCL.add( winnerCB2 );
-		
+		//whose turn is now
 		moveCL.setBounds( 470, 80, 240, 55 );
 		moveCL.setHorizontalAlignment( SwingConstants.CENTER );
 		moveCL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
 		moveCL.setForeground( Color.white );
 		
+		//just "turn" word
 		whotitCL.setBounds( 470, 110, 240, 55 );
 		whotitCL.setHorizontalAlignment( SwingConstants.CENTER );
 		whotitCL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
 		whotitCL.setForeground( Color.white );
 		
+		//"score = " and number of points 
 		scoreCL.setBounds( 470, 200, 240, 35 );
 		scoreCL.setHorizontalAlignment( SwingConstants.CENTER );
 		scoreCL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
@@ -981,9 +1005,47 @@ public class Menu implements ActionListener, MouseListener{
 		backNinoB.addMouseListener( this );
 		backNinoB2.addMouseListener( this );
 		
+		/*main menu button*/
+		Image mainBefore = mainII.getImage();
+		Image mainAfter = mainBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		mainII = new ImageIcon( mainAfter );
+		winnerLB = new JButton( mainII );
+		winnerLB.setBounds( 122, 240, 176, 60 );
+		winnerLB.setContentAreaFilled( false );
+		winnerLB.setFocusable( false );
+		winnerLB.setBorder( null );
+		
+		Image mainBefore2 = mainII2.getImage();
+		Image mainAfter2 = mainBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		mainII2 = new ImageIcon( mainAfter2 );
+		winnerLB2 = new JButton( mainII2 );
+		winnerLB2.setBounds( 122, 240, 176, 60 );
+		winnerLB2.setContentAreaFilled( false );
+		winnerLB2.setFocusable( false );
+		winnerLB2.setBorder( null );
+		winnerLB2.setVisible( false );
+		
+		winnerLB2.addActionListener( this );
+		winnerLB.addMouseListener( this );
+		winnerLB2.addMouseListener( this );
+		
 		/*game buttons field*/
 		xobuttonNL.setLayout( null );
 		xobuttonNL.setBounds( 20, 20, 420, 420 );
+		
+		//winner message
+		winnerNL.setBounds( 0, 0, 420, 420 );
+		winnerNL.setHorizontalAlignment( SwingConstants.CENTER );
+		winnerNL.setFont( new Font( "Calibri", Font.BOLD, 50 ) );
+		winnerNL.setForeground( Color.white );
+		winnerNL.setBackground(new Color(255, 255, 255, 55));
+		winnerNL.setOpaque(true);
+		
+		xobuttonNL.add( winnerNL );
+		winnerNL.setVisible( false );
+		xobuttonNL.add( winnerLB );
+		winnerLB.setVisible( false );
+		xobuttonNL.add( winnerLB2 );
 		
 		for( int i = 0; i < 9; i++ ) {
 			xoninoB[i] = new JButton();
@@ -1040,15 +1102,29 @@ public class Menu implements ActionListener, MouseListener{
 	 */
 	void classic_game(){
 		if( !winner ) {
+			for( int i = 0; i < 9; i++ ) {
+				xoclassicB[i].setText( "" );
+				xoclassicB[i].setEnabled( true );
+				xoclassicB[i].setVisible( true );
+			}
+			backClassicB2.setVisible( false );
+			backClassicB.setEnabled( true );
+			backClassicB2.setEnabled( true );
+			winnerCL.setVisible( false );
+			winnerCB2.setVisible( false );
+			winnerCB.setVisible( false );
+			scoreCL.setText( points + score );
+			moveCL.setVisible( true );
+			
 			classicBackL.setVisible( true );
+			
 			begin();
 			if( mode >= 1 ) scoreCL.setVisible( true );
 		}
 		else if( winner ) {
 			backClassicB.setEnabled( false );
-			backClassicB2.setFocusable( false );
-			whotitCL.setVisible( false );
-			winnerCB.setVisible( true );
+			backClassicB2.setEnabled( false );
+			moveCL.setVisible( false );
 			
 			if( Xturn ) {
 				winnerCL.setText( Xplayer + " won!" );
@@ -1067,17 +1143,21 @@ public class Menu implements ActionListener, MouseListener{
 					else score = score + 50;
 				}
 			}
-			scoreCL.setText( "score = " + String.valueOf( score ) );
+			
+			if( mode != 0 ) {
+				scoreCL.setText( points + String.valueOf( score ) );
+				score = score + list.dat.get( name );
+				if( score > 9999 ) score = 9999;
+				list.dat.put( name, score );
+			}
+			
 			winnerCL.setVisible( true );
-			score = score + list.dat.get( name );
-			if( score >= 9999 ) score = 9999;
-			list.dat.put( name, score );
+			
 			game = 0;
 			score = 0;
 			mode = 4;
-			mode = 2;
-			winner = false;
-			//menuBackL.setVisible( true );
+			
+			winnerCB.setVisible( true );
 		}
 		
 		
@@ -1097,8 +1177,6 @@ public class Menu implements ActionListener, MouseListener{
 		game = 0;
 		score = 0;
 		mode = 4;
-		opt = 2;
-		//menuBackL.setVisible( true ); 
 		
 	}
 	
@@ -1156,45 +1234,48 @@ public class Menu implements ActionListener, MouseListener{
 		else user = 'O';
 	}
 	
-	boolean check() {
+	boolean checkc() {
 		for( int i = 0; i < 3; i++ ) {
 			if( xoclassicB[0 + ( i * 3 )].getText() != "" && xoclassicB[0 + ( i * 3 )].getText() == xoclassicB[1 + ( i * 3 )].getText() && xoclassicB[1 + ( i * 3 )].getText() == xoclassicB[2 + ( i * 3 )].getText() ) { //rows
-				if( xoclassicB[0 + ( i * 3 )].getText() == "X" ) win( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
-				else win( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
+				if( xoclassicB[0 + ( i * 3 )].getText() == "X" ) winc( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
+				else winc( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
 				return true;
 			}
 			
 			if( xoclassicB[0 + i].getText() != "" && xoclassicB[0 + i].getText() == xoclassicB[3 + i].getText() && xoclassicB[3 + i].getText() == xoclassicB[6 + i].getText() ) { //columns
-				if( xoclassicB[0 + i].getText() == "X" ) win( 0 + i, 3 + i, 6 + i );
-				else win( 0 + i, 3 + i, 6 + i );
+				if( xoclassicB[0 + i].getText() == "X" ) winc( 0 + i, 3 + i, 6 + i );
+				else winc( 0 + i, 3 + i, 6 + i );
 				return true;
 			}
 		}
 		if( xoclassicB[0].getText() != "" && xoclassicB[0].getText() == xoclassicB[4].getText() && xoclassicB[4].getText() == xoclassicB[8].getText() ) { //diagonals
-			if( xoclassicB[0].getText() == "X" ) win( 0, 4, 8 );
-			else win( 0, 4, 8 );
+			if( xoclassicB[0].getText() == "X" ) winc( 0, 4, 8 );
+			else winc( 0, 4, 8 );
 			return true;
 		}
 		if( xoclassicB[2].getText() != "" && xoclassicB[2].getText() == xoclassicB[4].getText() && xoclassicB[4].getText() == xoclassicB[6].getText() ) { //diagonals
-			if( xoclassicB[2].getText() == "X" ) win( 2, 4, 6 );
-			else win( 2, 4, 6 );
+			if( xoclassicB[2].getText() == "X" ) winc( 2, 4, 6 );
+			else winc( 2, 4, 6 );
 			return true;
 		}
 		return false;
 	}
 	
-	void win( int a, int b, int c) {
-		xoclassicB[a].setBackground(new Color( 0, 255, 0 ) );
-		xoclassicB[b].setBackground(new Color( 0, 255, 0 ) );
-		xoclassicB[c].setBackground(new Color( 0, 255, 0 ) );
+	void winc( int a, int b, int c) {
 		
 		for( int i = 0; i < 9; i++ ) {
-			xoclassicB[i].setEnabled( false );
+			xoclassicB[i].setVisible( false );
 		}
-		winner = true;
+		xoclassicB[a].setVisible( true );
+		xoclassicB[b].setVisible( true );
+		xoclassicB[c].setVisible( true );
+		xoclassicB[a].setEnabled( false );
+		xoclassicB[b].setEnabled( false );
+		xoclassicB[c].setEnabled( false );
 		
-		if( opt == 0 ) classic_game();
-		else nino_game();
+		
+		winner = true;
+		classic_game();
 	}
 	
 	
