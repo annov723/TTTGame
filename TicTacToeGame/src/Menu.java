@@ -123,6 +123,15 @@ public class Menu implements ActionListener, MouseListener{
 	boolean winner = false;
 	int mode; //if we have single, two player easy, medium or hard mode (0 for two players mode and 1, 2, 3 for single with different difficulty levels)
 	
+	//ranking stuff
+	int num = list.dat.size();
+	JLabel rankL = new JLabel( new ImageIcon( "backrank.png" ) );
+	JLabel pointsL = new JLabel();
+	JLabel numL = new JLabel();
+	JLabel[] names = new JLabel[num];
+	JLabel[] scores = new JLabel[num];
+	JLabel[] nums = new JLabel[num];
+	
 	
 	
 	Menu( String player ){
@@ -173,18 +182,32 @@ public class Menu implements ActionListener, MouseListener{
 			menuBackL.setVisible( false );
 			modeBackL.setVisible( true );
 		}
+		
 		/*9 in 1 button to start this version of game*/
 		if( e.getSource() == ninoB2 ) {
 			game = 2;
 			menuBackL.setVisible( false );
 			modeBackL.setVisible( true );
 		}
+		
 		/*ranking button to open ranking view*/
 		if( e.getSource() == rankB2 ) {
-			menuBackL.setVisible( false );
-			rankBackL.setVisible( true );
+			menuBackL.setVisible( false );	
 			
+			List<Map.Entry<String, Integer>> sorted = new ArrayList<>( list.dat.entrySet() );
+			Collections.sort( sorted, ( entry1, entry2 ) -> entry2.getValue().compareTo( entry1.getValue() ) );
+			
+			int counter = 0;
+			for ( Map.Entry<String, Integer> entry : sorted ) {
+				nums[counter].setText( Integer.toString( counter + 1 ) + "." );
+		    	names[counter].setText( entry.getKey() );
+		    	scores[counter].setText( Integer.toString( entry.getValue() ) );
+		    	counter++;
+			}
+			
+			rankBackL.setVisible( true );
 		}
+		
 		/*exit button clicked closes window, saves data and closes whole program*/
 		if( e.getSource() == exitB2 ) {
 			list.dataSave();
@@ -195,8 +218,10 @@ public class Menu implements ActionListener, MouseListener{
 		/*back button to return to the menu screen*/
 		if( e.getSource() == backRankB2 ) {
 			rankBackL.setVisible( false );
-			menuBackL.setVisible( true );			
+			menuBackL.setVisible( true );
         }
+		
+		//ending the game in the middle of it
 		if( e.getSource() == backClassicB2 || e.getSource() == backNinoB2 ) {
 			int result = JOptionPane.showConfirmDialog( frame, "Are you sure you want to go back to menu?\nYour progress will be lost.", "", JOptionPane.YES_NO_OPTION );
             if ( result == JOptionPane.YES_OPTION ) {
@@ -301,8 +326,18 @@ public class Menu implements ActionListener, MouseListener{
 					if( xoclassicB[i].getText() == "" ) {
 						xoclassicB[i].setText( "X" );
 						if( !checkc() ) {
-							Xturn = false;
-							moveCL.setText( Oplayer );
+							if( mode == 0 ) {
+								Xturn = false;
+								moveCL.setText( Oplayer );
+							}
+							else {
+								if( mode == 1 ) classic_easy();
+								else if( mode == 2 ) classic_medium();
+								else classic_hard();
+								Xturn = false;
+								if( !checkc() ) Xturn = true;
+							}
+							
 						}
 					}
 				}
@@ -310,12 +345,23 @@ public class Menu implements ActionListener, MouseListener{
 					if( xoclassicB[i].getText() == "" ) {
 						xoclassicB[i].setText( "O" );
 						if( !checkc() ) {
-							Xturn = true;
-							moveCL.setText( Xplayer );
+							if( mode == 0 ) {
+								Xturn = true;
+								moveCL.setText( Xplayer );
+							}
+							else {
+								if( mode == 1 ) classic_easy();
+								else if( mode == 2 ) classic_medium();
+								else classic_hard();
+								Xturn = true;
+								if( !checkc() ) Xturn = false;								
+							}
+							
 						}
 					}
 				}
 			}
+			
 		}
 		
 		//go back to menu after the classic game
@@ -323,10 +369,8 @@ public class Menu implements ActionListener, MouseListener{
 			winner = false;
 			classicBackL.setVisible( false );
 			menuBackL.setVisible( true );
-			
 		}
 
-		
 	}
 
 	
@@ -778,20 +822,43 @@ public class Menu implements ActionListener, MouseListener{
 	
 	JLabel ranking() {
 		
-		int num = list.dat.size();
-		
 		/*ranking board*/				
-		JLabel rankL = new JLabel( new ImageIcon( "backrank.png" ) );
 		rankL.setLayout( null );
 		rankL.setBounds( 20, 20, 480, 420 );
 		
-		JLabel pointsL = new JLabel();
 		pointsL.setLayout( null );
 		pointsL.setBounds( 420, 20, 80, 420 );
 		
-		JLabel numL = new JLabel();
 		numL.setLayout( null );
 		numL.setBounds( 45, 20, 40, 420 );
+		
+		/*print ranking*/
+		List<Map.Entry<String, Integer>> sorted = new ArrayList<>( list.dat.entrySet() );
+		Collections.sort( sorted, ( entry1, entry2 ) -> entry2.getValue().compareTo( entry1.getValue() ) );
+		
+		int counter = 0;
+		for ( Map.Entry<String, Integer> entry : sorted ) {
+			nums[counter] = new JLabel();
+	    	names[counter] = new JLabel();
+	    	scores[counter] = new JLabel();
+	    	counter++;
+		}
+		
+		for( int i = 0; i < num; i++ ) {
+			if( 40 + ( i * 35 ) >= 420 ) break;
+			nums[i].setBounds( 25, 20 + ( i * 35 ), 40, 35 );
+			nums[i].setFont( new Font( "Calibri", Font.BOLD, 25 ) );
+			nums[i].setForeground( new Color( 27, 213, 213 ) );
+			rankL.add( nums[i] );
+			names[i].setBounds( 65, 20 + ( i * 35 ), 355, 35 );
+			names[i].setFont( new Font( "Calibri", Font.BOLD, 25 ) );
+			names[i].setForeground( new Color( 27, 213, 213 ) );
+			rankL.add( names[i] );
+			scores[i].setBounds( 0, 20 + ( i * 35 ), 80, 35 );
+			scores[i].setFont( new Font( "Calibri", Font.BOLD, 25 ) );
+			scores[i].setForeground( new Color( 27, 213, 213 ) );
+			pointsL.add( scores[i] );
+		}
 		
 		/*back button - used in ranking, classic and 9 in 1 JLabel*/
 		Image backBefore = backII.getImage();
@@ -817,42 +884,12 @@ public class Menu implements ActionListener, MouseListener{
 		backRankB.addMouseListener( this );
 		backRankB2.addMouseListener( this );
 		
-		/*print ranking*/
-		List<Map.Entry<String, Integer>> sorted = new ArrayList<>( list.dat.entrySet() );
-		Collections.sort( sorted, ( entry1, entry2 ) -> entry2.getValue().compareTo( entry1.getValue() ) );
 		
-		JLabel[] names = new JLabel[num];
-		JLabel[] scores = new JLabel[num];
-		JLabel[] nums = new JLabel[num];
-		
-		int counter = 0;
-		for ( Map.Entry<String, Integer> entry : sorted ) {
-			nums[counter] = new JLabel( Integer.toString( counter + 1 ) + "." );
-	    	names[counter] = new JLabel( entry.getKey() );
-	    	scores[counter] = new JLabel( Integer.toString( entry.getValue() ) );
-	    	counter++;
-		}
-		
-		for( int i = 0; i < num; i++ ) {
-			if( 40 + ( i * 35 ) >= 420 ) break;
-			nums[i].setBounds( 25, 20 + ( i * 35 ), 40, 35 );
-			nums[i].setFont( new Font( "Calibri", Font.BOLD, 25 ) );
-			nums[i].setForeground( new Color( 27, 213, 213 ) );
-			rankL.add( nums[i] );
-			names[i].setBounds( 65, 20 + ( i * 35 ), 355, 35 );
-			names[i].setFont( new Font( "Calibri", Font.BOLD, 25 ) );
-			names[i].setForeground( new Color( 27, 213, 213 ) );
-			rankL.add( names[i] );
-			scores[i].setBounds( 0, 20 + ( i * 35 ), 80, 35 );
-			scores[i].setFont( new Font( "Calibri", Font.BOLD, 25 ) );
-			scores[i].setForeground( new Color( 27, 213, 213 ) );
-			pointsL.add( scores[i] );
-		}
 		
 		rankBackL.add( backRankB );
 		rankBackL.add( backRankB2 );
-		rankBackL.add(  pointsL );
-		rankBackL.add(  rankL );
+		rankBackL.add( pointsL );
+		rankBackL.add( rankL );
 		
 		
 		
@@ -1232,6 +1269,37 @@ public class Menu implements ActionListener, MouseListener{
 		
 		if( Xplayer == name ) user = 'X';
 		else user = 'O';
+		
+		if( Xturn == true && user == 'O' && mode >= 1 ) {
+			if( game == 1 ) {
+				if( mode == 1 ) classic_easy();
+				if( mode == 2 ) classic_medium();
+				else classic_hard();
+			}
+			else {
+				//nino game options
+			}
+			
+			Xturn = false;
+			if( game == 1 ) moveCL.setText( Oplayer );
+			else moveNL.setText( Oplayer );
+			
+		}
+		else if( Xturn == false && user == 'X' && mode >= 1 ) {
+			if( game == 1 ) {
+				if( mode == 1 ) classic_easy();
+				if( mode == 2 ) classic_medium();
+				else classic_hard();
+			}
+			else {
+				//nino game options
+			}
+			
+			Xturn = true;
+			if( game == 1 ) moveCL.setText( Xplayer );
+			else moveNL.setText( Xplayer );
+		}
+		
 	}
 	
 	boolean checkc() {
@@ -1278,6 +1346,26 @@ public class Menu implements ActionListener, MouseListener{
 		classic_game();
 	}
 	
+	void classic_easy() {
+		while( true ) {
+			int count = random.nextInt( 9 );
+			if( xoclassicB[count].getText() == "" ) {
+				if( user == 'X' ) xoclassicB[count].setText( "O" );
+				else xoclassicB[count].setText( "X" );
+				break;
+			}
+		}
+	}
+	
+	void classic_hard() {
+		
+	}
+	
+	void classic_medium() {
+		int count = random.nextInt( 2 );
+		if( count == 0 ) classic_easy();
+		else classic_hard();
+	}
 	
 
 	

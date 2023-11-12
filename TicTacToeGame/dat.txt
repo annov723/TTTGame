@@ -1,8 +1,8 @@
 Aww:0
 kk:10
-A:250
+A:410
 Bartus:1500
 Loki:450
 Ania:210
-kkk:0
+kkk:110
 jjj:0
