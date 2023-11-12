@@ -24,20 +24,22 @@ public class Menu implements ActionListener, MouseListener{
 	
 	Data list = new Data(); //create new Cata object and import dat.txt file
 	byte game = 0; //1 - classic, 2 - 9 in 1
-	String name;
+	String name; //iser's nickname
 	
-	Random random  = new Random();
+	Random random  = new Random(); //to choose who starts the game
 	
-	JFrame frame = new JFrame( "TTTGame" );
-	ImageIcon icon = new ImageIcon( "icon.png" );
+	JFrame frame = new JFrame( "TTTGame" ); //a title for menu display
+	ImageIcon icon = new ImageIcon( "icon.png" ); //an icon for menu display
 	
-	JLabel  menuBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
+	//bakground JLabels for each display
+	JLabel  menuBackL = new JLabel( new ImageIcon( "backmenu.png" ) ); 
 	JLabel  modeBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
 	JLabel  levelBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
 	JLabel  rankBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
 	JLabel  classicBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
 	JLabel  ninoBackL = new JLabel( new ImageIcon( "backmenu.png" ) );
 	
+	//menu display buttons
 	ImageIcon classicII = new ImageIcon( "classicb.png" );
 	JButton classicB;
 	ImageIcon classicII2 = new ImageIcon( "classicb2.png" );
@@ -55,6 +57,7 @@ public class Menu implements ActionListener, MouseListener{
 	ImageIcon exitII2 = new ImageIcon( "exitb2.png" );
 	JButton exitB2;
 	
+	//single and two player mode buttons
 	ImageIcon singleII = new ImageIcon( "spb.png" );
 	JButton singleB;
 	ImageIcon singleII2 = new ImageIcon( "spb2.png" );
@@ -64,6 +67,7 @@ public class Menu implements ActionListener, MouseListener{
 	ImageIcon twoII2 = new ImageIcon( "tpb2.png" );
 	JButton twoB2;
 	
+	//difficulty level buttons
 	ImageIcon easyII = new ImageIcon( "easyb.png" );
 	JButton easyB;
 	ImageIcon easyII2 = new ImageIcon( "easyb2.png" );
@@ -77,6 +81,7 @@ public class Menu implements ActionListener, MouseListener{
 	ImageIcon hardII2 = new ImageIcon( "hardb2.png" );
 	JButton hardB2;
 	
+	//back button for each display
 	ImageIcon backII = new ImageIcon( "backb.png" );
 	JButton backRankB;
 	ImageIcon backII2 = new ImageIcon( "backb2.png" );
@@ -86,22 +91,38 @@ public class Menu implements ActionListener, MouseListener{
 	JButton backNinoB;
 	JButton backNinoB2;
 	
-	JButton[] xoclassicB = new JButton[9];
+	//classic and 9 in 1 games buttons
+	JButton[] xoclassicB = new JButton[9]; //X and O buttons
 	JButton[] xoninoB = new JButton[9];
-	JLabel xobuttonCL = new JLabel( new ImageIcon( "tttboard.png" ) );
+	JLabel xobuttonCL = new JLabel( new ImageIcon( "tttboard.png" ) ); //board for O and X 
 	JLabel xobuttonNL = new JLabel( new ImageIcon( "tttboard.png" ) );
-	JLabel moveCL = new JLabel();
+	JLabel moveCL = new JLabel(); //whose move is now
 	JLabel moveNL = new JLabel();
-	JLabel whotitCL = new JLabel( "turn" );
+	JLabel whotitCL = new JLabel( "turn" ); //just "turn" JLabel
 	JLabel whotitNL = new JLabel( "turn" );
+	JLabel winnerCL = new JLabel(); //to display the winner
+	JLabel winnerNL = new JLabel();
 	
-	JLabel scoreNL = new JLabel();
+	//ending game JButton when someone's won
+	ImageIcon mainII = new ImageIcon( "mainb.png" );
+	JButton winnerCB;
+	JButton winnerLB;
+	ImageIcon mainII2 = new ImageIcon( "mainb2.png" );
+	JButton winnerCB2;
+	JButton winnerLB2;
+	
+	JLabel scoreNL = new JLabel(); //shows score in the single mode
+	JLabel scoreCL = new JLabel();
 	
 	boolean Xturn; //check whose move is now
-	int score = 0; //count the player score
+	int score = 0; //count the player's score
 	String points = "score: ";
 	String Xplayer;
 	String Oplayer;
+	char user;
+	boolean winner = false;
+	int mode; //if we have single, two player easy, medium or hard mode (0 for two players mode and 1, 2, 3 for single with different difficulty levels)
+	int opt; //if we have classic (0) or 9 in 1 (1) option
 	
 	
 	
@@ -196,8 +217,16 @@ public class Menu implements ActionListener, MouseListener{
 		if( e.getSource() == twoB2 ) {
 			modeBackL.setVisible( false );
 			
-			if( game == 1 )	classic_game( 0 );
-			else if( game == 2 ) nino_game( 0 );
+			if( game == 1 ) {
+				mode = 0;
+				opt = 0;
+				classic_game();
+			}
+			else if( game == 2 ) {
+				mode = 0;
+				opt = 1;
+				nino_game();
+			}
 			else {
 				ninoBackL.setVisible( false );
             	classicBackL.setVisible( false );
@@ -211,8 +240,16 @@ public class Menu implements ActionListener, MouseListener{
 		if( e.getSource() == easyB2 ) {
 			levelBackL.setVisible( false );
 
-			if( game == 1 ) classic_game( 1 );
-			else if( game == 2 ) nino_game( 1 );
+			if( game == 1 ) {
+				mode = 1;
+				opt = 0;
+				classic_game();
+			}
+			else if( game == 2 ) {
+				mode = 1;
+				opt = 1;
+				nino_game();
+			}
 			else {
 				ninoBackL.setVisible( false );
             	classicBackL.setVisible( false );
@@ -225,8 +262,16 @@ public class Menu implements ActionListener, MouseListener{
 		if( e.getSource() == mediumB2 ) {
 			levelBackL.setVisible( false );
 
-			if( game == 1 ) classic_game( 2 );
-			else if( game == 2 ) nino_game( 2 );
+			if( game == 1 ) {
+				mode = 2;
+				opt = 0;
+				classic_game();
+			}
+			else if( game == 2 ) {
+				mode = 2;
+				opt = 1;
+				nino_game();
+			}
 			else{
 				ninoBackL.setVisible( false );
             	classicBackL.setVisible( false );
@@ -239,8 +284,16 @@ public class Menu implements ActionListener, MouseListener{
 		if( e.getSource() == hardB2 ) {
 			levelBackL.setVisible( false );
 
-			if( game == 1 )	classic_game( 3 );
-			else if( game == 2 ) nino_game( 3 );
+			if( game == 1 ) {
+				opt = 0;
+				mode = 3;
+				classic_game();
+			}
+			else if( game == 2 ) {
+				opt = 1;
+				mode = 3;
+				nino_game();
+			}
 			else {
 				ninoBackL.setVisible( false );
             	classicBackL.setVisible( false );
@@ -273,8 +326,6 @@ public class Menu implements ActionListener, MouseListener{
 				}
 			}
 		}
-		//xoclassicB[i].setOpaque(true); 
-		//xoclassicB[i].setBackground(new Color(0, 0, 0, 128));
 		
 	}
 
@@ -798,8 +849,8 @@ public class Menu implements ActionListener, MouseListener{
 	JLabel classic() {
 		
 		/*back button - used in ranking, classic and 9 in 1 JLabel*/
-		Image backBefore = backII.getImage();
-		Image backAfter = backBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		Image backClassicBefore = backII.getImage();
+		Image backAfter = backClassicBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
 		backII = new ImageIcon( backAfter );
 		backClassicB = new JButton( backII );
 		backClassicB.setBounds( 525, 380, 176, 60 );
@@ -821,9 +872,38 @@ public class Menu implements ActionListener, MouseListener{
 		backClassicB.addMouseListener( this );
 		backClassicB2.addMouseListener( this );
 		
+		/*main menu button*/
+		Image mainBefore = mainII.getImage();
+		Image mainAfter = mainBefore.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		mainII = new ImageIcon( mainAfter );
+		winnerCB = new JButton( mainII );
+		winnerCB.setBounds( 122, 200, 176, 60 );
+		winnerCB.setContentAreaFilled( false );
+		winnerCB.setFocusable( false );
+		winnerCB.setBorder( null );
+		
+		Image mainBefore2 = mainII2.getImage();
+		Image mainAfter2 = mainBefore2.getScaledInstance( 176, 60, java.awt.Image.SCALE_SMOOTH );
+		mainII2 = new ImageIcon( mainAfter2 );
+		winnerCB2 = new JButton( mainII2 );
+		winnerCB2.setBounds( 122, 200, 176, 60 );
+		winnerCB2.setContentAreaFilled( false );
+		winnerCB2.setFocusable( false );
+		winnerCB2.setBorder( null );
+		winnerCB2.setVisible( false );
+		
+		winnerCB2.addActionListener( this );
+		winnerCB.addMouseListener( this );
+		winnerCB2.addMouseListener( this );
+		
 		/*game buttons field*/
 		xobuttonCL.setLayout( null );
 		xobuttonCL.setBounds( 20, 20, 420, 420 );
+		
+		winnerCL.setBounds( 0, 0, 420, 420 );
+		winnerCL.setHorizontalAlignment( SwingConstants.CENTER );
+		winnerCL.setFont( new Font( "Calibri", Font.BOLD, 50 ) );
+		winnerCL.setForeground( Color.white );
 		
 		for( int i = 0; i < 9; i++ ) {
 			xoclassicB[i] = new JButton();
@@ -837,6 +917,12 @@ public class Menu implements ActionListener, MouseListener{
 			xobuttonCL.add( xoclassicB[i] );
 		}
 		
+		xobuttonCL.add( winnerCL );
+		winnerCL.setVisible( false );
+		xobuttonCL.add( winnerCB );
+		winnerCB.setVisible( false );
+		xobuttonCL.add( winnerCB2 );
+		
 		moveCL.setBounds( 470, 80, 240, 55 );
 		moveCL.setHorizontalAlignment( SwingConstants.CENTER );
 		moveCL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
@@ -847,11 +933,19 @@ public class Menu implements ActionListener, MouseListener{
 		whotitCL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
 		whotitCL.setForeground( Color.white );
 		
+		scoreCL.setBounds( 470, 200, 240, 35 );
+		scoreCL.setHorizontalAlignment( SwingConstants.CENTER );
+		scoreCL.setFont( new Font( "Calibri", Font.BOLD, 35 ) );
+		scoreCL.setForeground( Color.white );
+		scoreCL.setText( points + score );
+		scoreCL.setVisible( false );
+		
 		classicBackL.add( backClassicB );
 		classicBackL.add( backClassicB2 );
 		classicBackL.add( xobuttonCL );
 		classicBackL.add( moveCL );
 		classicBackL.add( whotitCL );
+		classicBackL.add( scoreCL );
 		
 		classicBackL.setLayout( null );
 		classicBackL.setBounds( 0, 0, 750, 500 );
@@ -943,38 +1037,67 @@ public class Menu implements ActionListener, MouseListener{
 	
 	/**
 	 * @brief runs the classic game variant
-	 * 
-	 * @param mode - 0 for two players mode and 1, 2, 3 for single with different difficulty levels
 	 */
-	void classic_game( int mode ){
+	void classic_game(){
+		if( !winner ) {
+			classicBackL.setVisible( true );
+			begin();
+			if( mode >= 1 ) scoreCL.setVisible( true );
+		}
+		else if( winner ) {
+			backClassicB.setEnabled( false );
+			backClassicB2.setFocusable( false );
+			whotitCL.setVisible( false );
+			winnerCB.setVisible( true );
+			
+			if( Xturn ) {
+				winnerCL.setText( Xplayer + " won!" );
+				if( user == 'X' ) {
+					if( mode == 1 ) score = score + 10;
+					else if( mode == 2 ) score = score + 30;
+					else score = score + 50;
+				}
+				
+			}
+			else {
+				winnerCL.setText( Oplayer + " won!" );
+				if( user == 'O' ) {
+					if( mode == 1 ) score = score + 10;
+					else if( mode == 2 ) score = score + 30;
+					else score = score + 50;
+				}
+			}
+			scoreCL.setText( "score = " + String.valueOf( score ) );
+			winnerCL.setVisible( true );
+			score = score + list.dat.get( name );
+			if( score >= 9999 ) score = 9999;
+			list.dat.put( name, score );
+			game = 0;
+			score = 0;
+			mode = 4;
+			mode = 2;
+			winner = false;
+			//menuBackL.setVisible( true );
+		}
 		
-		classicBackL.setVisible( true );
-		begin( mode );
-		
-		
-		score = score + list.dat.get( name );
-		list.dat.put( name, score );
-		game = 0;
-		score = 0;
-		//menuBackL.setVisible( true );
 		
 	}
 	
 	/**
 	 * @brief runs the 9 in 1 game variant
-	 * 
-	 * @param mode - 0 for two players mode and 1, 2, 3 for single with different difficulty levels
 	 */
-	void nino_game( int mode ) {
+	void nino_game() {
 		
 		ninoBackL.setVisible( true );
-		begin( mode );
+		begin();
 		if( mode >= 1 ) scoreNL.setVisible( true );
 		
 		score = score + list.dat.get( name );
 		list.dat.put( name, score );
 		game = 0;
 		score = 0;
+		mode = 4;
+		opt = 2;
 		//menuBackL.setVisible( true ); 
 		
 	}
@@ -983,10 +1106,8 @@ public class Menu implements ActionListener, MouseListener{
 	 * @brief decides who starts, and with which elem
 	 * 0 - X begins, 1 - O begins
 	 * 0 - the logged user begins, 1 - computer (1) or their friend (0) begins
-	 * 
-	 * @param mode - if the game is single or for two players 
 	 */
-	void begin( int mode ) {
+	void begin() {
 		if( random.nextInt( 2 ) == 0 ) Xturn = true;
 		else Xturn = false;
 			
@@ -1030,36 +1151,39 @@ public class Menu implements ActionListener, MouseListener{
 				else moveNL.setText( "computer" );
 			}
 		}
+		
+		if( Xplayer == name ) user = 'X';
+		else user = 'O';
 	}
 	
 	boolean check() {
 		for( int i = 0; i < 3; i++ ) {
 			if( xoclassicB[0 + ( i * 3 )].getText() != "" && xoclassicB[0 + ( i * 3 )].getText() == xoclassicB[1 + ( i * 3 )].getText() && xoclassicB[1 + ( i * 3 )].getText() == xoclassicB[2 + ( i * 3 )].getText() ) { //rows
-				if( xoclassicB[0 + ( i * 3 )].getText() == "X" ) xwin( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
-				else owin( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
+				if( xoclassicB[0 + ( i * 3 )].getText() == "X" ) win( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
+				else win( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
 				return true;
 			}
 			
 			if( xoclassicB[0 + i].getText() != "" && xoclassicB[0 + i].getText() == xoclassicB[3 + i].getText() && xoclassicB[3 + i].getText() == xoclassicB[6 + i].getText() ) { //columns
-				if( xoclassicB[0 + i].getText() == "X" ) xwin( 0 + i, 3 + i, 6 + i );
-				else owin( 0 + i, 3 + i, 6 + i );
+				if( xoclassicB[0 + i].getText() == "X" ) win( 0 + i, 3 + i, 6 + i );
+				else win( 0 + i, 3 + i, 6 + i );
 				return true;
 			}
 		}
 		if( xoclassicB[0].getText() != "" && xoclassicB[0].getText() == xoclassicB[4].getText() && xoclassicB[4].getText() == xoclassicB[8].getText() ) { //diagonals
-			if( xoclassicB[0].getText() == "X" ) xwin( 0, 4, 8 );
-			else owin( 0, 4, 8 );
+			if( xoclassicB[0].getText() == "X" ) win( 0, 4, 8 );
+			else win( 0, 4, 8 );
 			return true;
 		}
 		if( xoclassicB[2].getText() != "" && xoclassicB[2].getText() == xoclassicB[4].getText() && xoclassicB[4].getText() == xoclassicB[6].getText() ) { //diagonals
-			if( xoclassicB[2].getText() == "X" ) xwin( 2, 4, 6 );
-			else owin( 2, 4, 6 );
+			if( xoclassicB[2].getText() == "X" ) win( 2, 4, 6 );
+			else win( 2, 4, 6 );
 			return true;
 		}
 		return false;
 	}
 	
-	void xwin( int a, int b, int c) {
+	void win( int a, int b, int c) {
 		xoclassicB[a].setBackground(new Color( 0, 255, 0 ) );
 		xoclassicB[b].setBackground(new Color( 0, 255, 0 ) );
 		xoclassicB[c].setBackground(new Color( 0, 255, 0 ) );
@@ -1067,20 +1191,12 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 9; i++ ) {
 			xoclassicB[i].setEnabled( false );
 		}
-		//pop up window for winner and go back to menu
+		winner = true;
+		
+		if( opt == 0 ) classic_game();
+		else nino_game();
 	}
 	
-	void owin( int a, int b, int c) {
-		xoclassicB[a].setBackground(new Color( 0, 255, 0 ) );
-		xoclassicB[b].setBackground(new Color( 0, 255, 0 ) );
-		xoclassicB[c].setBackground(new Color( 0, 255, 0 ) );
-		
-		for( int i = 0; i < 9; i++ ) {
-			xoclassicB[i].setEnabled( false );
-		}
-		//pop up window for winner and go back to menu
-		
-	}
 	
 
 	
