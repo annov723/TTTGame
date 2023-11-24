@@ -1358,6 +1358,299 @@ public class Menu implements ActionListener, MouseListener{
 	}
 	
 	void classic_hard() {
+		String comp_who, user_who;
+		if( user == 'X' ) {
+			comp_who = "O";
+			user_who = "X";
+		}
+		else{
+			comp_who = "X";
+			user_who = "O";
+		}
+		
+		//first step -> computer is trying to win
+		for( int i = 0; i < 3; i++ ) {
+			if( xoclassicB[i * 3].getText() == comp_who && xoclassicB[1 + ( i * 3 )].getText() == comp_who && xoclassicB[2 + ( i * 3 )].getText() == "" ) {
+				xoclassicB[2 + ( i * 3 )].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoclassicB[1 + ( i * 3 )].getText() == comp_who && xoclassicB[2 + ( i * 3 )].getText() == comp_who && xoclassicB[i * 3].getText() == "" ) {
+				xoclassicB[i * 3].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoclassicB[i].getText() == comp_who && xoclassicB[3 + i].getText() == comp_who && xoclassicB[6 + i].getText() == "" ) {
+				xoclassicB[6 + i].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoclassicB[6 + i].getText() == comp_who && xoclassicB[3 + i].getText() == comp_who && xoclassicB[i].getText() == "" ) {
+				xoclassicB[i].setText( comp_who );
+				return;
+			}
+		}
+		
+		if( xoclassicB[0].getText() == comp_who && xoclassicB[4].getText() == comp_who  && xoclassicB[8].getText() == "" ) {
+			xoclassicB[8].setText( comp_who );
+			return;
+		}
+		if( xoclassicB[4].getText() == comp_who && xoclassicB[8].getText() == comp_who  && xoclassicB[0].getText() == "" ) {
+			xoclassicB[0].setText( comp_who );
+			return;
+		}
+		if( xoclassicB[2].getText() == comp_who && xoclassicB[4].getText() == comp_who && xoclassicB[6].getText() == "" ) {
+			xoclassicB[6].setText( comp_who );
+			return;
+		}
+		if( xoclassicB[4].getText() == comp_who && xoclassicB[6].getText() == comp_who && xoclassicB[2].getText() == "" ) {
+			xoclassicB[2].setText( comp_who );
+			return;
+		}
+		
+		//second step -> computer is trying not to let the user win
+		for( int i = 0; i < 3; i++ ) {
+			if( xoclassicB[i * 3].getText() == user_who && xoclassicB[1 + ( i * 3 )].getText() == user_who && xoclassicB[2 + ( i * 3 )].getText() == "" ) {
+				xoclassicB[2 + ( i * 3 )].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoclassicB[1 + ( i * 3 )].getText() == user_who && xoclassicB[2 + ( i * 3 )].getText() == user_who && xoclassicB[i * 3].getText() == "" ) {
+				xoclassicB[i * 3].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoclassicB[i].getText() == user_who && xoclassicB[3 + i].getText() == user_who && xoclassicB[6 + i].getText() == "" ) {
+				xoclassicB[6 + i].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoclassicB[6 + i].getText() == user_who && xoclassicB[3 + i].getText() == user_who && xoclassicB[i].getText() == "" ) {
+				xoclassicB[i].setText( comp_who );
+				return;
+			}
+		}
+				
+		if( xoclassicB[0].getText() == user_who && xoclassicB[4].getText() == user_who && xoclassicB[8].getText() == "" ) {
+			xoclassicB[8].setText( comp_who );
+			return;
+		}
+		if( xoclassicB[4].getText() == user_who && xoclassicB[8].getText() == user_who && xoclassicB[0].getText() == "" ) {
+			xoclassicB[0].setText( comp_who );
+			return;
+		}
+		if( xoclassicB[2].getText() == user_who && xoclassicB[4].getText() == user_who && xoclassicB[6].getText() == "" ) {
+			xoclassicB[6].setText( comp_who );
+			return;
+		}
+		if( xoclassicB[4].getText() == user_who && xoclassicB[6].getText() == user_who && xoclassicB[2].getText() == "" ) {
+			xoclassicB[2].setText( comp_who );
+			return;
+		}
+		
+		//third step -> computer is trying to draw its mark to make the line with another one, using random (don't wanna make every game the same)
+		int counter = 0;
+		while( counter != 9 ) {
+			int pick1 = random.nextInt( 9 );
+			int pick2;
+			int[] pick_arr0 = { 0, 0, 0 };
+			int[] pick_arr1 = { 0, 0, 0, 0, 0 };
+			int[] pick_arr2 = { 0, 0, 0 };
+			int[] pick_arr3 = { 0, 0, 0, 0, 0 };
+			int[] pick_arr4 = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			int[] pick_arr5 = { 0, 0, 0, 0, 0 };
+			int[] pick_arr6 = { 0, 0, 0 };
+			int[] pick_arr7 = { 0, 0, 0, 0, 0 };
+			int[] pick_arr8 = { 0, 0, 0 };
+			
+			switch( pick1 ) {
+			case 0:
+				if( xoclassicB[0].getText() == comp_who ) {
+					for( int i = 0; i < 4; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr0[pick2] == 0 ) {
+								pick_arr0[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoclassicB[1 + pick2].getText() == "" ) {
+							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+			case 1:
+				if( xoclassicB[0].getText() == comp_who ) {
+					for( int i = 0; i < 4; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr1[pick2] == 0 ) {
+								pick_arr1[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoclassicB[1 + pick2].getText() == "" ) {
+							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 2:
+				if( xoclassicB[0].getText() == comp_who ) {
+					for( int i = 0; i < 4; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr2[pick2] == 0 ) {
+								pick_arr2[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoclassicB[1 + pick2].getText() == "" ) {
+							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 3:
+				if( xoclassicB[0].getText() == comp_who ) {
+					for( int i = 0; i < 4; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr3[pick2] == 0 ) {
+								pick_arr3[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoclassicB[1 + pick2].getText() == "" ) {
+							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 4:
+				if( xoclassicB[0].getText() == comp_who ) {
+					for( int i = 0; i < 4; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr4[pick2] == 0 ) {
+								pick_arr4[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoclassicB[1 + pick2].getText() == "" ) {
+							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 5:
+				if( xoclassicB[0].getText() == comp_who ) {
+					for( int i = 0; i < 4; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr5[pick2] == 0 ) {
+								pick_arr5[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoclassicB[1 + pick2].getText() == "" ) {
+							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 6:
+				if( xoclassicB[0].getText() == comp_who ) {
+					for( int i = 0; i < 4; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr6[pick2] == 0 ) {
+								pick_arr6[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoclassicB[1 + pick2].getText() == "" ) {
+							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 7:
+				if( xoclassicB[0].getText() == comp_who ) {
+					for( int i = 0; i < 4; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr7[pick2] == 0 ) {
+								pick_arr7[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoclassicB[1 + pick2].getText() == "" ) {
+							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 8:
+				if( xoclassicB[0].getText() == comp_who ) {
+					for( int i = 0; i < 4; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr8[pick2] == 0 ) {
+								pick_arr8[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoclassicB[1 + pick2].getText() == "" ) {
+							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			default:
+				break;					
+			}
+			
+			counter++;
+		}
+		
+		//forth step - the only option is to pick randomly
+		classic_easy();
+		
+		
 		
 	}
 	
