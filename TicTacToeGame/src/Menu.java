@@ -1456,23 +1456,23 @@ public class Menu implements ActionListener, MouseListener{
 		
 		//third step -> computer is trying to draw its mark to make the line with another one, using random (don't wanna make every game the same)
 		int counter = 0;
+		int[] pick_arr0 = { 0, 0, 0 };
+		int[] pick_arr1 = { 0, 0, 0, 0, 0 };
+		int[] pick_arr2 = { 0, 0, 0 };
+		int[] pick_arr3 = { 0, 0, 0, 0, 0 };
+		int[] pick_arr4 = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		int[] pick_arr5 = { 0, 0, 0, 0, 0 };
+		int[] pick_arr6 = { 0, 0, 0 };
+		int[] pick_arr7 = { 0, 0, 0, 0, 0 };
+		int[] pick_arr8 = { 0, 0, 0 };
 		while( counter != 9 ) {
 			int pick1 = random.nextInt( 9 );
 			int pick2;
-			int[] pick_arr0 = { 0, 0, 0 };
-			int[] pick_arr1 = { 0, 0, 0, 0, 0 };
-			int[] pick_arr2 = { 0, 0, 0 };
-			int[] pick_arr3 = { 0, 0, 0, 0, 0 };
-			int[] pick_arr4 = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-			int[] pick_arr5 = { 0, 0, 0, 0, 0 };
-			int[] pick_arr6 = { 0, 0, 0 };
-			int[] pick_arr7 = { 0, 0, 0, 0, 0 };
-			int[] pick_arr8 = { 0, 0, 0 };
 			
 			switch( pick1 ) {
 			case 0:
 				if( xoclassicB[0].getText() == comp_who ) {
-					for( int i = 0; i < 4; i++ ) {
+					for( int i = 0; i < 3; i++ ) {
 						while( true ) {
 							pick2 = random.nextInt( 3 );
 							if( pick_arr0[pick2] == 0 ) {
@@ -1488,19 +1488,20 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 				break;
+				
 			case 1:
-				if( xoclassicB[0].getText() == comp_who ) {
-					for( int i = 0; i < 4; i++ ) {
+				if( xoclassicB[1].getText() == comp_who ) {
+					for( int i = 0; i < 5; i++ ) {
 						while( true ) {
-							pick2 = random.nextInt( 3 );
+							pick2 = random.nextInt( 5 );
 							if( pick_arr1[pick2] == 0 ) {
 								pick_arr1[pick2] = 1;
 								break;
 							}
 						}
 						
-						if( xoclassicB[1 + pick2].getText() == "" ) {
-							xoclassicB[1 + pick2].setText( comp_who );
+						if( xoclassicB[(2 + pick2) % 6].getText() == "" ) {
+							xoclassicB[( 2 + pick2 ) % 6].setText( comp_who );
 							return;
 						}
 					}
@@ -1508,8 +1509,8 @@ public class Menu implements ActionListener, MouseListener{
 				break;
 				
 			case 2:
-				if( xoclassicB[0].getText() == comp_who ) {
-					for( int i = 0; i < 4; i++ ) {
+				if( xoclassicB[2].getText() == comp_who ) {
+					for( int i = 0; i < 3; i++ ) {
 						while( true ) {
 							pick2 = random.nextInt( 3 );
 							if( pick_arr2[pick2] == 0 ) {
@@ -1518,8 +1519,12 @@ public class Menu implements ActionListener, MouseListener{
 							}
 						}
 						
-						if( xoclassicB[1 + pick2].getText() == "" ) {
-							xoclassicB[1 + pick2].setText( comp_who );
+						if( pick2 == 0 && xoclassicB[1].getText() == "" ) {
+							xoclassicB[1].setText( comp_who );
+							return;
+						}
+						if( pick2 != 0 && xoclassicB[2 + pick2].getText() == "" ) {
+							xoclassicB[2 + pick2].setText( comp_who );
 							return;
 						}
 					}
@@ -1527,18 +1532,22 @@ public class Menu implements ActionListener, MouseListener{
 				break;
 				
 			case 3:
-				if( xoclassicB[0].getText() == comp_who ) {
-					for( int i = 0; i < 4; i++ ) {
+				if( xoclassicB[3].getText() == comp_who ) {
+					for( int i = 0; i < 5; i++ ) {
 						while( true ) {
-							pick2 = random.nextInt( 3 );
+							pick2 = random.nextInt( 5 );
 							if( pick_arr3[pick2] == 0 ) {
 								pick_arr3[pick2] = 1;
 								break;
 							}
 						}
 						
-						if( xoclassicB[1 + pick2].getText() == "" ) {
-							xoclassicB[1 + pick2].setText( comp_who );
+						if( pick2 < 4 && xoclassicB[( 6 + pick2 ) % 8 ].getText() == "" ) {
+							xoclassicB[( 6 + pick2 ) % 8 ].setText( comp_who );
+							return;
+						}
+						if( pick2 == 4 && xoclassicB[4].getText() == "" ) {
+							xoclassicB[4].setText( comp_who );
 							return;
 						}
 					}
@@ -1649,8 +1658,6 @@ public class Menu implements ActionListener, MouseListener{
 		
 		//forth step - the only option is to pick randomly
 		classic_easy();
-		
-		
 		
 	}
 	
