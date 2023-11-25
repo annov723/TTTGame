@@ -1481,8 +1481,12 @@ public class Menu implements ActionListener, MouseListener{
 							}
 						}
 						
-						if( xoclassicB[1 + pick2].getText() == "" ) {
-							xoclassicB[1 + pick2].setText( comp_who );
+						if( pick2 == 0 && xoclassicB[0].getText() == "" ) {
+							xoclassicB[0].setText( comp_who );
+							return;
+						}
+						if( xoclassicB[2 + pick2].getText() == "" ) {
+							xoclassicB[2 + pick2].setText( comp_who );
 							return;
 						}
 					}
@@ -1523,8 +1527,8 @@ public class Menu implements ActionListener, MouseListener{
 							xoclassicB[1].setText( comp_who );
 							return;
 						}
-						if( pick2 != 0 && xoclassicB[2 + pick2].getText() == "" ) {
-							xoclassicB[2 + pick2].setText( comp_who );
+						if( pick2 != 0 && xoclassicB[3 + pick2].getText() == "" ) {
+							xoclassicB[3 + pick2].setText( comp_who );
 							return;
 						}
 					}
@@ -1542,12 +1546,16 @@ public class Menu implements ActionListener, MouseListener{
 							}
 						}
 						
-						if( pick2 < 4 && xoclassicB[( 6 + pick2 ) % 8 ].getText() == "" ) {
-							xoclassicB[( 6 + pick2 ) % 8 ].setText( comp_who );
+						if( pick2 < 2 && xoclassicB[pick2].getText() == "" ) {
+							xoclassicB[pick2].setText( comp_who );
 							return;
 						}
-						if( pick2 == 4 && xoclassicB[4].getText() == "" ) {
+						if( pick2 == 2 && xoclassicB[4].getText() == "" ) {
 							xoclassicB[4].setText( comp_who );
+							return;
+						}
+						if( pick2 > 2 && xoclassicB[3 + pick2].getText() == "" ) {
+							xoclassicB[3 + pick2].setText( comp_who );
 							return;
 						}
 					}
@@ -1555,18 +1563,18 @@ public class Menu implements ActionListener, MouseListener{
 				break;
 				
 			case 4:
-				if( xoclassicB[0].getText() == comp_who ) {
-					for( int i = 0; i < 4; i++ ) {
+				if( xoclassicB[4].getText() == comp_who ) {
+					for( int i = 0; i < 8; i++ ) {
 						while( true ) {
-							pick2 = random.nextInt( 3 );
+							pick2 = random.nextInt( 8 );
 							if( pick_arr4[pick2] == 0 ) {
 								pick_arr4[pick2] = 1;
 								break;
 							}
 						}
 						
-						if( xoclassicB[1 + pick2].getText() == "" ) {
-							xoclassicB[1 + pick2].setText( comp_who );
+						if( xoclassicB[( 5 + pick2 ) % 10].getText() == "" ) {
+							xoclassicB[( 5 + pick2 ) % 10].setText( comp_who );
 							return;
 						}
 					}
@@ -1574,18 +1582,26 @@ public class Menu implements ActionListener, MouseListener{
 				break;
 				
 			case 5:
-				if( xoclassicB[0].getText() == comp_who ) {
-					for( int i = 0; i < 4; i++ ) {
+				if( xoclassicB[5].getText() == comp_who ) {
+					for( int i = 0; i < 5; i++ ) {
 						while( true ) {
-							pick2 = random.nextInt( 3 );
+							pick2 = random.nextInt( 5 );
 							if( pick_arr5[pick2] == 0 ) {
 								pick_arr5[pick2] = 1;
 								break;
 							}
 						}
 						
-						if( xoclassicB[1 + pick2].getText() == "" ) {
+						if( pick2 < 2 && xoclassicB[1 + pick2].getText() == "" ) {
 							xoclassicB[1 + pick2].setText( comp_who );
+							return;
+						}
+						if( pick2 == 2 && xoclassicB[4].getText() == "" ) {
+							xoclassicB[4].setText( comp_who );
+							return;
+						}
+						if( pick2 > 2 && xoclassicB[4 + pick2].getText() == "" ) {
+							xoclassicB[4 + pick2].setText( comp_who );
 							return;
 						}
 					}
@@ -1593,8 +1609,8 @@ public class Menu implements ActionListener, MouseListener{
 				break;
 				
 			case 6:
-				if( xoclassicB[0].getText() == comp_who ) {
-					for( int i = 0; i < 4; i++ ) {
+				if( xoclassicB[6].getText() == comp_who ) {
+					for( int i = 0; i < 3; i++ ) {
 						while( true ) {
 							pick2 = random.nextInt( 3 );
 							if( pick_arr6[pick2] == 0 ) {
@@ -1603,8 +1619,12 @@ public class Menu implements ActionListener, MouseListener{
 							}
 						}
 						
-						if( xoclassicB[1 + pick2].getText() == "" ) {
-							xoclassicB[1 + pick2].setText( comp_who );
+						if( pick2 == 2 && xoclassicB[7].getText() == "" ) {
+							xoclassicB[7].setText( comp_who );
+							return;
+						}
+						if( pick2 < 2 && xoclassicB[pick2 + 3].getText() == "" ) {
+							xoclassicB[pick2 + 3].setText( comp_who );
 							return;
 						}
 					}
@@ -1612,18 +1632,22 @@ public class Menu implements ActionListener, MouseListener{
 				break;
 				
 			case 7:
-				if( xoclassicB[0].getText() == comp_who ) {
-					for( int i = 0; i < 4; i++ ) {
+				if( xoclassicB[7].getText() == comp_who ) {
+					for( int i = 0; i < 5; i++ ) {
 						while( true ) {
-							pick2 = random.nextInt( 3 );
+							pick2 = random.nextInt( 5 );
 							if( pick_arr7[pick2] == 0 ) {
 								pick_arr7[pick2] = 1;
 								break;
 							}
 						}
 						
-						if( xoclassicB[1 + pick2].getText() == "" ) {
-							xoclassicB[1 + pick2].setText( comp_who );
+						if( pick2 < 4 && xoclassicB[pick2 + 3].getText() == "" ) {
+							xoclassicB[pick2 + 3].setText( comp_who );
+							return;
+						}
+						if( pick2 == 4 && xoclassicB[8].getText() == "" ) {
+							xoclassicB[8].setText( comp_who );
 							return;
 						}
 					}
@@ -1631,8 +1655,8 @@ public class Menu implements ActionListener, MouseListener{
 				break;
 				
 			case 8:
-				if( xoclassicB[0].getText() == comp_who ) {
-					for( int i = 0; i < 4; i++ ) {
+				if( xoclassicB[8].getText() == comp_who ) {
+					for( int i = 0; i < 3; i++ ) {
 						while( true ) {
 							pick2 = random.nextInt( 3 );
 							if( pick_arr8[pick2] == 0 ) {
@@ -1641,8 +1665,12 @@ public class Menu implements ActionListener, MouseListener{
 							}
 						}
 						
-						if( xoclassicB[1 + pick2].getText() == "" ) {
-							xoclassicB[1 + pick2].setText( comp_who );
+						if( pick2 == 2 && xoclassicB[7].getText() == "" ) {
+							xoclassicB[7].setText( comp_who );
+							return;
+						}
+						if( pick2 < 2 && xoclassicB[4 + pick2].getText() == "" ) {
+							xoclassicB[4 + pick2].setText( comp_who );
 							return;
 						}
 					}
