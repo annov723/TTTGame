@@ -1,8 +1,14 @@
 Aww:0
 kk:10
-A:410
-Bartus:1500
+A:480
+rob:0
 Loki:450
-Ania:210
+apup:60
 kkk:110
 jjj:0
+Bartus:1500
+bob:0
+appus:0
+5u5:30
+appupapip:30
+Ania:210

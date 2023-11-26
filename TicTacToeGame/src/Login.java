@@ -121,7 +121,7 @@ public class Login implements ActionListener, MouseListener{
 				txtF.setText( "" );
 			}
 			else if( a == -1 ) {
-				frame.dispose(); //Login window disappears	
+				frame.dispose(); //Login window disappears
 				Menu menu = new Menu( name ); //Menu opens
 			}
 			else {
