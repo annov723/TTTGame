@@ -93,7 +93,8 @@ public class Menu implements ActionListener, MouseListener{
 	
 	//classic and 9 in 1 games buttons
 	JButton[] xoclassicB = new JButton[9]; //X and O buttons
-	JButton[] xoninoB = new JButton[9];
+	JButton[][] xoninoB = new JButton[9][9];
+	JButton[] xoninoFB = new JButton[9];
 	JLabel xobuttonCL = new JLabel( new ImageIcon( "tttboard.png" ) ); //board for O and X 
 	JLabel xobuttonNL = new JLabel( new ImageIcon( "tttboard.png" ) );
 	JLabel moveCL = new JLabel(); //whose move is now
@@ -122,6 +123,9 @@ public class Menu implements ActionListener, MouseListener{
 	char user;
 	boolean winner = false;
 	int mode; //if we have single, two player easy, medium or hard mode (0 for two players mode and 1, 2, 3 for single with different difficulty levels)
+	
+	//variables for nino game
+	int sq = 4; //in which "square" the game is going on, every time starting square is the one in the middle
 	
 	//ranking stuff
 	int num = list.dat.size();
@@ -319,7 +323,7 @@ public class Menu implements ActionListener, MouseListener{
 			}
 		}
 		
-		
+		//classic mode buttons loop
 		for( int i = 0; i < 9; i++ ) {
 			if( e.getSource() == xoclassicB[i] ) {
 				if( Xturn ) {
@@ -356,13 +360,60 @@ public class Menu implements ActionListener, MouseListener{
 								Xturn = true;
 								if( !checkc() ) Xturn = false;								
 							}
-							
 						}
 					}
 				}
 			}
-			
 		}
+		
+		//nino mode buttons loop - it has to change the sq value and force user to play in the correct "big"square!
+		for( int i = 0; i < 9; i++ ) {
+			if( e.getSource() == xoninoB[sq][i] ) {
+				if( Xturn ) {
+					if( xoninoB[sq][i].getText() == "" ) {
+						xoninoB[sq][i].setText( "X" );
+						checkn();
+						if( !checknF() ) {
+							if( mode == 0 ) {
+								Xturn = false;
+								moveCL.setText( Oplayer );
+							}
+							else {
+								if( mode == 1 ) nino_easy();
+								else if( mode == 2 ) nino_medium();
+								else nino_hard();
+								Xturn = false;
+								if( !checknF() ) Xturn = true;
+							}
+						}
+						sq = i;
+						//now it must enable unused "big" squares
+					}
+				}
+				else {
+					if( xoninoB[sq][i].getText() == "" ) {
+						xoninoB[sq][i].setText( "O" );
+						checkn();
+						if( !checknF() ) {
+							if( mode == 0 ) {
+								Xturn = true;
+								moveCL.setText( Xplayer );
+							}
+							else {
+								if( mode == 1 ) nino_easy();
+								else if( mode == 2 ) nino_medium();
+								else nino_hard();
+								Xturn = true;
+								if( !checknF() ) Xturn = false;								
+							}
+						}
+						sq = i;
+						//now it must enable unused "big" squares!!!
+					}
+				}
+			}
+		}
+		
 		
 		//go back to menu after the classic game
 		if( e.getSource() == winnerCB2 ) {
@@ -1085,15 +1136,29 @@ public class Menu implements ActionListener, MouseListener{
 		xobuttonNL.add( winnerLB2 );
 		
 		for( int i = 0; i < 9; i++ ) {
-			xoninoB[i] = new JButton();
-			xoninoB[i].setFont( new Font( "Ink Free", Font.BOLD, 90 ) ); //Comic Sans, Forte, MV Boli, Segoe UI Black
-			xoninoB[i].setContentAreaFilled( false );
-			xoninoB[i].setFocusable( false );
-			xoninoB[i].setBorder( null );
-			xoninoB[i].setBounds( 140 * ( i % 3 ) , 140 * Integer.valueOf( i / 3 ), 140, 140 );
-			xoninoB[i].addActionListener( this );
+			for( int j = 0; j < 9; j++ ) {
+				xoninoB[i][j] = new JButton();
+				xoninoB[i][j].setFont( new Font( "Ink Free", Font.BOLD, 10 ) ); //Comic Sans, Forte, MV Boli, Segoe UI Black
+				xoninoB[i][j].setContentAreaFilled( false );
+				xoninoB[i][j].setFocusable( false );
+				xoninoB[i][j].setBorder( null );
+				xoninoB[i][j].setBounds( 140 * ( i % 3 ) + 46 * ( j % 3 ) , 140 * Integer.valueOf( i / 3 ) + 46 * Integer.valueOf( j / 3 ), 46, 46 );
+				xoninoB[i][j].addActionListener( this );
+				
+				xobuttonNL.add( xoninoB[i][j] );
+			}
+		}
+		
+		for( int i = 0; i < 9; i++ ) {
+			xoninoFB[i] = new JButton();
+			xoninoFB[i].setFont( new Font( "Ink Free", Font.BOLD, 90 ) ); //Comic Sans, Forte, MV Boli, Segoe UI Black
+			xoninoFB[i].setContentAreaFilled( false );
+			xoninoFB[i].setFocusable( false );
+			xoninoFB[i].setBorder( null );
+			xoninoFB[i].setBounds( 140 * ( i % 3 ) , 140 * Integer.valueOf( i / 3 ), 140, 140 );
+			xoninoFB[i].addActionListener( this );
 			
-			xobuttonNL.add( xoninoB[i] );
+			xobuttonNL.add( xoninoFB[i] );
 		}
 		
 		/*whose turn label*/
@@ -1197,7 +1262,6 @@ public class Menu implements ActionListener, MouseListener{
 			winnerCB.setVisible( true );
 		}
 		
-		
 	}
 	
 	/**
@@ -1205,15 +1269,77 @@ public class Menu implements ActionListener, MouseListener{
 	 */
 	void nino_game() {
 		
-		ninoBackL.setVisible( true );
-		begin();
-		if( mode >= 1 ) scoreNL.setVisible( true );
-		
-		score = score + list.dat.get( name );
-		list.dat.put( name, score );
-		game = 0;
-		score = 0;
-		mode = 4;
+		if( !winner ) {
+			sq = 4;
+			for( int i = 0; i < 9; i++ ) {
+				for( int j = 0; j < 9; j++ ) {
+					xoninoB[i][j].setText( "" );
+					xoninoB[i][j].setEnabled( false );
+					xoninoB[i][j].setVisible( true );
+				}
+			}
+			for( int j = 0; j < 9; j++ ) {
+				xoninoB[sq][j].setText( "" );
+				xoninoB[sq][j].setEnabled( true );
+				xoninoB[sq][j].setVisible( true );
+			}
+			for( int i = 0; i < 9; i++ ) {
+				xoninoFB[i].setText( "" );
+				xoninoFB[i].setEnabled( false );
+				xoninoFB[i].setVisible( false );
+			}
+			backNinoB2.setVisible( false );
+			backNinoB.setEnabled( true );
+			backNinoB2.setEnabled( true );
+			winnerNL.setVisible( false );
+			winnerLB2.setVisible( false );
+			winnerLB.setVisible( false );
+			scoreNL.setText( points + score );
+			moveNL.setVisible( true );
+			
+			ninoBackL.setVisible( true );
+			
+			begin();
+			if( mode >= 1 ) scoreNL.setVisible( true );
+		}
+		else if( winner ) {
+			backNinoB.setEnabled( false );
+			backNinoB2.setEnabled( false );
+			moveNL.setVisible( false );
+			
+			if( Xturn ) {
+				winnerNL.setText( Xplayer + " won!" );
+				if( user == 'X' ) {
+					if( mode == 1 ) score = score + 10;
+					else if( mode == 2 ) score = score + 30;
+					else score = score + 50;
+				}
+				
+			}
+			else {
+				winnerNL.setText( Oplayer + " won!" );
+				if( user == 'O' ) {
+					if( mode == 1 ) score = score + 10;
+					else if( mode == 2 ) score = score + 30;
+					else score = score + 50;
+				}
+			}
+			
+			if( mode != 0 ) {
+				scoreNL.setText( points + String.valueOf( score ) );
+				score = score + list.dat.get( name );
+				if( score > 9999 ) score = 9999;
+				list.dat.put( name, score );
+			}
+			
+			winnerNL.setVisible( true );
+			
+			game = 0;
+			score = 0;
+			mode = 4;
+			
+			winnerLB.setVisible( true );
+		}
 		
 	}
 	
@@ -1277,7 +1403,9 @@ public class Menu implements ActionListener, MouseListener{
 				else classic_hard();
 			}
 			else {
-				//nino game options 
+				if( mode == 1 ) nino_easy();
+				else if( mode == 2 ) nino_medium();
+				else nino_hard();
 			}
 			
 			Xturn = false;
@@ -1292,7 +1420,9 @@ public class Menu implements ActionListener, MouseListener{
 				else classic_hard();
 			}
 			else {
-				//nino game options
+				if( mode == 1 ) nino_easy();
+				else if( mode == 2 ) nino_medium();
+				else nino_hard();
 			}
 			
 			Xturn = true;
@@ -1303,8 +1433,10 @@ public class Menu implements ActionListener, MouseListener{
 		System.out.println( "jaki znak ma user?" + user );
 	}
 	
+	
+	//classic mode methods
 	boolean checkc() {
-		System.out.println( "check" );
+		
 		for( int i = 0; i < 3; i++ ) {
 			if( xoclassicB[0 + ( i * 3 )].getText() != "" && xoclassicB[0 + ( i * 3 )].getText() == xoclassicB[1 + ( i * 3 )].getText() && xoclassicB[1 + ( i * 3 )].getText() == xoclassicB[2 + ( i * 3 )].getText() ) { //rows
 				winc( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
@@ -1721,6 +1853,473 @@ public class Menu implements ActionListener, MouseListener{
 		int count = random.nextInt( 2 );
 		if( count == 0 ) classic_easy();
 		else classic_hard();
+	}
+	
+	
+	//nino mode methods
+	boolean checkn() {
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][0 + ( i * 3 )].getText() != "" && xoninoB[sq][0 + ( i * 3 )].getText() == xoninoB[sq][1 + ( i * 3 )].getText() && xoninoB[sq][1 + ( i * 3 )].getText() == xoninoB[sq][2 + ( i * 3 )].getText() ) { //rows
+				winn( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
+				return true;
+			}
+			
+			if( xoninoB[sq][0 + i].getText() != "" && xoninoB[sq][0 + i].getText() == xoninoB[sq][3 + i].getText() && xoninoB[sq][3 + i].getText() == xoninoB[sq][6 + i].getText() ) { //columns
+				winn( 0 + i, 3 + i, 6 + i );
+				return true;
+			}
+		}
+		if( xoninoB[sq][0].getText() != "" && xoninoB[sq][0].getText() == xoninoB[sq][4].getText() && xoninoB[sq][4].getText() == xoninoB[sq][8].getText() ) { //diagonals
+			winn( 0, 4, 8 );
+			return true;
+		}
+		if( xoninoB[sq][2].getText() != "" && xoninoB[sq][2].getText() == xoninoB[sq][4].getText() && xoninoB[sq][4].getText() == xoninoB[sq][6].getText() ) { //diagonals
+			winn( 2, 4, 6 );
+			return true;
+		}
+		
+		//we have to check if there is still any chance of winning
+		int draw = 0;
+		for( int i = 0; i < 9; i++ ) {
+			if( xoninoB[sq][i].getText() != "" ) draw++;
+		}
+		if( draw == 9 ) return true; //if we have draw, programme should count it somehow -> special variable for draw
+		
+		return false;
+	}
+	
+	boolean checknF() {
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoFB[0 + ( i * 3 )].getText() != "" && xoninoFB[0 + ( i * 3 )].getText() == xoninoFB[1 + ( i * 3 )].getText() && xoninoFB[1 + ( i * 3 )].getText() == xoninoFB[2 + ( i * 3 )].getText() ) { //rows
+				winnF( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
+				return true;
+			}
+			
+			if( xoninoFB[0 + i].getText() != "" && xoninoFB[0 + i].getText() == xoninoFB[3 + i].getText() && xoninoFB[3 + i].getText() == xoninoFB[6 + i].getText() ) { //columns
+				winnF( 0 + i, 3 + i, 6 + i );
+				return true;
+			}
+		}
+		if( xoninoFB[0].getText() != "" && xoninoFB[0].getText() == xoninoFB[4].getText() && xoninoFB[4].getText() == xoninoFB[8].getText() ) { //diagonals
+			winnF( 0, 4, 8 );
+			return true;
+		}
+		if( xoninoFB[2].getText() != "" && xoninoFB[2].getText() == xoninoFB[4].getText() && xoninoFB[4].getText() == xoninoFB[6].getText() ) { //diagonals
+			winnF( 2, 4, 6 );
+			return true;
+		}
+		
+		//we have to check if there is still any chance of winning
+		int draw = 0;
+		for( int i = 0; i < 9; i++ ) {
+			if( xoninoFB[i].getText() != "" ) draw++;
+		}
+		if( draw == 9 ) return true;
+		
+		return false;
+	}
+	
+	void winn( int a, int b, int c ) {
+		for( int i = 0; i < 9; i++ ) {
+			xoninoB[sq][i].setVisible( false );
+		}
+		xoninoB[sq][a].setVisible( true );
+		xoninoB[sq][b].setVisible( true );
+		xoninoB[sq][c].setVisible( true );
+		xoninoB[sq][a].setEnabled( false );
+		xoninoB[sq][b].setEnabled( false );
+		xoninoB[sq][c].setEnabled( false );
+		
+		if( Xturn ) xoninoFB[sq].setText( "X" );
+		else xoninoFB[sq].setText( "O" );
+		xoninoFB[sq].setVisible( true );
+	}
+	
+	void winnF( int a, int b, int c ) {
+		for( int i = 0; i < 9; i++ ) {
+			xoninoFB[i].setVisible( false );
+		}
+		xoninoFB[a].setVisible( true );
+		xoninoFB[b].setVisible( true );
+		xoninoFB[c].setVisible( true );
+		xoninoFB[a].setEnabled( false );
+		xoninoFB[b].setEnabled( false );
+		xoninoFB[c].setEnabled( false );
+		
+		
+		winner = true;
+		nino_game();
+	}
+	
+	void nino_easy() {
+		while( true ) {
+			int count = random.nextInt( 9 );
+			if( xoninoB[sq][count].getText() == "" ) {
+				if( user == 'X' ) xoninoB[sq][count].setText( "O" );
+				else xoninoB[sq][count].setText( "X" );
+				break;
+			}
+		}
+	}
+	
+	void nino_hard() {
+		String comp_who, user_who;
+		if( user == 'X' ) {
+			comp_who = "O";
+			user_who = "X";
+		}
+		else{
+			comp_who = "X";
+			user_who = "O";
+		}
+		
+		//first step -> computer is trying to win
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][i * 3].getText() == comp_who && xoninoB[sq][1 + ( i * 3 )].getText() == comp_who && xoninoB[sq][2 + ( i * 3 )].getText() == "" ) {
+				xoninoB[sq][2 + ( i * 3 )].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][1 + ( i * 3 )].getText() == comp_who && xoninoB[sq][2 + ( i * 3 )].getText() == comp_who && xoninoB[sq][i * 3].getText() == "" ) {
+				xoninoB[sq][i * 3].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][i * 3].getText() == comp_who && xoninoB[sq][2 + ( i * 3 )].getText() == comp_who && xoninoB[sq][i * 3].getText() == "" ) {
+				xoninoB[sq][1 + (i * 3)].setText( comp_who );
+				return;
+			}
+		}
+		
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][i].getText() == comp_who && xoninoB[sq][3 + i].getText() == comp_who && xoninoB[sq][6 + i].getText() == "" ) {
+				xoninoB[sq][6 + i].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][6 + i].getText() == comp_who && xoninoB[sq][3 + i].getText() == comp_who && xoninoB[sq][i].getText() == "" ) {
+				xoninoB[sq][i].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][i].getText() == comp_who && xoninoB[sq][6 + i].getText() == comp_who && xoninoB[sq][3 + i].getText() == "" ) {
+				xoninoB[sq][3 + i].setText( comp_who );
+				return;
+			}
+		}
+		
+		if( xoninoB[sq][0].getText() == comp_who && xoninoB[sq][4].getText() == comp_who  && xoninoB[sq][8].getText() == "" ) {
+			xoninoB[sq][8].setText( comp_who );
+			return;
+		}
+		if( xoninoB[sq][4].getText() == comp_who && xoninoB[sq][8].getText() == comp_who  && xoninoB[sq][0].getText() == "" ) {
+			xoninoB[sq][0].setText( comp_who );
+			return;
+		}
+		if( xoninoB[sq][0].getText() == comp_who && xoninoB[sq][8].getText() == comp_who  && xoninoB[sq][4].getText() == "" ) {
+			xoninoB[sq][4].setText( comp_who );
+			return;
+		}
+		
+		if( xoninoB[sq][2].getText() == comp_who && xoninoB[sq][4].getText() == comp_who && xoninoB[sq][6].getText() == "" ) {
+			xoninoB[sq][6].setText( comp_who );
+			return;
+		}
+		if( xoninoB[sq][4].getText() == comp_who && xoninoB[sq][6].getText() == comp_who && xoninoB[sq][2].getText() == "" ) {
+			xoninoB[sq][2].setText( comp_who );
+			return;
+		}
+		if( xoninoB[sq][2].getText() == comp_who && xoninoB[sq][6].getText() == comp_who && xoninoB[sq][4].getText() == "" ) {
+			xoninoB[sq][4].setText( comp_who );
+			return;
+		}
+		
+		//second step -> computer is trying not to let the user win
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][i * 3].getText() == user_who && xoninoB[sq][1 + ( i * 3 )].getText() == user_who && xoninoB[sq][2 + ( i * 3 )].getText() == "" ) {
+				xoninoB[sq][2 + ( i * 3 )].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][1 + ( i * 3 )].getText() == user_who && xoninoB[sq][2 + ( i * 3 )].getText() == user_who && xoninoB[sq][i * 3].getText() == "" ) {
+				xoninoB[sq][i * 3].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][i].getText() == user_who && xoninoB[sq][3 + i].getText() == user_who && xoninoB[sq][6 + i].getText() == "" ) {
+				xoninoB[sq][6 + i].setText( comp_who );
+				return;
+			}
+		}
+		for( int i = 0; i < 3; i++ ) {
+			if( xoninoB[sq][6 + i].getText() == user_who && xoninoB[sq][3 + i].getText() == user_who && xoninoB[sq][i].getText() == "" ) {
+				xoninoB[sq][i].setText( comp_who );
+				return;
+			}
+		}
+				
+		if( xoninoB[sq][0].getText() == user_who && xoninoB[sq][4].getText() == user_who && xoninoB[sq][8].getText() == "" ) {
+			xoninoB[sq][8].setText( comp_who );
+			return;
+		}
+		if( xoninoB[sq][4].getText() == user_who && xoninoB[sq][8].getText() == user_who && xoninoB[sq][0].getText() == "" ) {
+			xoninoB[sq][0].setText( comp_who );
+			return;
+		}
+		if( xoninoB[sq][2].getText() == user_who && xoninoB[sq][4].getText() == user_who && xoninoB[sq][6].getText() == "" ) {
+			xoninoB[sq][6].setText( comp_who );
+			return;
+		}
+		if( xoninoB[sq][4].getText() == user_who && xoninoB[sq][6].getText() == user_who && xoninoB[sq][2].getText() == "" ) {
+			xoninoB[sq][2].setText( comp_who );
+			return;
+		}
+		
+		//third step -> computer is trying to draw its mark to make the line with another one, using random (don't wanna make every game the same)
+		int counter = 0;
+		int[] pick_arr0 = { 0, 0, 0 };
+		int[] pick_arr1 = { 0, 0, 0, 0, 0 };
+		int[] pick_arr2 = { 0, 0, 0 };
+		int[] pick_arr3 = { 0, 0, 0 };
+		int[] pick_arr4 = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		int[] pick_arr5 = { 0, 0, 0 };
+		int[] pick_arr6 = { 0, 0, 0 };
+		int[] pick_arr7 = { 0, 0, 0, 0, 0 };
+		int[] pick_arr8 = { 0, 0, 0 };
+		while( counter != 9 ) {
+			int pick1 = random.nextInt( 9 );
+			int pick2;
+			
+			switch( pick1 ) {
+			case 0:
+				if( xoninoB[sq][0].getText() == comp_who ) {
+					for( int i = 0; i < 3; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr0[pick2] == 0 ) {
+								pick_arr0[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( pick2 == 0 && xoninoB[sq][0].getText() == "" ) {
+							xoninoB[sq][0].setText( comp_who );
+							return;
+						}
+						if( xoninoB[sq][2 + pick2].getText() == "" ) {
+							xoninoB[sq][2 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 1:
+				if( xoninoB[sq][1].getText() == comp_who ) {
+					for( int i = 0; i < 5; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 5 );
+							if( pick_arr1[pick2] == 0 ) {
+								pick_arr1[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoninoB[sq][(2 + pick2) % 6].getText() == "" ) {
+							xoninoB[sq][( 2 + pick2 ) % 6].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 2:
+				if( xoninoB[sq][2].getText() == comp_who ) {
+					for( int i = 0; i < 3; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr2[pick2] == 0 ) {
+								pick_arr2[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( pick2 == 0 && xoninoB[sq][1].getText() == "" ) {
+							xoninoB[sq][1].setText( comp_who );
+							return;
+						}
+						if( pick2 != 0 && xoninoB[sq][3 + pick2].getText() == "" ) {
+							xoninoB[sq][3 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 3:
+				if( xoninoB[sq][3].getText() == comp_who ) {
+					for( int i = 0; i < 3; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr3[pick2] == 0 ) {
+								pick_arr3[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( pick2 == 0 && xoninoB[sq][0].getText() == "" ) {
+							xoninoB[sq][0].setText( comp_who );
+							return;
+						}
+						if( pick2 == 2 && xoninoB[sq][4].getText() == "" ) {
+							xoninoB[sq][4].setText( comp_who );
+							return;
+						}
+						if( pick2 == 1 && xoninoB[sq][6].getText() == "" ) {
+							xoninoB[sq][6].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 4:
+				if( xoninoB[sq][4].getText() == comp_who ) {
+					for( int i = 0; i < 8; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 8 );
+							if( pick_arr4[pick2] == 0 ) {
+								pick_arr4[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( xoninoB[sq][( 5 + pick2 ) % 10].getText() == "" ) {
+							xoninoB[sq][( 5 + pick2 ) % 10].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 5:
+				if( xoninoB[sq][5].getText() == comp_who ) {
+					for( int i = 0; i < 3; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr5[pick2] == 0 ) {
+								pick_arr5[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( pick2 == 0 && xoninoB[sq][2].getText() == "" ) {
+							xoninoB[sq][2].setText( comp_who );
+							return;
+						}
+						if( pick2 == 2 && xoninoB[sq][4].getText() == "" ) {
+							xoninoB[sq][4].setText( comp_who );
+							return;
+						}
+						if( pick2 == 1 && xoninoB[sq][8].getText() == "" ) {
+							xoninoB[sq][8].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 6:
+				if( xoninoB[sq][6].getText() == comp_who ) {
+					for( int i = 0; i < 3; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr6[pick2] == 0 ) {
+								pick_arr6[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( pick2 == 2 && xoninoB[sq][7].getText() == "" ) {
+							xoninoB[sq][7].setText( comp_who );
+							return;
+						}
+						if( pick2 < 2 && xoninoB[sq][pick2 + 3].getText() == "" ) {
+							xoninoB[sq][pick2 + 3].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 7:
+				if( xoninoB[sq][7].getText() == comp_who ) {
+					for( int i = 0; i < 5; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 5 );
+							if( pick_arr7[pick2] == 0 ) {
+								pick_arr7[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( pick2 < 4 && xoninoB[sq][pick2 + 3].getText() == "" ) {
+							xoninoB[sq][pick2 + 3].setText( comp_who );
+							return;
+						}
+						if( pick2 == 4 && xoninoB[sq][8].getText() == "" ) {
+							xoninoB[sq][8].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			case 8:
+				if( xoninoB[sq][8].getText() == comp_who ) {
+					for( int i = 0; i < 3; i++ ) {
+						while( true ) {
+							pick2 = random.nextInt( 3 );
+							if( pick_arr8[pick2] == 0 ) {
+								pick_arr8[pick2] = 1;
+								break;
+							}
+						}
+						
+						if( pick2 == 2 && xoninoB[sq][7].getText() == "" ) {
+							xoninoB[sq][7].setText( comp_who );
+							return;
+						}
+						if( pick2 < 2 && xoninoB[sq][4 + pick2].getText() == "" ) {
+							xoninoB[sq][4 + pick2].setText( comp_who );
+							return;
+						}
+					}
+				}
+				break;
+				
+			default:
+				break;					
+			}
+			
+			counter++;
+		}
+		
+		//forth step - the only option is to pick randomly
+		nino_easy();
+		
+	}
+	
+	void nino_medium() {
+		int count = random.nextInt( 2 );
+		if( count == 0 ) nino_easy();
+		else nino_hard();
 	}
 	
 
