@@ -387,11 +387,22 @@ public class Menu implements ActionListener, MouseListener{
 							}
 						}
 						sq = i;
+						//check if the chosen square is able to be used!!!! - if not, pick random square
+						if( xoninoFB[sq].isVisible() ) {
+							while( true ) {
+								int newsq = random.nextInt( 9 );
+								if( !xoninoFB[newsq].isVisible() ) {
+									sq = newsq;
+									break;
+								}
+							}
+						}
+						
 						//now it must enable unused "big" squares after user's move
 						for( int k = 0; k < 9; k++ ) {
 							for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
 						}
-						for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );
+						for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );		
 						
 					}
 				}
@@ -413,6 +424,17 @@ public class Menu implements ActionListener, MouseListener{
 							}
 						}
 						sq = i;
+						//check if the chosen square is able to be used!!!! - if not, pick random square
+						if( xoninoFB[sq].isVisible() ) {
+							while( true ) {
+								int newsq = random.nextInt( 9 );
+								if( !xoninoFB[newsq].isVisible() ) {
+									sq = newsq;
+									break;
+								}
+							}
+						}
+						
 						//now it must enable unused "big" squares after user's move
 						for( int k = 0; k < 9; k++ ) {
 							for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
@@ -429,6 +451,13 @@ public class Menu implements ActionListener, MouseListener{
 		if( e.getSource() == winnerCB2 ) {
 			winner = false;
 			classicBackL.setVisible( false );
+			menuBackL.setVisible( true );
+		}
+		
+		//go back to menu after the nino game
+		if( e.getSource() == winnerLB2 ) {
+			winner = false;
+			ninoBackL.setVisible( false );
 			menuBackL.setVisible( true );
 		}
 
