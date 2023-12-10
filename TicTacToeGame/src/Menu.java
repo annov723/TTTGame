@@ -96,7 +96,7 @@ public class Menu implements ActionListener, MouseListener{
 	JButton[][] xoninoB = new JButton[9][9];
 	JButton[] xoninoFB = new JButton[9];
 	JLabel xobuttonCL = new JLabel( new ImageIcon( "tttboard.png" ) ); //board for O and X 
-	JLabel xobuttonNL = new JLabel( new ImageIcon( "tttboard.png" ) );
+	JLabel xobuttonNL = new JLabel( new ImageIcon( "tttboard_nino.png" ) );
 	JLabel moveCL = new JLabel(); //whose move is now
 	JLabel moveNL = new JLabel();
 	JLabel whotitCL = new JLabel( "turn" ); //just "turn" JLabel
@@ -422,25 +422,7 @@ public class Menu implements ActionListener, MouseListener{
 								else if( mode == 2 ) nino_medium();
 								else nino_hard();
 								
-								//sq is set for the next move in the mode methods so checkn() has to be done before that!
-								
-								//check if the chosen square is able to be used!!!! - if not, pick random square
-								if( xoninoFB[sq].isVisible() ) {
-									while( true ) {
-										int newsq = random.nextInt( 9 );
-										if( !xoninoFB[newsq].isVisible() ) {
-											sq = newsq;
-											break;
-										}
-									}
-								}
-								
-								//now it must enable unused "big" squares after user's move
-								for( int k = 0; k < 9; k++ ) {
-									for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
-								}
-								for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
-								
+			
 								
 								if( !checknF() ) Xturn = true;
 							}
@@ -501,24 +483,6 @@ public class Menu implements ActionListener, MouseListener{
 								else if( mode == 2 ) nino_medium();
 								else nino_hard();
 				
-								//sq is set for the next move in the mode methods so checkn() has to be done before that!
-								
-								//check if the chosen square is able to be used!!!! - if not, pick random square
-								if( xoninoFB[sq].isVisible() ) {
-									while( true ) {
-										int newsq = random.nextInt( 9 );
-										if( !xoninoFB[newsq].isVisible() ) {
-											sq = newsq;
-											break;
-										}
-									}
-								}
-								
-								//now it must enable unused "big" squares after user's move
-								for( int k = 0; k < 9; k++ ) {
-									for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
-								}
-								for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
 								
 				
 								if( !checknF() ) Xturn = false;								
@@ -1562,8 +1526,8 @@ public class Menu implements ActionListener, MouseListener{
 			if( game == 1 ) moveCL.setText( Xplayer );
 			else moveNL.setText( Xplayer );
 		}
-		System.out.println( "czy X zaczyna?" + Xturn );
-		System.out.println( "jaki znak ma user?" + user );
+		//System.out.println( "czy X zaczyna?" + Xturn );
+		//System.out.println( "jaki znak ma user?" + user );
 	}
 	
 	
@@ -2095,6 +2059,26 @@ public class Menu implements ActionListener, MouseListener{
 				break;
 			}
 		}
+		
+		//sq is set for the next move in the mode methods so checkn() has to be done before that!
+		
+		//check if the chosen square is able to be used!!!! - if not, pick random square
+		if( xoninoFB[sq].isVisible() ) {
+			while( true ) {
+				int newsq = random.nextInt( 9 );
+				if( !xoninoFB[newsq].isVisible() ) {
+					sq = newsq;
+					break;
+				}
+			}
+		}
+		
+		//now it must enable unused "big" squares after user's move
+		for( int k = 0; k < 9; k++ ) {
+			for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+		}
+		for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+		
 	}
 	
 	void nino_hard() {
@@ -2114,6 +2098,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][2 + ( i * 3 )].setText( comp_who );
 				checkn();
 				sq = 2 + ( i * 3 );
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2122,6 +2125,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][i * 3].setText( comp_who );
 				checkn();
 				sq = i * 3;
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2130,6 +2152,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][1 + (i * 3)].setText( comp_who );
 				checkn();
 				sq = 1 + (i * 3);
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2139,6 +2180,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][6 + i].setText( comp_who );
 				checkn();
 				sq = 6 + i;
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2147,6 +2207,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][i].setText( comp_who );
 				checkn();
 				sq = i;
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2155,6 +2234,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][3 + i].setText( comp_who );
 				checkn();
 				sq = 3 + i;
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2163,18 +2261,75 @@ public class Menu implements ActionListener, MouseListener{
 			xoninoB[sq][8].setText( comp_who );
 			checkn();
 			sq = 8;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		if( xoninoB[sq][4].getText() == comp_who && xoninoB[sq][8].getText() == comp_who  && xoninoB[sq][0].getText() == "" ) {
 			xoninoB[sq][0].setText( comp_who );
 			checkn();
 			sq = 0;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		if( xoninoB[sq][0].getText() == comp_who && xoninoB[sq][8].getText() == comp_who  && xoninoB[sq][4].getText() == "" ) {
 			xoninoB[sq][4].setText( comp_who );
 			checkn();
 			sq = 4;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		
@@ -2182,18 +2337,75 @@ public class Menu implements ActionListener, MouseListener{
 			xoninoB[sq][6].setText( comp_who );
 			checkn();
 			sq = 6;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		if( xoninoB[sq][4].getText() == comp_who && xoninoB[sq][6].getText() == comp_who && xoninoB[sq][2].getText() == "" ) {
 			xoninoB[sq][2].setText( comp_who );
 			checkn();
 			sq = 2;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		if( xoninoB[sq][2].getText() == comp_who && xoninoB[sq][6].getText() == comp_who && xoninoB[sq][4].getText() == "" ) {
 			xoninoB[sq][4].setText( comp_who );
 			checkn();
 			sq = 4;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		
@@ -2203,6 +2415,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][2 + ( i * 3 )].setText( comp_who );
 				checkn();
 				sq = 2 + ( i * 3 );
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2211,6 +2442,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][i * 3].setText( comp_who );
 				checkn();
 				sq = i * 3;
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2219,6 +2469,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][6 + i].setText( comp_who );
 				checkn();
 				sq = 6 + i;
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2227,6 +2496,25 @@ public class Menu implements ActionListener, MouseListener{
 				xoninoB[sq][i].setText( comp_who );
 				checkn();
 				sq = i;
+				//sq is set for the next move in the mode methods so checkn() has to be done before that!
+				
+				//check if the chosen square is able to be used!!!! - if not, pick random square
+				if( xoninoFB[sq].isVisible() ) {
+					while( true ) {
+						int newsq = random.nextInt( 9 );
+						if( !xoninoFB[newsq].isVisible() ) {
+							sq = newsq;
+							break;
+						}
+					}
+				}
+				
+				//now it must enable unused "big" squares after user's move
+				for( int k = 0; k < 9; k++ ) {
+					for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+				}
+				for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+				
 				return;
 			}
 		}
@@ -2235,24 +2523,100 @@ public class Menu implements ActionListener, MouseListener{
 			xoninoB[sq][8].setText( comp_who );
 			checkn();
 			sq = 8;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		if( xoninoB[sq][4].getText() == user_who && xoninoB[sq][8].getText() == user_who && xoninoB[sq][0].getText() == "" ) {
 			xoninoB[sq][0].setText( comp_who );
 			checkn();
 			sq = 0;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		if( xoninoB[sq][2].getText() == user_who && xoninoB[sq][4].getText() == user_who && xoninoB[sq][6].getText() == "" ) {
 			xoninoB[sq][6].setText( comp_who );
 			checkn();
 			sq = 6;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		if( xoninoB[sq][4].getText() == user_who && xoninoB[sq][6].getText() == user_who && xoninoB[sq][2].getText() == "" ) {
 			xoninoB[sq][2].setText( comp_who );
 			checkn();
 			sq = 2;
+			//sq is set for the next move in the mode methods so checkn() has to be done before that!
+			
+			//check if the chosen square is able to be used!!!! - if not, pick random square
+			if( xoninoFB[sq].isVisible() ) {
+				while( true ) {
+					int newsq = random.nextInt( 9 );
+					if( !xoninoFB[newsq].isVisible() ) {
+						sq = newsq;
+						break;
+					}
+				}
+			}
+			
+			//now it must enable unused "big" squares after user's move
+			for( int k = 0; k < 9; k++ ) {
+				for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+			}
+			for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+			
 			return;
 		}
 		
@@ -2287,12 +2651,50 @@ public class Menu implements ActionListener, MouseListener{
 							xoninoB[sq][0].setText( comp_who );
 							checkn();
 							sq = 0;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 						if( xoninoB[sq][2 + pick2].getText() == "" ) {
 							xoninoB[sq][2 + pick2].setText( comp_who );
 							checkn();
 							sq = 2 + pick2;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 					}
@@ -2314,6 +2716,25 @@ public class Menu implements ActionListener, MouseListener{
 							xoninoB[sq][( 2 + pick2 ) % 6].setText( comp_who );
 							checkn();
 							sq = ( 2 + pick2 ) % 6;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 					}
@@ -2335,6 +2756,25 @@ public class Menu implements ActionListener, MouseListener{
 							xoninoB[sq][1].setText( comp_who );
 							checkn();
 							sq = 1;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 						if( pick2 != 0 && xoninoB[sq][3 + pick2].getText() == "" ) {
@@ -2362,18 +2802,75 @@ public class Menu implements ActionListener, MouseListener{
 							xoninoB[sq][0].setText( comp_who );
 							checkn();
 							sq = 0;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 						if( pick2 == 2 && xoninoB[sq][4].getText() == "" ) {
 							xoninoB[sq][4].setText( comp_who );
 							checkn();
 							sq = 4;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 						if( pick2 == 1 && xoninoB[sq][6].getText() == "" ) {
 							xoninoB[sq][6].setText( comp_who );
 							checkn();
 							sq = 6;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 					}
@@ -2395,6 +2892,25 @@ public class Menu implements ActionListener, MouseListener{
 							xoninoB[sq][( 5 + pick2 ) % 10].setText( comp_who );
 							checkn();
 							sq = ( 5 + pick2 ) % 10;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 					}
@@ -2416,18 +2932,75 @@ public class Menu implements ActionListener, MouseListener{
 							xoninoB[sq][2].setText( comp_who );
 							checkn();
 							sq = 2;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 						if( pick2 == 2 && xoninoB[sq][4].getText() == "" ) {
 							xoninoB[sq][4].setText( comp_who );
 							checkn();
 							sq = 4;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 						if( pick2 == 1 && xoninoB[sq][8].getText() == "" ) {
 							xoninoB[sq][8].setText( comp_who );
 							checkn();
 							sq = 8;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 					}
@@ -2449,12 +3022,50 @@ public class Menu implements ActionListener, MouseListener{
 							xoninoB[sq][7].setText( comp_who );
 							checkn();
 							sq = 7;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 						if( pick2 < 2 && xoninoB[sq][pick2 + 3].getText() == "" ) {
 							xoninoB[sq][pick2 + 3].setText( comp_who );
 							checkn();
 							sq = pick2 + 3;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 					}
@@ -2476,12 +3087,50 @@ public class Menu implements ActionListener, MouseListener{
 							xoninoB[sq][pick2 + 3].setText( comp_who );
 							checkn();
 							sq = pick2 + 3;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 						if( pick2 == 4 && xoninoB[sq][8].getText() == "" ) {
 							xoninoB[sq][8].setText( comp_who );
 							checkn();
 							sq = 8;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 					}
@@ -2503,12 +3152,50 @@ public class Menu implements ActionListener, MouseListener{
 							xoninoB[sq][7].setText( comp_who );
 							checkn();
 							sq = 7;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 						if( pick2 < 2 && xoninoB[sq][4 + pick2].getText() == "" ) {
 							xoninoB[sq][4 + pick2].setText( comp_who );
 							checkn();
 							sq = 4 + pick2;
+							//sq is set for the next move in the mode methods so checkn() has to be done before that!
+							
+							//check if the chosen square is able to be used!!!! - if not, pick random square
+							if( xoninoFB[sq].isVisible() ) {
+								while( true ) {
+									int newsq = random.nextInt( 9 );
+									if( !xoninoFB[newsq].isVisible() ) {
+										sq = newsq;
+										break;
+									}
+								}
+							}
+							
+							//now it must enable unused "big" squares after user's move
+							for( int k = 0; k < 9; k++ ) {
+								for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+							}
+							for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+							
 							return;
 						}
 					}
