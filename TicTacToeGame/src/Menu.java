@@ -375,34 +375,76 @@ public class Menu implements ActionListener, MouseListener{
 						checkn();
 						if( !checknF() ) {
 							if( mode == 0 ) {
+								
+								sq = i;
+								//check if the chosen square is able to be used!!!! - if not, pick random square
+								if( xoninoFB[sq].isVisible() ) {
+									while( true ) {
+										int newsq = random.nextInt( 9 );
+										if( !xoninoFB[newsq].isVisible() ) {
+											sq = newsq;
+											break;
+										}
+									}
+								}
+								
+								//now it must enable unused "big" squares after user's move
+								for( int k = 0; k < 9; k++ ) {
+									for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+								}
+								for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );
+								
 								Xturn = false;
 								moveNL.setText( Oplayer );
 							}
 							else {
+								
+								sq = i;
+								//check if the chosen square is able to be used!!!! - if not, pick random square
+								if( xoninoFB[sq].isVisible() ) {
+									while( true ) {
+										int newsq = random.nextInt( 9 );
+										if( !xoninoFB[newsq].isVisible() ) {
+											sq = newsq;
+											break;
+										}
+									}
+								}
+								
+								//now it must enable unused "big" squares after user's move
+								for( int k = 0; k < 9; k++ ) {
+									for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+								}
+								for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );
+								
+								Xturn = false;
 								if( mode == 1 ) nino_easy();
 								else if( mode == 2 ) nino_medium();
 								else nino_hard();
-								Xturn = false;
+								
+								//sq is set for the next move in the mode methods so checkn() has to be done before that!
+								
+								//check if the chosen square is able to be used!!!! - if not, pick random square
+								if( xoninoFB[sq].isVisible() ) {
+									while( true ) {
+										int newsq = random.nextInt( 9 );
+										if( !xoninoFB[newsq].isVisible() ) {
+											sq = newsq;
+											break;
+										}
+									}
+								}
+								
+								//now it must enable unused "big" squares after user's move
+								for( int k = 0; k < 9; k++ ) {
+									for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+								}
+								for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+								
+								
 								if( !checknF() ) Xturn = true;
 							}
-						}
-						sq = i;
-						//check if the chosen square is able to be used!!!! - if not, pick random square
-						if( xoninoFB[sq].isVisible() ) {
-							while( true ) {
-								int newsq = random.nextInt( 9 );
-								if( !xoninoFB[newsq].isVisible() ) {
-									sq = newsq;
-									break;
-								}
-							}
-						}
-						
-						//now it must enable unused "big" squares after user's move
-						for( int k = 0; k < 9; k++ ) {
-							for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
-						}
-						for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );		
+						}		
 						
 					}
 				}
@@ -412,34 +454,76 @@ public class Menu implements ActionListener, MouseListener{
 						checkn();
 						if( !checknF() ) {
 							if( mode == 0 ) {
+								
+								sq = i;
+								//check if the chosen square is able to be used!!!! - if not, pick random square
+								if( xoninoFB[sq].isVisible() ) {
+									while( true ) {
+										int newsq = random.nextInt( 9 );
+										if( !xoninoFB[newsq].isVisible() ) {
+											sq = newsq;
+											break;
+										}
+									}
+								}
+								
+								//now it must enable unused "big" squares after user's move
+								for( int k = 0; k < 9; k++ ) {
+									for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+								}
+								for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );
+								
 								Xturn = true;
 								moveNL.setText( Xplayer );
 							}
 							else {
+								
+								sq = i;
+								//check if the chosen square is able to be used!!!! - if not, pick random square
+								if( xoninoFB[sq].isVisible() ) {
+									while( true ) {
+										int newsq = random.nextInt( 9 );
+										if( !xoninoFB[newsq].isVisible() ) {
+											sq = newsq;
+											break;
+										}
+									}
+								}
+								
+								//now it must enable unused "big" squares after user's move
+								for( int k = 0; k < 9; k++ ) {
+									for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+								}
+								for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );
+								
+								Xturn = true;
 								if( mode == 1 ) nino_easy();
 								else if( mode == 2 ) nino_medium();
 								else nino_hard();
-								Xturn = true;
+				
+								//sq is set for the next move in the mode methods so checkn() has to be done before that!
+								
+								//check if the chosen square is able to be used!!!! - if not, pick random square
+								if( xoninoFB[sq].isVisible() ) {
+									while( true ) {
+										int newsq = random.nextInt( 9 );
+										if( !xoninoFB[newsq].isVisible() ) {
+											sq = newsq;
+											break;
+										}
+									}
+								}
+								
+								//now it must enable unused "big" squares after user's move
+								for( int k = 0; k < 9; k++ ) {
+									for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+								}
+								for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );	
+								
+				
 								if( !checknF() ) Xturn = false;								
 							}
 						}
-						sq = i;
-						//check if the chosen square is able to be used!!!! - if not, pick random square
-						if( xoninoFB[sq].isVisible() ) {
-							while( true ) {
-								int newsq = random.nextInt( 9 );
-								if( !xoninoFB[newsq].isVisible() ) {
-									sq = newsq;
-									break;
-								}
-							}
-						}
-						
-						//now it must enable unused "big" squares after user's move
-						for( int k = 0; k < 9; k++ ) {
-							for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
-						}
-						for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );
 						
 					}
 				}
@@ -2006,6 +2090,7 @@ public class Menu implements ActionListener, MouseListener{
 			if( xoninoB[sq][count].getText() == "" ) {
 				if( user == 'X' ) xoninoB[sq][count].setText( "O" );
 				else xoninoB[sq][count].setText( "X" );
+				checkn();
 				sq = count;
 				break;
 			}
@@ -2027,6 +2112,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i * 3].getText() == comp_who && xoninoB[sq][1 + ( i * 3 )].getText() == comp_who && xoninoB[sq][2 + ( i * 3 )].getText() == "" ) {
 				xoninoB[sq][2 + ( i * 3 )].setText( comp_who );
+				checkn();
 				sq = 2 + ( i * 3 );
 				return;
 			}
@@ -2034,6 +2120,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][1 + ( i * 3 )].getText() == comp_who && xoninoB[sq][2 + ( i * 3 )].getText() == comp_who && xoninoB[sq][i * 3].getText() == "" ) {
 				xoninoB[sq][i * 3].setText( comp_who );
+				checkn();
 				sq = i * 3;
 				return;
 			}
@@ -2041,6 +2128,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i * 3].getText() == comp_who && xoninoB[sq][2 + ( i * 3 )].getText() == comp_who && xoninoB[sq][i * 3].getText() == "" ) {
 				xoninoB[sq][1 + (i * 3)].setText( comp_who );
+				checkn();
 				sq = 1 + (i * 3);
 				return;
 			}
@@ -2049,6 +2137,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i].getText() == comp_who && xoninoB[sq][3 + i].getText() == comp_who && xoninoB[sq][6 + i].getText() == "" ) {
 				xoninoB[sq][6 + i].setText( comp_who );
+				checkn();
 				sq = 6 + i;
 				return;
 			}
@@ -2056,6 +2145,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][6 + i].getText() == comp_who && xoninoB[sq][3 + i].getText() == comp_who && xoninoB[sq][i].getText() == "" ) {
 				xoninoB[sq][i].setText( comp_who );
+				checkn();
 				sq = i;
 				return;
 			}
@@ -2063,6 +2153,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i].getText() == comp_who && xoninoB[sq][6 + i].getText() == comp_who && xoninoB[sq][3 + i].getText() == "" ) {
 				xoninoB[sq][3 + i].setText( comp_who );
+				checkn();
 				sq = 3 + i;
 				return;
 			}
@@ -2070,32 +2161,38 @@ public class Menu implements ActionListener, MouseListener{
 		
 		if( xoninoB[sq][0].getText() == comp_who && xoninoB[sq][4].getText() == comp_who  && xoninoB[sq][8].getText() == "" ) {
 			xoninoB[sq][8].setText( comp_who );
+			checkn();
 			sq = 8;
 			return;
 		}
 		if( xoninoB[sq][4].getText() == comp_who && xoninoB[sq][8].getText() == comp_who  && xoninoB[sq][0].getText() == "" ) {
 			xoninoB[sq][0].setText( comp_who );
+			checkn();
 			sq = 0;
 			return;
 		}
 		if( xoninoB[sq][0].getText() == comp_who && xoninoB[sq][8].getText() == comp_who  && xoninoB[sq][4].getText() == "" ) {
 			xoninoB[sq][4].setText( comp_who );
+			checkn();
 			sq = 4;
 			return;
 		}
 		
 		if( xoninoB[sq][2].getText() == comp_who && xoninoB[sq][4].getText() == comp_who && xoninoB[sq][6].getText() == "" ) {
 			xoninoB[sq][6].setText( comp_who );
+			checkn();
 			sq = 6;
 			return;
 		}
 		if( xoninoB[sq][4].getText() == comp_who && xoninoB[sq][6].getText() == comp_who && xoninoB[sq][2].getText() == "" ) {
 			xoninoB[sq][2].setText( comp_who );
+			checkn();
 			sq = 2;
 			return;
 		}
 		if( xoninoB[sq][2].getText() == comp_who && xoninoB[sq][6].getText() == comp_who && xoninoB[sq][4].getText() == "" ) {
 			xoninoB[sq][4].setText( comp_who );
+			checkn();
 			sq = 4;
 			return;
 		}
@@ -2104,6 +2201,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i * 3].getText() == user_who && xoninoB[sq][1 + ( i * 3 )].getText() == user_who && xoninoB[sq][2 + ( i * 3 )].getText() == "" ) {
 				xoninoB[sq][2 + ( i * 3 )].setText( comp_who );
+				checkn();
 				sq = 2 + ( i * 3 );
 				return;
 			}
@@ -2111,6 +2209,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][1 + ( i * 3 )].getText() == user_who && xoninoB[sq][2 + ( i * 3 )].getText() == user_who && xoninoB[sq][i * 3].getText() == "" ) {
 				xoninoB[sq][i * 3].setText( comp_who );
+				checkn();
 				sq = i * 3;
 				return;
 			}
@@ -2118,6 +2217,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i].getText() == user_who && xoninoB[sq][3 + i].getText() == user_who && xoninoB[sq][6 + i].getText() == "" ) {
 				xoninoB[sq][6 + i].setText( comp_who );
+				checkn();
 				sq = 6 + i;
 				return;
 			}
@@ -2125,6 +2225,7 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][6 + i].getText() == user_who && xoninoB[sq][3 + i].getText() == user_who && xoninoB[sq][i].getText() == "" ) {
 				xoninoB[sq][i].setText( comp_who );
+				checkn();
 				sq = i;
 				return;
 			}
@@ -2132,21 +2233,25 @@ public class Menu implements ActionListener, MouseListener{
 				
 		if( xoninoB[sq][0].getText() == user_who && xoninoB[sq][4].getText() == user_who && xoninoB[sq][8].getText() == "" ) {
 			xoninoB[sq][8].setText( comp_who );
+			checkn();
 			sq = 8;
 			return;
 		}
 		if( xoninoB[sq][4].getText() == user_who && xoninoB[sq][8].getText() == user_who && xoninoB[sq][0].getText() == "" ) {
 			xoninoB[sq][0].setText( comp_who );
+			checkn();
 			sq = 0;
 			return;
 		}
 		if( xoninoB[sq][2].getText() == user_who && xoninoB[sq][4].getText() == user_who && xoninoB[sq][6].getText() == "" ) {
 			xoninoB[sq][6].setText( comp_who );
+			checkn();
 			sq = 6;
 			return;
 		}
 		if( xoninoB[sq][4].getText() == user_who && xoninoB[sq][6].getText() == user_who && xoninoB[sq][2].getText() == "" ) {
 			xoninoB[sq][2].setText( comp_who );
+			checkn();
 			sq = 2;
 			return;
 		}
@@ -2180,11 +2285,13 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 0 && xoninoB[sq][0].getText() == "" ) {
 							xoninoB[sq][0].setText( comp_who );
+							checkn();
 							sq = 0;
 							return;
 						}
 						if( xoninoB[sq][2 + pick2].getText() == "" ) {
 							xoninoB[sq][2 + pick2].setText( comp_who );
+							checkn();
 							sq = 2 + pick2;
 							return;
 						}
@@ -2205,6 +2312,7 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( xoninoB[sq][(2 + pick2) % 6].getText() == "" ) {
 							xoninoB[sq][( 2 + pick2 ) % 6].setText( comp_who );
+							checkn();
 							sq = ( 2 + pick2 ) % 6;
 							return;
 						}
@@ -2225,11 +2333,13 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 0 && xoninoB[sq][1].getText() == "" ) {
 							xoninoB[sq][1].setText( comp_who );
+							checkn();
 							sq = 1;
 							return;
 						}
 						if( pick2 != 0 && xoninoB[sq][3 + pick2].getText() == "" ) {
 							xoninoB[sq][3 + pick2].setText( comp_who );
+							checkn();
 							sq = 3 + pick2;
 							return;
 						}
@@ -2250,16 +2360,19 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 0 && xoninoB[sq][0].getText() == "" ) {
 							xoninoB[sq][0].setText( comp_who );
+							checkn();
 							sq = 0;
 							return;
 						}
 						if( pick2 == 2 && xoninoB[sq][4].getText() == "" ) {
 							xoninoB[sq][4].setText( comp_who );
+							checkn();
 							sq = 4;
 							return;
 						}
 						if( pick2 == 1 && xoninoB[sq][6].getText() == "" ) {
 							xoninoB[sq][6].setText( comp_who );
+							checkn();
 							sq = 6;
 							return;
 						}
@@ -2280,6 +2393,7 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( xoninoB[sq][( 5 + pick2 ) % 10].getText() == "" ) {
 							xoninoB[sq][( 5 + pick2 ) % 10].setText( comp_who );
+							checkn();
 							sq = ( 5 + pick2 ) % 10;
 							return;
 						}
@@ -2300,16 +2414,19 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 0 && xoninoB[sq][2].getText() == "" ) {
 							xoninoB[sq][2].setText( comp_who );
+							checkn();
 							sq = 2;
 							return;
 						}
 						if( pick2 == 2 && xoninoB[sq][4].getText() == "" ) {
 							xoninoB[sq][4].setText( comp_who );
+							checkn();
 							sq = 4;
 							return;
 						}
 						if( pick2 == 1 && xoninoB[sq][8].getText() == "" ) {
 							xoninoB[sq][8].setText( comp_who );
+							checkn();
 							sq = 8;
 							return;
 						}
@@ -2330,11 +2447,13 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 2 && xoninoB[sq][7].getText() == "" ) {
 							xoninoB[sq][7].setText( comp_who );
+							checkn();
 							sq = 7;
 							return;
 						}
 						if( pick2 < 2 && xoninoB[sq][pick2 + 3].getText() == "" ) {
 							xoninoB[sq][pick2 + 3].setText( comp_who );
+							checkn();
 							sq = pick2 + 3;
 							return;
 						}
@@ -2355,11 +2474,13 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 < 4 && xoninoB[sq][pick2 + 3].getText() == "" ) {
 							xoninoB[sq][pick2 + 3].setText( comp_who );
+							checkn();
 							sq = pick2 + 3;
 							return;
 						}
 						if( pick2 == 4 && xoninoB[sq][8].getText() == "" ) {
 							xoninoB[sq][8].setText( comp_who );
+							checkn();
 							sq = 8;
 							return;
 						}
@@ -2380,11 +2501,13 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 2 && xoninoB[sq][7].getText() == "" ) {
 							xoninoB[sq][7].setText( comp_who );
+							checkn();
 							sq = 7;
 							return;
 						}
 						if( pick2 < 2 && xoninoB[sq][4 + pick2].getText() == "" ) {
 							xoninoB[sq][4 + pick2].setText( comp_who );
+							checkn();
 							sq = 4 + pick2;
 							return;
 						}
