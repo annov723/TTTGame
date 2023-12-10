@@ -376,7 +376,7 @@ public class Menu implements ActionListener, MouseListener{
 						if( !checknF() ) {
 							if( mode == 0 ) {
 								Xturn = false;
-								moveCL.setText( Oplayer );
+								moveNL.setText( Oplayer );
 							}
 							else {
 								if( mode == 1 ) nino_easy();
@@ -387,7 +387,12 @@ public class Menu implements ActionListener, MouseListener{
 							}
 						}
 						sq = i;
-						//now it must enable unused "big" squares
+						//now it must enable unused "big" squares after user's move
+						for( int k = 0; k < 9; k++ ) {
+							for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+						}
+						for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );
+						
 					}
 				}
 				else {
@@ -397,7 +402,7 @@ public class Menu implements ActionListener, MouseListener{
 						if( !checknF() ) {
 							if( mode == 0 ) {
 								Xturn = true;
-								moveCL.setText( Xplayer );
+								moveNL.setText( Xplayer );
 							}
 							else {
 								if( mode == 1 ) nino_easy();
@@ -408,7 +413,12 @@ public class Menu implements ActionListener, MouseListener{
 							}
 						}
 						sq = i;
-						//now it must enable unused "big" squares!!!
+						//now it must enable unused "big" squares after user's move
+						for( int k = 0; k < 9; k++ ) {
+							for( int j = 0; j < 9; j++ ) xoninoB[k][j].setEnabled( false );
+						}
+						for( int j = 0; j < 9; j++ ) xoninoB[sq][j].setEnabled( true );
+						
 					}
 				}
 			}
@@ -1138,11 +1148,21 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 9; i++ ) {
 			for( int j = 0; j < 9; j++ ) {
 				xoninoB[i][j] = new JButton();
-				xoninoB[i][j].setFont( new Font( "Ink Free", Font.BOLD, 10 ) ); //Comic Sans, Forte, MV Boli, Segoe UI Black
+				xoninoB[i][j].setFont( new Font( "Ink Free", Font.BOLD, 30 ) ); //Comic Sans, Forte, MV Boli, Segoe UI Black
 				xoninoB[i][j].setContentAreaFilled( false );
 				xoninoB[i][j].setFocusable( false );
 				xoninoB[i][j].setBorder( null );
-				xoninoB[i][j].setBounds( 140 * ( i % 3 ) + 46 * ( j % 3 ) , 140 * Integer.valueOf( i / 3 ) + 46 * Integer.valueOf( j / 3 ), 46, 46 );
+				
+				int x = 140 * ( i % 3 ) + 46 * ( j % 3 );
+				int y = 140 * Integer.valueOf( i / 3 ) + 46 * Integer.valueOf( j / 3 );
+				if( i >= 0 && i <= 2 ) y = ( 140 * Integer.valueOf( i / 3 ) + 46 * Integer.valueOf( j / 3 ) ) + 8;
+				else if( i >= 6 && i <= 8 ) y = ( 140 * Integer.valueOf( i / 3 ) + 46 * Integer.valueOf( j / 3 ) ) - 8;
+				
+				if( i == 0 || i == 3 || i == 6 ) x = 140 * ( i % 3 ) + 46 * ( j % 3 ) + 8;
+				else if( i == 2 || i == 5 || i == 8 ) x = 140 * ( i % 3 ) + 46 * ( j % 3 ) - 8;
+				
+				xoninoB[i][j].setBounds( x, y, 46, 46 );
+				
 				xoninoB[i][j].addActionListener( this );
 				
 				xobuttonNL.add( xoninoB[i][j] );
@@ -1957,6 +1977,7 @@ public class Menu implements ActionListener, MouseListener{
 			if( xoninoB[sq][count].getText() == "" ) {
 				if( user == 'X' ) xoninoB[sq][count].setText( "O" );
 				else xoninoB[sq][count].setText( "X" );
+				sq = count;
 				break;
 			}
 		}
@@ -1977,18 +1998,21 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i * 3].getText() == comp_who && xoninoB[sq][1 + ( i * 3 )].getText() == comp_who && xoninoB[sq][2 + ( i * 3 )].getText() == "" ) {
 				xoninoB[sq][2 + ( i * 3 )].setText( comp_who );
+				sq = 2 + ( i * 3 );
 				return;
 			}
 		}
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][1 + ( i * 3 )].getText() == comp_who && xoninoB[sq][2 + ( i * 3 )].getText() == comp_who && xoninoB[sq][i * 3].getText() == "" ) {
 				xoninoB[sq][i * 3].setText( comp_who );
+				sq = i * 3;
 				return;
 			}
 		}
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i * 3].getText() == comp_who && xoninoB[sq][2 + ( i * 3 )].getText() == comp_who && xoninoB[sq][i * 3].getText() == "" ) {
 				xoninoB[sq][1 + (i * 3)].setText( comp_who );
+				sq = 1 + (i * 3);
 				return;
 			}
 		}
@@ -1996,45 +2020,54 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i].getText() == comp_who && xoninoB[sq][3 + i].getText() == comp_who && xoninoB[sq][6 + i].getText() == "" ) {
 				xoninoB[sq][6 + i].setText( comp_who );
+				sq = 6 + i;
 				return;
 			}
 		}
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][6 + i].getText() == comp_who && xoninoB[sq][3 + i].getText() == comp_who && xoninoB[sq][i].getText() == "" ) {
 				xoninoB[sq][i].setText( comp_who );
+				sq = i;
 				return;
 			}
 		}
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i].getText() == comp_who && xoninoB[sq][6 + i].getText() == comp_who && xoninoB[sq][3 + i].getText() == "" ) {
 				xoninoB[sq][3 + i].setText( comp_who );
+				sq = 3 + i;
 				return;
 			}
 		}
 		
 		if( xoninoB[sq][0].getText() == comp_who && xoninoB[sq][4].getText() == comp_who  && xoninoB[sq][8].getText() == "" ) {
 			xoninoB[sq][8].setText( comp_who );
+			sq = 8;
 			return;
 		}
 		if( xoninoB[sq][4].getText() == comp_who && xoninoB[sq][8].getText() == comp_who  && xoninoB[sq][0].getText() == "" ) {
 			xoninoB[sq][0].setText( comp_who );
+			sq = 0;
 			return;
 		}
 		if( xoninoB[sq][0].getText() == comp_who && xoninoB[sq][8].getText() == comp_who  && xoninoB[sq][4].getText() == "" ) {
 			xoninoB[sq][4].setText( comp_who );
+			sq = 4;
 			return;
 		}
 		
 		if( xoninoB[sq][2].getText() == comp_who && xoninoB[sq][4].getText() == comp_who && xoninoB[sq][6].getText() == "" ) {
 			xoninoB[sq][6].setText( comp_who );
+			sq = 6;
 			return;
 		}
 		if( xoninoB[sq][4].getText() == comp_who && xoninoB[sq][6].getText() == comp_who && xoninoB[sq][2].getText() == "" ) {
 			xoninoB[sq][2].setText( comp_who );
+			sq = 2;
 			return;
 		}
 		if( xoninoB[sq][2].getText() == comp_who && xoninoB[sq][6].getText() == comp_who && xoninoB[sq][4].getText() == "" ) {
 			xoninoB[sq][4].setText( comp_who );
+			sq = 4;
 			return;
 		}
 		
@@ -2042,42 +2075,50 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i * 3].getText() == user_who && xoninoB[sq][1 + ( i * 3 )].getText() == user_who && xoninoB[sq][2 + ( i * 3 )].getText() == "" ) {
 				xoninoB[sq][2 + ( i * 3 )].setText( comp_who );
+				sq = 2 + ( i * 3 );
 				return;
 			}
 		}
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][1 + ( i * 3 )].getText() == user_who && xoninoB[sq][2 + ( i * 3 )].getText() == user_who && xoninoB[sq][i * 3].getText() == "" ) {
 				xoninoB[sq][i * 3].setText( comp_who );
+				sq = i * 3;
 				return;
 			}
 		}
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][i].getText() == user_who && xoninoB[sq][3 + i].getText() == user_who && xoninoB[sq][6 + i].getText() == "" ) {
 				xoninoB[sq][6 + i].setText( comp_who );
+				sq = 6 + i;
 				return;
 			}
 		}
 		for( int i = 0; i < 3; i++ ) {
 			if( xoninoB[sq][6 + i].getText() == user_who && xoninoB[sq][3 + i].getText() == user_who && xoninoB[sq][i].getText() == "" ) {
 				xoninoB[sq][i].setText( comp_who );
+				sq = i;
 				return;
 			}
 		}
 				
 		if( xoninoB[sq][0].getText() == user_who && xoninoB[sq][4].getText() == user_who && xoninoB[sq][8].getText() == "" ) {
 			xoninoB[sq][8].setText( comp_who );
+			sq = 8;
 			return;
 		}
 		if( xoninoB[sq][4].getText() == user_who && xoninoB[sq][8].getText() == user_who && xoninoB[sq][0].getText() == "" ) {
 			xoninoB[sq][0].setText( comp_who );
+			sq = 0;
 			return;
 		}
 		if( xoninoB[sq][2].getText() == user_who && xoninoB[sq][4].getText() == user_who && xoninoB[sq][6].getText() == "" ) {
 			xoninoB[sq][6].setText( comp_who );
+			sq = 6;
 			return;
 		}
 		if( xoninoB[sq][4].getText() == user_who && xoninoB[sq][6].getText() == user_who && xoninoB[sq][2].getText() == "" ) {
 			xoninoB[sq][2].setText( comp_who );
+			sq = 2;
 			return;
 		}
 		
@@ -2110,10 +2151,12 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 0 && xoninoB[sq][0].getText() == "" ) {
 							xoninoB[sq][0].setText( comp_who );
+							sq = 0;
 							return;
 						}
 						if( xoninoB[sq][2 + pick2].getText() == "" ) {
 							xoninoB[sq][2 + pick2].setText( comp_who );
+							sq = 2 + pick2;
 							return;
 						}
 					}
@@ -2133,6 +2176,7 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( xoninoB[sq][(2 + pick2) % 6].getText() == "" ) {
 							xoninoB[sq][( 2 + pick2 ) % 6].setText( comp_who );
+							sq = ( 2 + pick2 ) % 6;
 							return;
 						}
 					}
@@ -2152,10 +2196,12 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 0 && xoninoB[sq][1].getText() == "" ) {
 							xoninoB[sq][1].setText( comp_who );
+							sq = 1;
 							return;
 						}
 						if( pick2 != 0 && xoninoB[sq][3 + pick2].getText() == "" ) {
 							xoninoB[sq][3 + pick2].setText( comp_who );
+							sq = 3 + pick2;
 							return;
 						}
 					}
@@ -2175,14 +2221,17 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 0 && xoninoB[sq][0].getText() == "" ) {
 							xoninoB[sq][0].setText( comp_who );
+							sq = 0;
 							return;
 						}
 						if( pick2 == 2 && xoninoB[sq][4].getText() == "" ) {
 							xoninoB[sq][4].setText( comp_who );
+							sq = 4;
 							return;
 						}
 						if( pick2 == 1 && xoninoB[sq][6].getText() == "" ) {
 							xoninoB[sq][6].setText( comp_who );
+							sq = 6;
 							return;
 						}
 					}
@@ -2202,6 +2251,7 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( xoninoB[sq][( 5 + pick2 ) % 10].getText() == "" ) {
 							xoninoB[sq][( 5 + pick2 ) % 10].setText( comp_who );
+							sq = ( 5 + pick2 ) % 10;
 							return;
 						}
 					}
@@ -2221,14 +2271,17 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 0 && xoninoB[sq][2].getText() == "" ) {
 							xoninoB[sq][2].setText( comp_who );
+							sq = 2;
 							return;
 						}
 						if( pick2 == 2 && xoninoB[sq][4].getText() == "" ) {
 							xoninoB[sq][4].setText( comp_who );
+							sq = 4;
 							return;
 						}
 						if( pick2 == 1 && xoninoB[sq][8].getText() == "" ) {
 							xoninoB[sq][8].setText( comp_who );
+							sq = 8;
 							return;
 						}
 					}
@@ -2248,10 +2301,12 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 2 && xoninoB[sq][7].getText() == "" ) {
 							xoninoB[sq][7].setText( comp_who );
+							sq = 7;
 							return;
 						}
 						if( pick2 < 2 && xoninoB[sq][pick2 + 3].getText() == "" ) {
 							xoninoB[sq][pick2 + 3].setText( comp_who );
+							sq = pick2 + 3;
 							return;
 						}
 					}
@@ -2271,10 +2326,12 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 < 4 && xoninoB[sq][pick2 + 3].getText() == "" ) {
 							xoninoB[sq][pick2 + 3].setText( comp_who );
+							sq = pick2 + 3;
 							return;
 						}
 						if( pick2 == 4 && xoninoB[sq][8].getText() == "" ) {
 							xoninoB[sq][8].setText( comp_who );
+							sq = 8;
 							return;
 						}
 					}
@@ -2294,10 +2351,12 @@ public class Menu implements ActionListener, MouseListener{
 						
 						if( pick2 == 2 && xoninoB[sq][7].getText() == "" ) {
 							xoninoB[sq][7].setText( comp_who );
+							sq = 7;
 							return;
 						}
 						if( pick2 < 2 && xoninoB[sq][4 + pick2].getText() == "" ) {
 							xoninoB[sq][4 + pick2].setText( comp_who );
+							sq = 4 + pick2;
 							return;
 						}
 					}
