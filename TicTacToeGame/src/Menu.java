@@ -1980,7 +1980,10 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 9; i++ ) {
 			if( xoninoB[sq][i].getText() != "" ) draw++;
 		}
-		if( draw == 9 ) return true; //if we have draw, programme should count it somehow -> special variable for draw
+		if( draw == 9 ) {
+			xoninoFB[sq].setVisible( true );
+			return true; //if we have draw, programme should count it somehow -> special variable for draw
+		}
 		
 		return false;
 	}
