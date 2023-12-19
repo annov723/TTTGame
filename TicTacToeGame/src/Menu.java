@@ -326,9 +326,11 @@ public class Menu implements ActionListener, MouseListener{
 		//classic mode buttons loop
 		for( int i = 0; i < 9; i++ ) {
 			if( e.getSource() == xoclassicB[i] ) {
+				//System.out.println( "it knows the button was clicked" );
 				if( Xturn ) {
 					if( xoclassicB[i].getText() == "" ) {
 						xoclassicB[i].setText( "X" );
+						//System.out.println( "X text set - player" );
 						if( !checkc() ) {
 							if( mode == 0 ) {
 								Xturn = false;
@@ -338,6 +340,7 @@ public class Menu implements ActionListener, MouseListener{
 								if( mode == 1 ) classic_easy();
 								else if( mode == 2 ) classic_medium();
 								else classic_hard();
+								//System.out.println( "X text set - comp" );
 								Xturn = false;
 								if( !checkc() ) Xturn = true;
 							}
@@ -348,6 +351,7 @@ public class Menu implements ActionListener, MouseListener{
 				else {
 					if( xoclassicB[i].getText() == "" ) {
 						xoclassicB[i].setText( "O" );
+						//System.out.println( "O text set - player" );
 						if( !checkc() ) {
 							if( mode == 0 ) {
 								Xturn = true;
@@ -357,6 +361,7 @@ public class Menu implements ActionListener, MouseListener{
 								if( mode == 1 ) classic_easy();
 								else if( mode == 2 ) classic_medium();
 								else classic_hard();
+								//System.out.println( "O text set - comp" );
 								Xturn = true;
 								if( !checkc() ) Xturn = false;								
 							}
@@ -1533,7 +1538,7 @@ public class Menu implements ActionListener, MouseListener{
 	
 	//classic mode methods
 	boolean checkc() {
-		
+		System.out.println( "were in checkc" );
 		for( int i = 0; i < 3; i++ ) {
 			if( xoclassicB[0 + ( i * 3 )].getText() != "" && xoclassicB[0 + ( i * 3 )].getText() == xoclassicB[1 + ( i * 3 )].getText() && xoclassicB[1 + ( i * 3 )].getText() == xoclassicB[2 + ( i * 3 )].getText() ) { //rows
 				winc( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
@@ -1564,6 +1569,7 @@ public class Menu implements ActionListener, MouseListener{
 			return true;
 		}
 		
+		System.out.println( "we end checkc" );
 		return false;
 	}
 	
@@ -1605,6 +1611,7 @@ public class Menu implements ActionListener, MouseListener{
 	
 	void classic_easy() {
 		while( true ) {
+			//System.out.println( "is the bug here?" );
 			int count = random.nextInt( 9 );
 			if( xoclassicB[count].getText() == "" ) {
 				if( user == 'X' ) xoclassicB[count].setText( "O" );
@@ -2069,6 +2076,7 @@ public class Menu implements ActionListener, MouseListener{
 			else if( mode == 2 ) score = score + 5;
 			else score = score + 8;
 		}
+		scoreNL.setText( points + String.valueOf( score ) );
 	}
 	
 	void winnF( int a, int b, int c ) {

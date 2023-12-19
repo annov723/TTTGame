@@ -2,6 +2,7 @@ Aww:0
 kk:10
 A:480
 a:120
+bbb:50
 rob:0
 Loki:450
 apup:60
