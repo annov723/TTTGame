@@ -1559,7 +1559,10 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 9; i++ ) {
 			if( xoclassicB[i].getText() != "" ) draw++;
 		}
-		if( draw == 9 ) return true;
+		if( draw == 9 ) {
+			drawc();
+			return true;
+		}
 		
 		return false;
 	}
@@ -1579,6 +1582,25 @@ public class Menu implements ActionListener, MouseListener{
 		
 		winner = true;
 		classic_game();
+	}
+	
+	void drawc() {
+		for( int i = 0; i < 9; i++ ) {
+			xoclassicB[i].setEnabled( false );
+		}
+		
+		backClassicB.setEnabled( false );
+		backClassicB2.setEnabled( false );
+		moveCL.setVisible( false );
+		
+		winnerCL.setText( "draw" );
+		winnerCL.setVisible( true );
+		
+		game = 0;
+		score = 0;
+		mode = 4;
+		
+		winnerCB.setVisible( true );
 	}
 	
 	void classic_easy() {
@@ -1981,7 +2003,7 @@ public class Menu implements ActionListener, MouseListener{
 			if( xoninoB[sq][i].getText() != "" ) draw++;
 		}
 		if( draw == 9 ) {
-			xoninoFB[sq].setVisible( true );
+			drawn();
 			return true; //if we have draw, programme should count it somehow -> special variable for draw
 		}
 		
@@ -2014,7 +2036,10 @@ public class Menu implements ActionListener, MouseListener{
 		for( int i = 0; i < 9; i++ ) {
 			if( xoninoFB[i].getText() != "" ) draw++;
 		}
-		if( draw == 9 ) return true;
+		if( draw == 9 ) {
+			drawnF();
+			return true;
+		}
 		
 		return false;
 	}
@@ -2033,6 +2058,17 @@ public class Menu implements ActionListener, MouseListener{
 		if( Xturn ) xoninoFB[sq].setText( "X" );
 		else xoninoFB[sq].setText( "O" );
 		xoninoFB[sq].setVisible( true );
+		
+		if( Xturn && user == 'X' ) {
+			if( mode == 1 ) score = score + 2;
+			else if( mode == 2 ) score = score + 5;
+			else score = score + 8;
+		}
+		else if( !Xturn && user == 'O' ) {
+			if( mode == 1 ) score = score + 2;
+			else if( mode == 2 ) score = score + 5;
+			else score = score + 8;
+		}
 	}
 	
 	void winnF( int a, int b, int c ) {
@@ -2049,6 +2085,34 @@ public class Menu implements ActionListener, MouseListener{
 		
 		winner = true;
 		nino_game();
+	}
+	
+	void drawn() {
+		for( int i = 0; i < 9; i++ ) {
+			xoninoB[sq][i].setEnabled( false );
+		}
+		
+		xoninoFB[sq].setText( "" );
+		xoninoFB[sq].setVisible( true );
+	}
+	
+	void drawnF() {
+		for( int i = 0; i < 9; i++ ) {
+			xoninoFB[i].setEnabled( false );
+		}
+		
+		backNinoB.setEnabled( false );
+		backNinoB2.setEnabled( false );
+		moveNL.setVisible( false );
+		
+		winnerNL.setText( "draw" );
+		winnerNL.setVisible( true );
+		
+		game = 0;
+		score = 0;
+		mode = 4;
+		
+		winnerLB.setVisible( true );
 	}
 	
 	void nino_easy() {
