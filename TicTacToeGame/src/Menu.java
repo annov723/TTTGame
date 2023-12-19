@@ -95,8 +95,9 @@ public class Menu implements ActionListener, MouseListener{
 	JButton[] xoclassicB = new JButton[9]; //X and O buttons
 	JButton[][] xoninoB = new JButton[9][9];
 	JButton[] xoninoFB = new JButton[9];
-	JLabel xobuttonCL = new JLabel( new ImageIcon( "tttboard.png" ) ); //board for O and X 
-	JLabel xobuttonNL = new JLabel( new ImageIcon( "tttboard_nino.png" ) );
+	JLabel xobuttonCL = new JLabel( new ImageIcon( "tttboard.png" ) ); //board for O and X
+	ImageIcon[] xobuttonNI = new ImageIcon[9];
+	JLabel xobuttonNL = new JLabel();
 	JLabel moveCL = new JLabel(); //whose move is now
 	JLabel moveNL = new JLabel();
 	JLabel whotitCL = new JLabel( "turn" ); //just "turn" JLabel
@@ -326,11 +327,9 @@ public class Menu implements ActionListener, MouseListener{
 		//classic mode buttons loop
 		for( int i = 0; i < 9; i++ ) {
 			if( e.getSource() == xoclassicB[i] ) {
-				//System.out.println( "it knows the button was clicked" );
 				if( Xturn ) {
 					if( xoclassicB[i].getText() == "" ) {
 						xoclassicB[i].setText( "X" );
-						//System.out.println( "X text set - player" );
 						if( !checkc() ) {
 							if( mode == 0 ) {
 								Xturn = false;
@@ -340,7 +339,6 @@ public class Menu implements ActionListener, MouseListener{
 								if( mode == 1 ) classic_easy();
 								else if( mode == 2 ) classic_medium();
 								else classic_hard();
-								//System.out.println( "X text set - comp" );
 								Xturn = false;
 								if( !checkc() ) Xturn = true;
 							}
@@ -351,7 +349,6 @@ public class Menu implements ActionListener, MouseListener{
 				else {
 					if( xoclassicB[i].getText() == "" ) {
 						xoclassicB[i].setText( "O" );
-						//System.out.println( "O text set - player" );
 						if( !checkc() ) {
 							if( mode == 0 ) {
 								Xturn = true;
@@ -361,7 +358,6 @@ public class Menu implements ActionListener, MouseListener{
 								if( mode == 1 ) classic_easy();
 								else if( mode == 2 ) classic_medium();
 								else classic_hard();
-								//System.out.println( "O text set - comp" );
 								Xturn = true;
 								if( !checkc() ) Xturn = false;								
 							}
@@ -392,6 +388,7 @@ public class Menu implements ActionListener, MouseListener{
 										}
 									}
 								}
+								xobuttonNL.setIcon( xobuttonNI[sq] );
 								
 								//now it must enable unused "big" squares after user's move
 								for( int k = 0; k < 9; k++ ) {
@@ -415,6 +412,7 @@ public class Menu implements ActionListener, MouseListener{
 										}
 									}
 								}
+								xobuttonNL.setIcon( xobuttonNI[sq] );
 								
 								//now it must enable unused "big" squares after user's move
 								for( int k = 0; k < 9; k++ ) {
@@ -453,6 +451,7 @@ public class Menu implements ActionListener, MouseListener{
 										}
 									}
 								}
+								xobuttonNL.setIcon( xobuttonNI[sq] );
 								
 								//now it must enable unused "big" squares after user's move
 								for( int k = 0; k < 9; k++ ) {
@@ -476,6 +475,7 @@ public class Menu implements ActionListener, MouseListener{
 										}
 									}
 								}
+								xobuttonNL.setIcon( xobuttonNI[sq] );
 								
 								//now it must enable unused "big" squares after user's move
 								for( int k = 0; k < 9; k++ ) {
@@ -1210,8 +1210,13 @@ public class Menu implements ActionListener, MouseListener{
 		winnerLB2.addMouseListener( this );
 		
 		/*game buttons field*/
+		for( int i = 0; i < 9; i++ ) {
+			String tttname = "tttnino" + i + ".png"; 
+			xobuttonNI[i] = new ImageIcon( tttname );
+		}
 		xobuttonNL.setLayout( null );
 		xobuttonNL.setBounds( 20, 20, 420, 420 );
+		xobuttonNL.setIcon( xobuttonNI[4] );
 		
 		//winner message
 		winnerNL.setBounds( 0, 0, 420, 420 );
@@ -1321,9 +1326,9 @@ public class Menu implements ActionListener, MouseListener{
 			moveCL.setVisible( true );
 			
 			classicBackL.setVisible( true );
+			if( mode >= 1 ) scoreCL.setVisible( true );
 			
 			begin();
-			if( mode >= 1 ) scoreCL.setVisible( true );
 		}
 		else if( winner ) {
 			backClassicB.setEnabled( false );
@@ -1373,6 +1378,7 @@ public class Menu implements ActionListener, MouseListener{
 		
 		if( !winner ) {
 			sq = 4;
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			for( int i = 0; i < 9; i++ ) {
 				for( int j = 0; j < 9; j++ ) {
 					xoninoB[i][j].setText( "" );
@@ -1400,9 +1406,9 @@ public class Menu implements ActionListener, MouseListener{
 			moveNL.setVisible( true );
 			
 			ninoBackL.setVisible( true );
+			if( mode >= 1 ) scoreNL.setVisible( true );
 			
 			begin();
-			if( mode >= 1 ) scoreNL.setVisible( true );
 		}
 		else if( winner ) {
 			backNinoB.setEnabled( false );
@@ -1538,7 +1544,6 @@ public class Menu implements ActionListener, MouseListener{
 	
 	//classic mode methods
 	boolean checkc() {
-		System.out.println( "were in checkc" );
 		for( int i = 0; i < 3; i++ ) {
 			if( xoclassicB[0 + ( i * 3 )].getText() != "" && xoclassicB[0 + ( i * 3 )].getText() == xoclassicB[1 + ( i * 3 )].getText() && xoclassicB[1 + ( i * 3 )].getText() == xoclassicB[2 + ( i * 3 )].getText() ) { //rows
 				winc( 0 + ( i * 3 ), 1 + ( i * 3 ), 2 + ( i * 3 ) );
@@ -1569,7 +1574,6 @@ public class Menu implements ActionListener, MouseListener{
 			return true;
 		}
 		
-		System.out.println( "we end checkc" );
 		return false;
 	}
 	
@@ -1611,7 +1615,6 @@ public class Menu implements ActionListener, MouseListener{
 	
 	void classic_easy() {
 		while( true ) {
-			//System.out.println( "is the bug here?" );
 			int count = random.nextInt( 9 );
 			if( xoclassicB[count].getText() == "" ) {
 				if( user == 'X' ) xoclassicB[count].setText( "O" );
@@ -2147,6 +2150,7 @@ public class Menu implements ActionListener, MouseListener{
 				}
 			}
 		}
+		xobuttonNL.setIcon( xobuttonNI[sq] );
 		
 		//now it must enable unused "big" squares after user's move
 		for( int k = 0; k < 9; k++ ) {
@@ -2185,6 +2189,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2212,6 +2217,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2239,6 +2245,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2267,6 +2274,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2294,6 +2302,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2321,6 +2330,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2348,6 +2358,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2373,6 +2384,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2398,6 +2410,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2424,6 +2437,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2449,6 +2463,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2474,6 +2489,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2502,6 +2518,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2529,6 +2546,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2556,6 +2574,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2583,6 +2602,7 @@ public class Menu implements ActionListener, MouseListener{
 						}
 					}
 				}
+				xobuttonNL.setIcon( xobuttonNI[sq] );
 				
 				//now it must enable unused "big" squares after user's move
 				for( int k = 0; k < 9; k++ ) {
@@ -2610,6 +2630,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2635,6 +2656,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2660,6 +2682,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2685,6 +2708,7 @@ public class Menu implements ActionListener, MouseListener{
 					}
 				}
 			}
+			xobuttonNL.setIcon( xobuttonNI[sq] );
 			
 			//now it must enable unused "big" squares after user's move
 			for( int k = 0; k < 9; k++ ) {
@@ -2738,6 +2762,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -2763,6 +2788,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -2803,6 +2829,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -2843,6 +2870,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -2889,6 +2917,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -2914,6 +2943,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -2939,6 +2969,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -2979,6 +3010,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -3019,6 +3051,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -3044,6 +3077,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -3069,6 +3103,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -3109,6 +3144,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -3134,6 +3170,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -3174,6 +3211,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -3199,6 +3237,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -3239,6 +3278,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {
@@ -3264,6 +3304,7 @@ public class Menu implements ActionListener, MouseListener{
 									}
 								}
 							}
+							xobuttonNL.setIcon( xobuttonNI[sq] );
 							
 							//now it must enable unused "big" squares after user's move
 							for( int k = 0; k < 9; k++ ) {

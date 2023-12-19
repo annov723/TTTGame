@@ -2,13 +2,14 @@ Aww:0
 kk:10
 A:480
 a:120
-bbb:50
+bbb:254
 rob:0
 Loki:450
 apup:60
 kkk:110
 pup:50
 jjj:0
+nnn:0
 dziadu:210
 Bartus:1500
 bob:0
