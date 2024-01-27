@@ -1,4 +1,5 @@
-# **TTTGame**
+
+# **TTTGame** <img align="right" img src="https://github.com/annov723/TTTGame/blob/master/TicTacToeGame/icon.png" width=25% height=25%>
 
 The project is based on the game of Tic Tac Toe, contains 2 game options - the classic one and 9 in 1 variation:
 - user-friendly interface built with Java Swing
