@@ -93,5 +93,5 @@ The board is divided into 9 "big" squares, each of them divided into 9 "small" s
 - maybe add some animations like confetti when the winner is announced
 - animated game logo in the menu (can pop up when the menu is opening
 - allow users to pick the color of their X and O?
-- I'm sure the code can be optimalized somehow but for now my algorithmic an Java knowledge is to small to propose any suggestions
+- I'm sure the code can be optimalized somehow but for now my algorithmic and Java knowledge is to small to propose any suggestions
 - make an online version to play with people from all over the world :)
