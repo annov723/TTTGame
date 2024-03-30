@@ -5,10 +5,15 @@ a:120
 bbb:254
 rob:0
 Loki:450
+Mamka:30
+Gra¿a:0
 apup:60
 kkk:110
 pup:50
 jjj:0
+Wojtek:50
+mmm:0
+opul:1550
 nnn:0
 dziadu:210
 Bartus:1500
